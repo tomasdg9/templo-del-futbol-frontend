@@ -1,0 +1,29 @@
+
+  /* Buscar paleta de colores y modificarlos */
+  body {
+    color: white; 
+    background-color: #3e3e42;
+  }
+  
+  a {
+    color: white; 
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: white; 
+  }
+  
+  .navbarColor { /* Navbar */
+    color: white; 
+    background-color: #96c53d; 
+  }
+
+  .footerColor {
+    background-color: #ffffff; 
+    height: 80px;
+    border-radius: 50px;
+  }
+  
+  .caroucel-image {
+  height: 470px; /* Cambia 200px por la altura deseada */
+}
