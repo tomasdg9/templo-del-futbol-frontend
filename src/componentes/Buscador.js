@@ -8,7 +8,7 @@ class Buscador extends Component {
     obtenerDatos = (e) => {
         e.preventDefault();
         const termino = this.busquedaRef.current.value; // Hace referencia a lo que se coloca en el input
-        this.props.datosBusqueda(termino);
+        this.props.datosBusqueda(termino); // Invoca la función "datosBusqueda" con "termino" de su padre
     }
 
     render(){

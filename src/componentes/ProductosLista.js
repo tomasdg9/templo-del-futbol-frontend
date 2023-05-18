@@ -14,7 +14,7 @@ class ProductosLista extends Component {
     y al apretar el filtro tengo que ordenar ese array segun el criterio y se volvería a renderizar
   */
   datosBusqueda = (termino) => {
-    console.log(termino)
+    this.props.datosBusqueda(termino); // Invoca la función "datosBusqueda" con "termino" de su padre
   }
 
   render() {
