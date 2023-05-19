@@ -24,7 +24,6 @@ class ProductosLista extends Component {
         <Buscador 
           datosBusqueda={this.datosBusqueda}
         />
-		    <h2>Lista de productos</h2>  
         <div className="row justify-content-center">
           
               <Producto 

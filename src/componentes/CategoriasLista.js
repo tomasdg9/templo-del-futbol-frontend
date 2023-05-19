@@ -5,28 +5,10 @@ import Pagination from 'react-js-pagination';
 
 class CategoriasLista extends Component {
   state = {
-    categorias: [
-      { id: 1, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 11, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 12, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 13, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 14, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 15, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 16, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 17, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 18, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 19, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 21, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 221, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 231, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 41, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 51, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 61, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 71, nombre: 'Categoría 1', descripcion: 'Prueba' },
-      { id: 1231, nombre: 'Categoría 1', descripcion: 'Prueba' },
-    ],
+    categorias: [],
     currentPage: 1,
     itemsPerPage: 9,
+    busqueda: false,
   };
 
   handlePageChange = (pageNumber) => {
@@ -39,12 +21,23 @@ class CategoriasLista extends Component {
   }
 
   obtenerCategorias = () => {
-    // Realizar la llamada a la API para obtener las categorías
-    // y actualizar el estado con los datos recibidos.
+    fetch("http://127.0.0.1:8000/rest/categorias")
+      .then(respuesta => respuesta.json())
+      .then(respuesta => this.setState({ categorias: respuesta.hits }))
   };
 
   datosBusqueda = (termino) => {
-      //probando comunicacion padre-hijo
+      // El buscador le comunica a CategoriasLista lo que tiene que buscar
+      // Busca en la api URL/rest/categorias/busqueda/{termino}
+      console.log(termino);
+  };
+
+  limpiarBusqueda = () => {
+    this.setState({
+      busqueda: false, 
+      categorias: [], 
+    });
+    this.obtenerCategorias();
   };
 
   render() {
@@ -56,6 +49,9 @@ class CategoriasLista extends Component {
     return (
       <div>
         <div className="d-flex justify-content-end">
+        { this.state.busqueda === true &&
+          <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+        }
           <Buscador datosBusqueda={this.datosBusqueda} />
         </div>
         <div className="container text-center">
@@ -74,7 +70,6 @@ class CategoriasLista extends Component {
                   />
                 ))}
               </div>
-              
             </div>
           )}
         </div>
@@ -91,7 +86,6 @@ class CategoriasLista extends Component {
                 />
             </div>
         </div>
-
       </div>
     );
   }

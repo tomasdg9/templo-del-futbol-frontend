@@ -1,4 +1,5 @@
 import { useParams, Navigate  } from 'react-router-dom';
+import ProductoLista from '../ProductosLista';
 
 function CategoriaDetalle() {
   const { id } = useParams();
@@ -12,9 +13,16 @@ function CategoriaDetalle() {
     return <Navigate to="/not-found" />;
   }
 
+  const nombre = "Prueba";
+
+  window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+
   return (
     <div>
-      Hola {id}!
+      <h1>Lista de productos de la categoria {nombre}</h1>
+      <ProductoLista 
+        categoria={id}
+      />
     </div>
   );
 }
