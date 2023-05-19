@@ -26,78 +26,33 @@ class ProductosLista extends Component {
         />
 		    <h2>Lista de productos</h2>  
         <div className="row justify-content-center">
-          
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-               <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-               <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              <Producto 
-                  nombre="Producto 1" 
-                  imagen="/img/logo.jpg"
-                  descripcion="Prueba producto" 
-              />
-              
+            {this.buscarProductosCategorias(this.props.categorias)}
         </div>
 		</div>
 		);
   }
 
+  buscarProductosCategorias = (categorias) =>{
+        if(categorias == -1){
+            //aca se obtendrian todos los productos de la pagina inicial
+            return(<Producto 
+                id={1}
+                categoria={categorias}
+                nombre="Producto 1" 
+                imagen="/img/logo.jpg"
+                precio={5000}
+              />)
+        }else{
+            return(<Producto
+                //aca tendria que obtener cada producto correspondiente a la categoria pasada por parametro
+                    nombre="Producto Categoria"
+                    imagen="/img/logo.jpg"
+                    precio={5000}
+                />)
+        }
+    }
+
 }
+
 
 export default ProductosLista;
