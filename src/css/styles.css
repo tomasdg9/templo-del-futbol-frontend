@@ -1,29 +1,45 @@
 
-  /* Buscar paleta de colores y modificarlos */
-  body {
-    color: white; 
-    background-color: #3e3e42;
-  }
+/* Buscar paleta de colores y modificarlos */
+body {
+  color: rgb(0, 0, 0); 
+  background-color: rgb(231, 231, 231);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
   
-  a {
-    color: white; 
-  }
+button {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+a{
+  color: black; 
+  font-family: Georgia, serif;
+}
+p{
+  color: black; 
+  font-family: "Helvetica", sans-serif;
+  font-size: 120%;
+}
   
-  h1, h2, h3, h4, h5, h6 {
-    color: white; 
-  }
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(46, 46, 46); 
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
   
-  .navbarColor { /* Navbar */
-    color: white; 
-    background-color: #96c53d; 
-  }
+.navbarColor { /* Navbar */
+  color: white; 
+  background-color: #81b81c; 
+}
 
-  .footerColor {
-    background-color: #ffffff; 
-    height: 80px;
-    border-radius: 50px;
-  }
+.footerColor {
+  background-color: #ffffff; 
+  height: 80px;
+  border-radius: 50px;
+}
   
-  .caroucel-image {
+.caroucel-image {
   height: 470px; /* Cambia 200px por la altura deseada */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }

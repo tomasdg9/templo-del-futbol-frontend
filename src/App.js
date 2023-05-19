@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Componentes
 import Navbar from './componentes/Navbar';
 import ProductosLista from './componentes/ProductosLista';
 import CategoriasLista from './componentes/CategoriasLista';
 import NotFound from './componentes/NotFound';
 import Home from './componentes/Home';
 import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
+import Carrito from './componentes/Carrito';
+
+//Contextos
+import CarritoContexto from './contextos/CarritoContexto';
+
+// Estilos
 import './css/styles.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
-
     // Recuperar el estado del carrito desde localStorage
     const carrito = localStorage.getItem('carrito');
     this.state = {
-      carrito: carrito ? JSON.parse(carrito) : [1,4,3],
+      carrito: carrito ? JSON.parse(carrito) : [1,4,3], // Carrito de prueba
     };
   }
 
@@ -28,16 +35,30 @@ class App extends Component {
     console.log(termino);
   };
 
+  // Pruebas comunicacion con context
   agregarProducto = (id) => {
-    
+    this.setState(
+      (prevState) => ({
+        carrito: prevState.carrito.concat(id)
+      }),
+      () => {
+        this.guardarCarritoEnLocalStorage();
+      }
+    );
   };
-
-  eliminarProducto = (id) => {
-    
+  
+  eliminarElemento = (index) => {
+    this.setState((prevState) => {
+      const newList = [...prevState.carrito];
+      newList.splice(index, 1);
+      return { carrito: newList };
+    }, () => {
+      this.guardarCarritoEnLocalStorage();
+    });
   };
+  
 
   vaciarCarrito = () => {
-    // Vaciar el carrito
     this.setState(
       {
         carrito: [],
@@ -49,18 +70,27 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navbar />
+          <Navbar 
+              cantCarrito={this.state.carrito.length}
+          />
           <p>Carrito: (productos ids) {this.state.carrito}</p>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/productos"
-              element={<ProductosLista datosBusqueda={this.vaciarCarrito} />}
-            />
-            <Route path="/categorias" element={<CategoriasLista />} />
-            <Route path="/categorias/:id" element={<CategoriaDetalle />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          { /* test contextos de react */ }
+          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/productos"
+                element={<ProductosLista datosBusqueda={this.vaciarCarrito} />}
+                // Esto es un ejemplo como comunicar a los componentes hijo-padre usando funciones 
+                // pero con el texto se puede solucionar si no son clases.
+                // son dos formas distintas de hacerlo
+              />
+              <Route path="/categorias" element={<CategoriasLista />} />
+              <Route path="/categorias/:id" element={<CategoriaDetalle />} />
+              <Route path="/carrito" element={<Carrito nombre="Prueba" />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </CarritoContexto.Provider>
         </div>
       </Router>
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
 
-function Navbar() {
+function Navbar(props) {
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbarColor navbar-dark">
@@ -38,8 +38,7 @@ function Navbar() {
             {/* Iconos */}
             <ul className="navbar-nav d-flex flex-row me-1">
               <li className="nav-item me-3 me-lg-0">
-                <a className="nav-link text-white" href="/carrito"><i className="bi bi-cart4"></i> (0)</a>
-                {/* Agregar una variable que sea por ejemplo cantidadItems y modifique el (0) */}
+                <a className="nav-link text-white" href="/carrito"><i className="bi bi-cart4"></i> ({props.cantCarrito})</a>          
               </li>
             </ul>
           </div>

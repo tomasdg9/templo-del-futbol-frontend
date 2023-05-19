@@ -1,98 +1,100 @@
 import React, { Component } from 'react';
 import Categoria from "./entidades/Categoria"
 import Buscador from './Buscador'
-import ReactPaginate from 'react-paginate';
+import Pagination from 'react-js-pagination';
 
-class CategoriasLista extends Component{
+class CategoriasLista extends Component {
+  state = {
+    categorias: [
+      { id: 1, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 11, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 12, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 13, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 14, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 15, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 16, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 17, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 18, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 19, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 21, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 221, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 231, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 41, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 51, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 61, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 71, nombre: 'Categoría 1', descripcion: 'Prueba' },
+      { id: 1231, nombre: 'Categoría 1', descripcion: 'Prueba' },
+    ],
+    currentPage: 1,
+    itemsPerPage: 9,
+  };
 
-    state = {
-        categorias: [
-            { id: 1, nombre: 'Categoría 1', descripcion: 'Prueba' },
-            { id: 2, nombre: 'Categoría 2', descripcion: 'addassad' },
-            { id: 3, nombre: 'Categoría 3', descripcion: '12312213' },
-          ],
-        currentPage: 0, // Página actual
-        itemsPerPage: 12, // Cantidad de categorías por página
-    };
+  handlePageChange = (pageNumber) => {
+    this.setState({ currentPage: pageNumber });
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  };
 
-    handlePageClick = data => {
-        const { selected } = data;
-        this.setState({
-          currentPage: selected,
-        });
-    };
+  componentDidMount() { // Ejecuta cuando se abre la pagina
+    this.obtenerCategorias();
+  }
 
-    componentDidMount() {
-        this.obtenerCategorias(); // Ejecuta obtenerCategorias() cuando se ejecuta el componente
-    }
+  obtenerCategorias = () => {
+    // Realizar la llamada a la API para obtener las categorías
+    // y actualizar el estado con los datos recibidos.
+  };
 
-    obtenerCategorias = () =>{
-        // Hay que configurar en Laravel para no tener CORS. Ya lo hice. Hacer el push.
-        /*      let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias"
-        fetch(URL)
-            .then(respuesta => respuesta.json)
-            .then(resultado => console.log(resultado))
-        */
-    }
+  datosBusqueda = (termino) => {
+      //probando comunicacion padre-hijo
+  };
 
-    datosBusqueda = (termino) => {
-       /* const { categorias } = this.state;
-        const nuevaCategoria = {
-          id: categorias.length + 1, // Generar un nuevo ID único
-          nombre: 'Nueva Categoría',
-          descripcion: 'Descripción de la nueva categoría',
-        };
-        this.setState(prevState => ({
-          categorias: [...prevState.categorias, nuevaCategoria],
-        }));*/
-    };
+  render() {
+    const { categorias, currentPage, itemsPerPage } = this.state;
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const categoriasPaginadas = categorias.slice(startIndex, endIndex);
 
-    render(){
-        const { categorias, currentPage, itemsPerPage } = this.state;
-
-        // Calcular el índice inicial y final de las categorías según la página actual
-        const startIndex = currentPage * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        const categoriasPaginadas = categorias.slice(startIndex, endIndex);
-
-        
-        return(
-            <div className="container text-center">
-                <h1>Lista de categorias</h1>
-                <Buscador datosBusqueda={this.datosBusqueda} />
-                {this.state.categorias.length === 0 ? ( // No hay categorias
-                    <div className="mt-2">No se encontraron categorias.</div>
-                ) : 
-                (<div> {/* // Hay categorias */ }
-                <div className="row justify-content-center mt-2">
-                    {categoriasPaginadas.map((categoria) => (
-                    <Categoria
-                        key={categoria.id}
-                        id={categoria.id}
-                        nombre={categoria.nombre}
-                        descripcion={categoria.descripcion}
-                    />
-                    ))}
-                </div>
-                <ReactPaginate
-                    previousLabel={<span className="btn btn-info">Anterior</span>}
-                    nextLabel={<span className="btn btn-info">Siguiente</span>}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={Math.ceil(categorias.length / itemsPerPage)}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination justify-content-center"}
-                    activeClassName={"active"}
-                    pageClassName="btn btn-success mx-1"
-                />
-                </div>)}
-                
+    return (
+      <div>
+        <div className="d-flex justify-content-end">
+          <Buscador datosBusqueda={this.datosBusqueda} />
+        </div>
+        <div className="container text-center">
+          <h1 className="display-4">Lista de categorias</h1>
+          {categorias.length === 0 ? (
+            <div className="mt-2">No se encontraron categorias.</div>
+          ) : (
+            <div>
+              <div className="row justify-content-center mt-2">
+                {categoriasPaginadas.map((categoria) => (
+                  <Categoria
+                    key={categoria.id}
+                    id={categoria.id}
+                    nombre={categoria.nombre}
+                    descripcion={categoria.descripcion}
+                  />
+                ))}
+              </div>
+              
             </div>
-        );
-    }
+          )}
+        </div>
+        <div className="container ">
+            <div className="pagination">
+                <Pagination
+                    activePage={currentPage}
+                    itemsCountPerPage={itemsPerPage}
+                    totalItemsCount={categorias.length}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange}
+                    itemClass="page-item"
+                    linkClass="page-link"
+                />
+            </div>
+        </div>
 
+      </div>
+    );
+  }
 }
 
 export default CategoriasLista;
