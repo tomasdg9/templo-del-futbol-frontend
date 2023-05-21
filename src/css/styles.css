@@ -2,7 +2,7 @@
 /* Buscar paleta de colores y modificarlos */
 body {
   color: rgb(0, 0, 0); 
-  background-color: rgb(238, 205, 163);
+  background-color: rgb(243, 243, 243);
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
   
@@ -31,6 +31,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .footerColor {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   background-color: #ffffff; 
   height: 80px;
   border-radius: 50px;
@@ -46,6 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .cardProducto{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   border-color: rgb(0, 0, 0);
   background-color: rgb(236, 196, 123);
@@ -54,4 +56,41 @@ h1, h2, h3, h4, h5, h6 {
 .botonProducto{
   background-color: rgb(170, 196, 123);
   border-color: rgb(68, 109, 107);
+}
+
+
+.productoDetalle img{
+  margin-top: 5%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  width: 50%;
+}
+
+.cardDetalleProd {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 1%;
+  border-radius: 20px;
+}
+
+.cardProdDescripcion{
+  color: #ffffffee;
+  border-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
+}
+
+.contenedorTitulo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoriaProducto{
+  font-weight: bold;
+}
+
+.precio{
+  font-weight: bold;
 }

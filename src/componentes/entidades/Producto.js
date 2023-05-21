@@ -21,7 +21,7 @@ class Producto extends Component {
             <div className="d-flex justify-content-center align-items-center"><Card.Text>{this.props.nombre}</Card.Text></div>
             <div className="d-flex justify-content-center align-items-center"><Card.Text>{"$"+this.props.precio}</Card.Text></div>
             <div className="d-flex justify-content-center align-items-center">
-              <Link to={`/productos/${this.props.id}`} onClick={this.handleClick} className="btn btn-primary btn-sm mx-2">Ver productos</Link></div>
+              <Link to={`/productos/${this.props.id}`} onClick={this.handleClick} className="btn btn-primary btn-sm mx-2">Ver producto</Link></div>
           </Card.Body>
         </Card>
       </div>

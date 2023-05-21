@@ -25,7 +25,7 @@ class ProductosLista extends Component {
           datosBusqueda={this.datosBusqueda}
         />
 		    <h2>Lista de productos</h2>  
-        <div className="row justify-content-center">
+        <div class="container-md">
             {this.buscarProductosCategorias(this.props.categorias)}
         </div>
 		</div>
@@ -41,7 +41,22 @@ class ProductosLista extends Component {
                 nombre="Producto 1" 
                 imagen="/img/logo.jpg"
                 precio={5000}
-              />)
+              />,
+              <Producto 
+                id={1}
+                categoria={categorias}
+                nombre="Producto 1" 
+                imagen="/img/logo.jpg"
+                precio={5000}
+              />,
+              <Producto 
+                id={1}
+                categoria={categorias}
+                nombre="Producto 1" 
+                imagen="/img/logo.jpg"
+                precio={5000}
+              />
+              )
         }else{
             return(<Producto
                 //aca tendria que obtener cada producto correspondiente a la categoria pasada por parametro
