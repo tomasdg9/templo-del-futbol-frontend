@@ -4,12 +4,16 @@ import Buscador from './Buscador'
 import Pagination from 'react-js-pagination';
 
 class CategoriasLista extends Component {
-  state = {
-    categorias: [],
-    currentPage: 1,
-    itemsPerPage: 9,
-    busqueda: false,
-  };
+
+  constructor(props) {
+      super(props);
+      this.state = {
+          categorias: [],
+          currentPage: 1,
+          itemsPerPage: 9,
+          busqueda: false,
+      };
+  }
 
   handlePageChange = (pageNumber) => {
     this.setState({ currentPage: pageNumber });
@@ -19,18 +23,28 @@ class CategoriasLista extends Component {
   componentDidMount() { // Ejecuta cuando se abre la pagina
     this.obtenerCategorias();
   }
+  
+  datosBusqueda = (termino) => {
+    if(termino === "")
+      this.obtenerCategorias();
+    else {
+      let URL = "http://127.0.0.1:8000/rest/categorias/buscar/"+termino;
+      fetch(URL)
+        .then(respuesta => respuesta.json())
+        .then(resultado => this.setState({ categorias: resultado }))
+        .catch(error => console.log(error));
+      }
+  };
 
   obtenerCategorias = () => {
-    fetch("http://127.0.0.1:8000/rest/categorias")
+    let URL = "http://127.0.0.1:8000/rest/categorias";
+    
+    fetch(URL)
       .then(respuesta => respuesta.json())
-      .then(respuesta => this.setState({ categorias: respuesta.hits }))
-  };
-
-  datosBusqueda = (termino) => {
-      // El buscador le comunica a CategoriasLista lo que tiene que buscar
-      // Busca en la api URL/rest/categorias/busqueda/{termino}
-      console.log(termino);
-  };
+      .then(resultado => this.setState({ categorias: resultado }))
+      .catch(error => console.log(error));
+  }
+  
 
   limpiarBusqueda = () => {
     this.setState({
