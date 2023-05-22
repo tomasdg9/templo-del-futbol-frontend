@@ -1,6 +1,9 @@
 import { useParams, Navigate  } from 'react-router-dom';
 import Card from 'react-bootstrap/Card';
 import BotonComprar from '../botones/BotonComprar';
+import BotonAnterior from '../botones/BotonAnterior';
+import BotonSiguiente from '../botones/BotonSiguiente';
+import CardCategoria from '../CardCategoria';
 
 function ProductoDetalle() {
     const { id, imagen } = useParams();
@@ -44,11 +47,42 @@ function ProductoDetalle() {
           </div>
           
         </Card>
+      <br/>
+      <div class='d-flex justify-content-center align-items-center'>
+        <Card className='cardDetalleProd'>
+          
+        <div class="row">
+           
+         
+        <div className="col-md-3 col-sm-6 mb-5">
+            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
+            <BotonAnterior/> 
+          </div>
+          <div className="col-md-3 col-sm-6 mb-5">
+            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
+          </div>
+          <div className="col-md-3 col-sm-6 mb-5">
+            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
+          </div>
+          <div className="col-md-3 col-sm-6 mb-5">
+            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
+            <BotonSiguiente class='alinearDerecha'/>
+          </div>
+        </div>
+        </Card>
+        
+      </div>
+      
+      <br/>
       </div>
     
     
   );
 }
+
+const handleClickCard =() =>{
+  console.log('se hizo click en la card. Deberia ir al link del producto')
+};
 
 const handleClick = () => {
   // Lógica que se ejecutará al hacer clic en el botón

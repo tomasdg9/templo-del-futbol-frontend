@@ -2,7 +2,7 @@
 /* Buscar paleta de colores y modificarlos */
 body {
   color: rgb(0, 0, 0); 
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(219, 219, 219);
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
   
@@ -93,4 +93,31 @@ h1, h2, h3, h4, h5, h6 {
 
 .precio{
   font-weight: bold;
+}
+
+.cardCategoria{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-color: rgb(204, 204, 204);
+  border-radius: 5%;
+  margin: 5%;
+  width: 90%;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.cardCategoria:hover {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+.cardCategoria img{
+  border-radius: 17%;
+}
+
+.alinearDerecha{
+  text-align: right;
+  float:right;
+}
+
+.nombreCat{
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(78, 48, 48)
 }

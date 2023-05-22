@@ -13,4 +13,4 @@ const BotonAnterior = () => (
   </div>
 )
 
-export default BotonSiguiente
+export default BotonAnterior
