@@ -8,6 +8,9 @@ class ProductosLista extends Component {
     super(props);
     this.state = {
         productos: [],
+        categorianombre: "",
+        cargando: true,
+        busqueda: false,
     };
 }
 
@@ -22,7 +25,24 @@ class ProductosLista extends Component {
   */
 
   datosBusqueda = (termino) => {
-    this.props.datosBusqueda(termino); // Invoca la función "datosBusqueda" con "termino" de su padre
+    console.log(termino); // Invoca la función "datosBusqueda" con "termino" de su padre
+    if(this.props.categoria === -1){
+        // Busca entre todos los productos
+    } else {
+        // Busca entre todos los productos de la categoria. Testear en Vercel.
+        if(termino === "") {
+          this.obtenerProductosCategoria(this.props.categoria);
+          this.setState({ busqueda: false });
+        }
+        else {
+          let URL = "http://127.0.0.1:8000/rest/productos/buscarporcategoria/"+termino+"/"+this.props.categoria;
+          fetch(URL)
+            .then(respuesta => respuesta.json())
+            .then(resultado => this.setState({ productos: resultado, busqueda: true }))
+            .catch(error => console.log(error));
+          }
+
+    }
   }
 
   componentDidMount() { // Ejecuta cuando se abre la pagina
@@ -33,13 +53,30 @@ class ProductosLista extends Component {
     }
   }
 
+
   obtenerProductosCategoria = (id) => {
     let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/categoria/" + id;
     fetch(URL)
       .then(respuesta => respuesta.json())
-      .then(resultado => this.setState({ productos: resultado }))
+      .then(resultado => {
+        if (resultado?.mensaje === "La categoría no tiene productos") {
+          this.setState({ productos: [] });
+        } else {
+          this.setState({ productos: resultado });
+        }
+        this.setState({ cargando: false });
+      })
       .catch(error => console.log(error));
+
+      let URL2 = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/" + id;
+      fetch(URL2)
+        .then(respuesta => respuesta.json())
+        .then(resultado => {
+          this.setState({categorianombre: resultado.nombre})
+        })
+        .catch(error => console.log(error));
   }
+  
 
   render() {
 	  return (
@@ -50,27 +87,30 @@ class ProductosLista extends Component {
         />
 
         <div className="container text-center">
-        {this.props.categoria === -1 ? (<h1 className="display-4">Lista de productos</h1>) :
-          <h1 className="display-4">Lista de productos de la categoria {this.props.nombrecategoria}</h1>}
-          {this.state.productos.length === 0 ? (
-            <div className="mt-2">No se encontraron productos.</div>
-          ) : (
-            <div>
-              <div className="row justify-content-center mt-2">
-                {this.state.productos.map((producto) => (
-                  <Producto
-                    key={producto.id}
-                    categoria={producto.categoria_id}
-                    id={producto.id}
-                    nombre={producto.nombre}
-                    descripcion={producto.descripcion}
-                    precio={producto.precio}
-                    imagen={producto.imagen}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
+        { this.state.cargando === false && (
+        this.props.categoria === -1 ? (<h1 className="display-4">Lista de productos</h1>) :
+          <h1 className="display-4">Productos de {this.state.categorianombre}</h1>)}
+        {this.state.cargando === true ?
+            (<div className="mt-2">Cargando...</div>) :
+          this.state.productos.length === 0 ? (
+                <div className="mt-2">No se encontraron productos.</div>
+            ) : (
+                    <div>
+                      <div className="row justify-content-center mt-2">
+                        {this.state.productos.map((producto) => (
+                          <Producto
+                            key={producto.id}
+                            categoria={producto.categoria_id}
+                            id={producto.id}
+                            nombre={producto.nombre}
+                            descripcion={producto.descripcion}
+                            precio={producto.precio}
+                            imagen={producto.imagen}
+                          />
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
 		</div>
 		);

@@ -7,9 +7,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 function Navbar(props) {
   return (
-    <NB collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <NB collapseOnSelect expand="lg" bg="success" variant="dark">
       <Container>
-        <NB.Brand href="#home">El Templo del Fútbol ⚽</NB.Brand>
+        <NB.Brand>El Templo del Fútbol ⚽</NB.Brand>
         <NB.Toggle aria-controls="responsive-NB-nav" />
         <NB.Collapse id="responsive-NB-nav">
           <Nav className="me-auto">
