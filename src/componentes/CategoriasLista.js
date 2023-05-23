@@ -25,15 +25,18 @@ class CategoriasLista extends Component {
   }
   
   datosBusqueda = (termino) => {
-    if(termino === "")
+    if(termino === "") {
       this.obtenerCategorias();
+      this.setState({ busqueda: false });
+    }
     else {
       let URL = "http://127.0.0.1:8000/rest/categorias/buscar/"+termino;
       fetch(URL)
         .then(respuesta => respuesta.json())
-        .then(resultado => this.setState({ categorias: resultado }))
+        .then(resultado => this.setState({ categorias: resultado, busqueda: true }))
         .catch(error => console.log(error));
       }
+      
   };
 
   obtenerCategorias = () => {
@@ -62,7 +65,7 @@ class CategoriasLista extends Component {
 
     return (
       <div>
-        <div className="d-flex justify-content-end">
+        <div className="mt-2 d-flex justify-content-end">
         { this.state.busqueda === true &&
           <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
         }

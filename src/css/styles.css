@@ -2,7 +2,7 @@
 /* Buscar paleta de colores y modificarlos */
 body {
   color: rgb(0, 0, 0); 
-  background-color: rgb(231, 231, 231);
+  background-color: rgb(219, 219, 219);
   font-family: "Helvetica Neue", Arial, sans-serif;
 }
   
@@ -11,7 +11,7 @@ button {
 }
 a{
   color: black; 
-  font-family: Georgia, serif;
+  font-family: Arial, Helvetica, sans-serif
 }
 p{
   color: black; 
@@ -21,15 +21,17 @@ p{
   
 h1, h2, h3, h4, h5, h6 {
   color: rgb(46, 46, 46); 
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif
 }
   
 .navbarColor { /* Navbar */
   color: white; 
-  background-color: #81b81c; 
+  background-color: rgb(129, 59, 59); 
 }
 
+
 .footerColor {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   background-color: #ffffff; 
   height: 80px;
   border-radius: 50px;
@@ -42,4 +44,80 @@ h1, h2, h3, h4, h5, h6 {
 .pagination {
   display: flex;
   justify-content: center;
+}
+
+.cardProducto{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  border-color: rgb(0, 0, 0);
+  background-color: rgb(236, 196, 123);
+}
+
+.botonProducto{
+  background-color: rgb(170, 196, 123);
+  border-color: rgb(68, 109, 107);
+}
+
+
+.productoDetalle img{
+  margin-top: 5%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  width: 50%;
+}
+
+.cardDetalleProd {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 1%;
+  border-radius: 20px;
+}
+
+.cardProdDescripcion{
+  color: #ffffffee;
+  border-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
+}
+
+.contenedorTitulo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoriaProducto{
+  font-weight: bold;
+}
+
+.precio{
+  font-weight: bold;
+}
+
+.cardCategoria{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-color: rgb(204, 204, 204);
+  border-radius: 5%;
+  margin: 5%;
+  width: 90%;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.cardCategoria:hover {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+.cardCategoria img{
+  border-radius: 17%;
+}
+
+.alinearDerecha{
+  text-align: right;
+  float:right;
+}
+
+.nombreCat{
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(78, 48, 48)
 }

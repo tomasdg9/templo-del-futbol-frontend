@@ -9,6 +9,7 @@ import NotFound from './componentes/NotFound';
 import Home from './componentes/Home';
 import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
 import Carrito from './componentes/Carrito';
+import ProductoDetalle from './componentes/entidades/ProductoDetalle'
 
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
@@ -73,18 +74,20 @@ class App extends Component {
           <Navbar 
               cantCarrito={this.state.carrito.length}
           />
-          <p>Carrito: (productos ids) {this.state.carrito}</p>
+          {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
           { /* test contextos de react */ }
           <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
                 path="/productos"
-                element={<ProductosLista datosBusqueda={this.vaciarCarrito} />}
+                element={<ProductosLista datosBusqueda={this.vaciarCarrito} categoria={-1}/>}
                 // Esto es un ejemplo como comunicar a los componentes hijo-padre usando funciones 
                 // pero con el texto se puede solucionar si no son clases.
                 // son dos formas distintas de hacerlo
               />
+              <Route path="/productos/:id" element={<ProductoDetalle />} />
+
               <Route path="/categorias" element={<CategoriasLista />} />
               <Route path="/categorias/:id" element={<CategoriaDetalle />} />
               <Route path="/carrito" element={<Carrito nombre="Prueba" />} />
