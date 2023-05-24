@@ -34,8 +34,9 @@ function ProductoDetalle() {
                   <p class='categoriaProducto'>Botines</p>{/* Esta seria la categoria */}
                   </div>
                 <div class="descripcion">
-                    <p>Libera un potencial ilimitado con la energía y el rendimiento de nuestra colección Ultra. El diseño impecable de nuestras botas de fútbol Ultra Match te da ventaja durante la competición gracias a nuestro exclusivo exterior potenciado con GRIP CONTROL que mejora el control del balón, una SPEEDPLATE de TPU que ofrece una tracción, control y propulsión increíbles, y un ajuste óptimo realzado por un cuello de punto de corte bajo. Son adecuadas para el training en césped.</p>
+                    <p class='text-justify'>Libera un potencial ilimitado con la energía y el rendimiento de nuestra colección Ultra. El diseño impecable de nuestras botas de fútbol Ultra Match te da ventaja durante la competición gracias a nuestro exclusivo exterior potenciado con GRIP CONTROL que mejora el control del balón, una SPEEDPLATE de TPU que ofrece una tracción, control y propulsión increíbles, y un ajuste óptimo realzado por un cuello de punto de corte bajo. Son adecuadas para el training en césped.</p>
                     <p>Estado: Nuevo</p>
+                    <p>Stock: 8</p>
                     <p class='precio'>$5.000</p>
                 </div>
                 <br/>
@@ -44,6 +45,7 @@ function ProductoDetalle() {
 
               <div class='d-flex justify-content-center align-items-center'><BotonComprar class='botonProducto' onClick={handleClick}></BotonComprar></div>
             </div>
+            <br/>
           </div>
           
         </Card>
@@ -56,7 +58,7 @@ function ProductoDetalle() {
          
         <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-            <BotonAnterior/> 
+            
           </div>
           <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
@@ -66,10 +68,10 @@ function ProductoDetalle() {
           </div>
           <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-            <BotonSiguiente class='alinearDerecha'/>
+            
           </div>
         </div>
-        </Card>
+          </Card>
         
       </div>
       
