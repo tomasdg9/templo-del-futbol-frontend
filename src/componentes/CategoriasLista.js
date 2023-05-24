@@ -12,6 +12,7 @@ class CategoriasLista extends Component {
           currentPage: 1,
           itemsPerPage: 9,
           busqueda: false,
+		      cargando: true,
       };
   }
 
@@ -30,7 +31,7 @@ class CategoriasLista extends Component {
       this.setState({ busqueda: false });
     }
     else {
-      let URL = "http://127.0.0.1:8000/rest/categorias/buscar/"+termino;
+      let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/buscar/"+termino;
       fetch(URL)
         .then(respuesta => respuesta.json())
         .then(resultado => this.setState({ categorias: resultado, busqueda: true }))
@@ -40,11 +41,11 @@ class CategoriasLista extends Component {
   };
 
   obtenerCategorias = () => {
-    let URL = "http://127.0.0.1:8000/rest/categorias";
+    let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias";
     
     fetch(URL)
       .then(respuesta => respuesta.json())
-      .then(resultado => this.setState({ categorias: resultado }))
+      .then(resultado => this.setState({ categorias: resultado, cargando:false }))
       .catch(error => console.log(error));
   }
   
@@ -73,7 +74,8 @@ class CategoriasLista extends Component {
         </div>
         <div className="container text-center">
           <h1 className="display-4">Lista de categorias</h1>
-          {categorias.length === 0 ? (
+		  {this.state.cargando === true ? <div className="mt-2">Cargando...</div> :
+          categorias.length === 0 ? (
             <div className="mt-2">No se encontraron categorias.</div>
           ) : (
             <div>

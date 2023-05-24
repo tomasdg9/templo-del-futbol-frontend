@@ -8,7 +8,7 @@ function Footer() {
         <div>
       <div className="footerColor align-items-center">
         <div className="row justify-content-center text-center">
-          <div className="col">
+          <div className="col mx-3">
             <img src="/img/mercadopago.svg" className="img-fluid mt-4" />
           </div>
           <div className="col">
@@ -26,7 +26,7 @@ function Footer() {
           <div className="col">
             <img src="/img/rapipago.svg" className="img-fluid mt-4" />
           </div>
-          <div className="col">
+          <div className="col mx-3">
             <img src="/img/visa.svg" className="img-fluid mt-4" />
           </div>
         </div>
