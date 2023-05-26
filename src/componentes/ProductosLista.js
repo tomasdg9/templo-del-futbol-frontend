@@ -15,6 +15,7 @@ class ProductosLista extends Component {
         currentPage: 1,
         itemsPerPage: 9,
         noExiste: false,
+        keyBuscador: 0, // Esto funciona para borrar el value del buscador al momento de limpiar la busqueda.
     };
   } 
 
@@ -23,6 +24,16 @@ class ProductosLista extends Component {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
 
+  limpiarBusqueda = () => {
+    this.setState({
+      busqueda: false, 
+    });
+    this.setState((prevState) => ({
+      keyBuscador: prevState.keyBuscador + 1 
+    }));
+    this.datosBusqueda("");
+  };
+  
   datosBusqueda = (termino) => {
     if(this.props.categoria === -1){
         // Busca entre todos los productos
@@ -82,7 +93,7 @@ class ProductosLista extends Component {
       })
       .catch(error => console.log(error));
 
-    let URL2 = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/" + id;
+    let URL2 = "http://127.0.0.1:8000/rest/categorias/" + id;
     fetch(URL2)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -101,10 +112,17 @@ class ProductosLista extends Component {
     const productosPaginados = productos.slice(startIndex, endIndex);
 	  return (
     <div>
-        <div className="mt-2 mb-2 container d-flex flex-column align-items-center">
+        <div className="mt-2 d-flex justify-content-end">
+        {this.state.productos.length > 0 && this.state.busqueda === true &&
+          <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+        } { this.state.productos.length > 0 &&
           <Buscador 
             datosBusqueda={this.datosBusqueda}
-          />
+            key={this.state.keyBuscador}
+          /> }
+        </div>
+        <div className="mt-2 mb-2 container d-flex flex-column align-items-center">
+        
           <div className="container text-center">
             { this.state.cargando === false && (
               this.props.categoria === -1 ? 

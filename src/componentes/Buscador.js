@@ -11,6 +11,7 @@ class Buscador extends Component {
         this.props.datosBusqueda(termino); // Invoca la función "datosBusqueda" con "termino" de su padre
     }
 
+    
     render(){
         return (
             <Form onSubmit={this.obtenerDatos} className="d-flex">

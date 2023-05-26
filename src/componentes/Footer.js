@@ -5,7 +5,7 @@ import 'bootstrap/dist/js/bootstrap.js';
 
 function Footer() {
     return (
-        <div>
+        <div className="mt-3">
       <div className="footerColor align-items-center">
         <div className="row justify-content-center text-center">
           <div className="col mx-3">

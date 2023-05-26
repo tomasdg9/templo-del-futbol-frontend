@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Carousel from 'react-bootstrap/Carousel';
 
-function Caroucel() {
+function CaroucelImg() {
   return (
     <Carousel>
       <Carousel.Item>
@@ -41,4 +41,4 @@ function Caroucel() {
   );
 }
 
-export default Caroucel;
+export default CaroucelImg;

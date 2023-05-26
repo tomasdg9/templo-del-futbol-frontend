@@ -13,6 +13,7 @@ class CategoriasLista extends Component {
           itemsPerPage: 9,
           busqueda: false,
 		      cargando: true,
+          keyBuscador: 0, // Esto funciona para borrar el value del buscador al momento de limpiar la busqueda.
       };
   }
 
@@ -55,6 +56,9 @@ class CategoriasLista extends Component {
       busqueda: false, 
       categorias: [], 
     });
+    this.setState((prevState) => ({
+      keyBuscador: prevState.keyBuscador + 1 
+    }));
     this.obtenerCategorias();
   };
 
@@ -67,18 +71,28 @@ class CategoriasLista extends Component {
     return (
       <div>
         <div className="mt-2 d-flex justify-content-end">
-        { this.state.busqueda === true &&
-          <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+        {this.state.categorias.length > 0 && this.state.busqueda === true &&
+              <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+        }   {this.state.categorias.length > 0 &&
+          <Buscador 
+            datosBusqueda={this.datosBusqueda} 
+            key={this.state.keyBuscador} />
+         // pendiente. que no se muestre el buscador si no hay categorias.
         }
-          <Buscador datosBusqueda={this.datosBusqueda} />
+        
+          
         </div>
         <div className="container text-center">
-          <h1 className="display-4">Lista de categorias</h1>
-		  {this.state.cargando === true ? <div className="mt-2">Cargando...</div> :
+          
+		  {this.state.cargando === true ? 
+      <div>
+        <div className="mt-2">Cargando...</div>
+      </div> :
           categorias.length === 0 ? (
             <div className="mt-2">No se encontraron categorias.</div>
           ) : (
             <div>
+              <h1 className="display-4">Lista de categorias</h1>
               <div className="row justify-content-center mt-2">
                 {categoriasPaginadas.map((categoria) => (
                   <Categoria
