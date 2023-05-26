@@ -1,6 +1,7 @@
 import { useParams, Navigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
+import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
 import CardCategoria from '../CardCategoria';
 
@@ -10,6 +11,7 @@ function ProductoDetalle() {
   const [producto, setProducto] = useState(null);
   const [categoria, setCategoria] = useState(null);
   const valido = Number.isInteger(Number(id)) && Number(id) >= 0;
+  const { agregarProducto } = useContext(CarritoContexto);
 
   useEffect(() => {
     if (!valido) {
@@ -44,7 +46,8 @@ function ProductoDetalle() {
     console.log('se hizo click en la card. Deberia ir al link del producto');
   };
 
-  const handleClick = () => {
+  const agregarACarrito = () => {
+    agregarProducto(id);
     console.log('Se hizo clic en el botón Comprar');
   };
 
@@ -97,7 +100,7 @@ return (
                     </Card>
               </div>
 
-              <div class='d-flex justify-content-center align-items-center'><BotonComprar class='botonProducto' onClick={handleClick}></BotonComprar></div>
+              <div class='d-flex justify-content-center align-items-center'><BotonComprar class='botonProducto' onClick={() => agregarProducto(id)}></BotonComprar></div>
             </div>
           </div>
           

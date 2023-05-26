@@ -46,6 +46,7 @@ class App extends Component {
         this.guardarCarritoEnLocalStorage();
       }
     );
+    console.log(this.state.carrito)
   };
   
   eliminarElemento = (index) => {
@@ -76,7 +77,7 @@ class App extends Component {
           />
           {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
           { /* test contextos de react */ }
-          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito }}>
+          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto}}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
