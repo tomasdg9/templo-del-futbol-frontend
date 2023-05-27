@@ -51,7 +51,7 @@ class ProductosLista extends Component {
   
 
   obtenerProductos = () => {
-    let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/filtrar/";
+    let URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -82,7 +82,7 @@ class ProductosLista extends Component {
       })
       .catch(error => console.log(error));
 
-    let URL2 = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/" + id;
+    let URL2 = "http://127.0.0.1:8000/rest/categorias/" + id;
     fetch(URL2)
       .then(respuesta => respuesta.json())
       .then(resultado => {

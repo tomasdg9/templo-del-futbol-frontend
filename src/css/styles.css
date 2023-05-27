@@ -50,7 +50,11 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   border-color: rgb(0, 0, 0);
-  background-color: rgb(236, 196, 123);
+  background-color: rgb(241, 255, 231);
+}
+
+.cardProducto Img{
+  border-radius: 22px;
 }
 
 .botonProducto{
@@ -134,4 +138,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .imgCarrito{
   width: 15%;
+}
+
+.precioCarrito{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: rgb(228, 246, 212);
 }
