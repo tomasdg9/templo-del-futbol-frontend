@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Categoria from "./entidades/Categoria"
 import Buscador from './Buscador'
 import Pagination from 'react-js-pagination';
+import CircularProgress from '@mui/material/CircularProgress';
+import toast, { Toaster } from 'react-hot-toast';
 
 class CategoriasLista extends Component {
 
@@ -35,7 +37,21 @@ class CategoriasLista extends Component {
       let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/buscar/"+termino;
       fetch(URL)
         .then(respuesta => respuesta.json())
-        .then(resultado => this.setState({ categorias: resultado, busqueda: true }))
+        .then(resultado => {this.setState({ categorias: resultado, busqueda: true })
+        if (resultado.length > 0) {
+          toast('Búsqueda exitosa', {
+            duration: 2000,
+            position: 'bottom-right',
+            type: 'success'
+          });
+        } else {
+          toast('No se encontraron resultados', {
+            duration: 2000,
+            position: 'bottom-right',
+            type: 'error'
+          });
+        }
+        })
         .catch(error => console.log(error));
       }
       
@@ -86,10 +102,12 @@ class CategoriasLista extends Component {
           
 		  {this.state.cargando === true ? 
       <div>
-        <div className="mt-2">Cargando...</div>
+        <div className="mt-2"><CircularProgress /></div>
       </div> :
-          categorias.length === 0 ? (
-            <div className="mt-2">No se encontraron categorias.</div>
+          categorias.length === 0 ? ( <div><h1 className="display-4">Lista de categorias</h1>
+            <div className="mt-2">No se encontraron categorias.<br></br>
+            <button onClick={this.limpiarBusqueda} className="btn mb-2 mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+            </div></div>
           ) : (
             <div>
               <h1 className="display-4">Lista de categorias</h1>
@@ -119,6 +137,7 @@ class CategoriasLista extends Component {
                 />
             </div>
         </div>
+        <Toaster />
       </div>
     );
   }

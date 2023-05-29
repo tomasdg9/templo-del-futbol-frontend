@@ -3,6 +3,9 @@ import Buscador from './Buscador'
 import Producto from './entidades/Producto';
 import Pagination from 'react-js-pagination';
 import NotFound from './NotFound';
+import CircularProgress from '@mui/material/CircularProgress';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 class ProductosLista extends Component {
   constructor(props) {
@@ -18,6 +21,8 @@ class ProductosLista extends Component {
         keyBuscador: 0, // Esto funciona para borrar el value del buscador al momento de limpiar la busqueda.
     };
   } 
+  
+
 
   handlePageChange = (pageNumber) => {
     this.setState({ currentPage: pageNumber });
@@ -36,7 +41,32 @@ class ProductosLista extends Component {
   
   datosBusqueda = (termino) => {
     if(this.props.categoria === -1){
-        // Busca entre todos los productos
+        if(termino === "") {
+          this.obtenerProductos();
+          this.setState({ busqueda: false });
+        }
+        else {
+          let URL = "http://127.0.0.1:8000/rest/productos/buscar/"+termino;
+          fetch(URL)
+            .then(respuesta => respuesta.json())
+            .then(resultado => { this.setState({ productos: resultado, busqueda: true })
+            
+            if (resultado.length > 0) {
+              toast('Búsqueda exitosa', {
+                duration: 2000,
+                position: 'bottom-right',
+                type: 'success'
+              });
+            } else {
+              toast('No se encontraron resultados', {
+                duration: 2000,
+                position: 'bottom-right',
+                type: 'error'
+              });
+            }
+            })
+            .catch(error => console.log(error));
+          }
     } else {
         if(termino === "") {
           this.obtenerProductosCategoria(this.props.categoria);
@@ -46,7 +76,21 @@ class ProductosLista extends Component {
           let URL = "http://127.0.0.1:8000/rest/productos/buscarporcategoria/"+termino+"/"+this.props.categoria;
           fetch(URL)
             .then(respuesta => respuesta.json())
-            .then(resultado => this.setState({ productos: resultado, busqueda: true }))
+            .then(resultado => {this.setState({ productos: resultado, busqueda: true })
+            if (resultado.length > 0) {
+              toast('Búsqueda exitosa', {
+                duration: 2000,
+                position: 'bottom-right',
+                type: 'success'
+              });
+            } else {
+              toast('No se encontraron resultados', {
+                duration: 2000,
+                position: 'bottom-right',
+                type: 'error'
+              });
+            }
+            })
             .catch(error => console.log(error));
           }
     }
@@ -132,10 +176,12 @@ class ProductosLista extends Component {
             }
             
             {this.state.cargando === true ?
-              (<div className="mt-2">Cargando...</div>) 
+              (<div className="mt-2"><CircularProgress /></div>) 
             :
               this.state.productos.length === 0 ? 
-                (<div className="mt-2">No se encontraron productos.</div>) 
+                (<div className="mt-2">No se encontraron productos.
+                <br></br>
+                <button onClick={this.limpiarBusqueda} className="btn mb-2 mx-1 btn-sm btn-danger">Limpiar busqueda</button></div>) 
               : 
                 (
                   <div>
@@ -169,6 +215,7 @@ class ProductosLista extends Component {
           />
         </div>
       </div>
+      <Toaster />
     </div>
 		); }
   }
