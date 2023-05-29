@@ -93,13 +93,9 @@ class CategoriasLista extends Component {
           <Buscador 
             datosBusqueda={this.datosBusqueda} 
             key={this.state.keyBuscador} />
-         // pendiente. que no se muestre el buscador si no hay categorias.
         }
-        
-          
         </div>
         <div className="container text-center">
-          
 		  {this.state.cargando === true ? 
       <div>
         <div className="mt-2"><CircularProgress /></div>

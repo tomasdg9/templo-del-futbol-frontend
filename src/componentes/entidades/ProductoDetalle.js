@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
 import CardCategoria from '../CardCategoria';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function ProductoDetalle() {
   const { id } = useParams();
@@ -23,7 +24,7 @@ function ProductoDetalle() {
   }
 
   if (!producto) {
-    return <div>Cargando...</div>;
+    return <div className="mt-2 mb-2 container d-flex flex-column align-items-center"><CircularProgress /></div>;
   }
 
   function handleClickCard() {
@@ -51,7 +52,7 @@ return (
           <div className='contenedorTitulo'><h1>{producto.nombre}</h1></div>
             <div className="row">
               <div className="col text-center">
-                <img src={producto.imagen} ></img>{/* Obtener la imagen por id */}
+                <img height="550px" src={producto.imagen} ></img>{/* Obtener la imagen por id */}
                 <div className="my-4"></div>
               </div>
               <div className="col">
@@ -62,14 +63,18 @@ return (
                 <div className="descripcion">
                     <p>{producto.descripcion}</p>
                     <p>{producto.estado}</p>
-                    <p>Stock disponible: {producto.stock}</p> {/** si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar */}
+                    <p>Stock disponible: {producto.stock}</p> {/*si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar*/ }
                     <p className='precio'>${producto.precio}</p>
                 </div>
                 <br/>
                     </Card>
               </div>
 
-              <div className='d-flex justify-content-center align-items-center'><BotonComprar className='botonProducto' onClick={() => agregarProducto(id)}></BotonComprar></div>
+              <div className='d-flex justify-content-center align-items-center mb-2'>
+              {producto.stock > 0 ? 
+                <BotonComprar className='botonProducto' onClick={() => agregarProducto(id)}></BotonComprar>
+                : <div>No se puede comprar este producto.</div> }
+                </div>
             </div>
           </div>
           

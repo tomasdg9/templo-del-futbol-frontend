@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 
 // Componentes
 import Navbar from './componentes/Navbar';
@@ -10,6 +11,7 @@ import Home from './componentes/Home';
 import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
 import Carrito from './componentes/Carrito';
 import ProductoDetalle from './componentes/entidades/ProductoDetalle'
+
 
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
@@ -48,8 +50,17 @@ class App extends Component {
         }
       );
       console.log(this.state.carrito)
+      toast('Producto agregado al carrito', {
+        duration: 2000,
+        position: 'bottom-right',
+        type: 'success'
+      });
     }else{
-      //aca tendria que tirar una alerta o algo parecido
+      toast('El producto ya está en el carrito', {
+        duration: 2000,
+        position: 'bottom-right',
+        type: 'error'
+      });
     }
   };
   
@@ -63,6 +74,15 @@ class App extends Component {
       this.guardarCarritoEnLocalStorage();
     });
   };
+
+  eliminarElementos = (elementos) => {
+    // No funciona. Seguir con esto.
+  };
+  
+  
+
+  
+
   
 
   vaciarCarrito = () => {
@@ -91,7 +111,7 @@ class App extends Component {
           />
           {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
           { /* test contextos de react */ }
-          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento}}>
+          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento, eliminarElementos: this.eliminarElementos}}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
@@ -109,6 +129,7 @@ class App extends Component {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CarritoContexto.Provider>
+          <Toaster />
         </div>
       </Router>
     );
