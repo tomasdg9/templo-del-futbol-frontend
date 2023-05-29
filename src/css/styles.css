@@ -50,7 +50,11 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   border-color: rgb(0, 0, 0);
-  background-color: rgb(236, 196, 123);
+  background-color: rgb(241, 255, 231);
+}
+
+.cardProducto Img{
+  border-radius: 22px;
 }
 
 .botonProducto{
@@ -63,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 5%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   border-radius: 15px;
-  width: 50%;
+  width: 80%;
 }
 
 .cardDetalleProd {
@@ -113,11 +117,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .alinearDerecha{
-  text-align: right;
-  float:right;
+  margin-right: 1%;
 }
 
 .nombreCat{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   color: rgb(78, 48, 48)
+}
+
+.text-justify{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.cardCarrito{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 3%;
+  border-radius: 20px;
+}
+
+.imgCarrito{
+  width: 15%;
+}
+
+.precioCarrito{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: rgb(228, 246, 212);
 }

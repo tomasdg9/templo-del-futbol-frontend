@@ -8,12 +8,12 @@ const CardCategoria = ({imagen, precio, nombre, onClick}) => {
             <Card className='cardCategoria' >
                 <img src={imagen} />
                 <hr/>
-                <div class='d-flex justify-content-center align-items-center'>
-                <text className='precio'>{precio}</text>
+                <div className='d-flex justify-content-center align-items-center'>
+                <p className='precio'>{precio}</p>
                 </div>
                 
-                <div class='d-flex justify-content-center align-items-center'>
-                <text className='nombreCat'>{nombre}</text>
+                <div className='d-flex justify-content-center align-items-center'>
+                <p className='nombreCat'>{nombre}</p>
                 </div>
             </Card>
         </div>

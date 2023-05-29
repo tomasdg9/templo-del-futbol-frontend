@@ -34,7 +34,7 @@ class CategoriasLista extends Component {
       this.setState({ busqueda: false });
     }
     else {
-      let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias/buscar/"+termino;
+      let URL = "http://127.0.0.1:8000/rest/categorias/buscar/"+termino;
       fetch(URL)
         .then(respuesta => respuesta.json())
         .then(resultado => {this.setState({ categorias: resultado, busqueda: true })
@@ -58,7 +58,7 @@ class CategoriasLista extends Component {
   };
 
   obtenerCategorias = () => {
-    let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias";
+    let URL = "http://127.0.0.1:8000/rest/categorias";
     
     fetch(URL)
       .then(respuesta => respuesta.json())

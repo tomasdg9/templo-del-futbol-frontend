@@ -38,16 +38,22 @@ class App extends Component {
 
   // Pruebas comunicacion con context
   agregarProducto = (id) => {
-    this.setState(
-      (prevState) => ({
-        carrito: prevState.carrito.concat(id)
-      }),
-      () => {
-        this.guardarCarritoEnLocalStorage();
-      }
-    );
+    if (!this.state.carrito.includes(id)) {
+      this.setState(
+        (prevState) => ({
+          carrito: prevState.carrito.concat(id)
+        }),
+        () => {
+          this.guardarCarritoEnLocalStorage();
+        }
+      );
+      console.log(this.state.carrito)
+    }else{
+      //aca tendria que tirar una alerta o algo parecido
+    }
   };
   
+  //esto anda bien con el index, no hay que modificarlo
   eliminarElemento = (index) => {
     this.setState((prevState) => {
       const newList = [...prevState.carrito];
@@ -67,6 +73,15 @@ class App extends Component {
     );
   };
 
+  comprarCarrito = (lista) =>{
+    const URL = "http://127.0.0.1:8000/rest/pedidos/crear/";
+    const compra = lista.map((idProd) => {
+      const productoURL = URL + idProd;
+      return fetch(productoURL)
+        .then(respuesta => respuesta.json());
+    });
+  }
+
   render() {
     return (
       <Router>
@@ -76,7 +91,7 @@ class App extends Component {
           />
           {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
           { /* test contextos de react */ }
-          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito }}>
+          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento}}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route

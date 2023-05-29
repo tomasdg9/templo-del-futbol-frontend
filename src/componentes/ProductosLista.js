@@ -106,7 +106,7 @@ class ProductosLista extends Component {
   
 
   obtenerProductos = () => {
-    let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/filtrar/";
+    let URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {

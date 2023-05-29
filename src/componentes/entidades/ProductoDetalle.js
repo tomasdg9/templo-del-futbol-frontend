@@ -1,62 +1,88 @@
-import { useParams, Navigate  } from 'react-router-dom';
+import { useParams, Navigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
+import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
-import BotonAnterior from '../botones/BotonAnterior';
-import BotonSiguiente from '../botones/BotonSiguiente';
 import CardCategoria from '../CardCategoria';
 
 function ProductoDetalle() {
-    const { id, imagen } = useParams();
-  const valido = Number.isInteger(Number(id)) && Number(id) >= 0;
+  const { id } = useParams();
 
-  // IMPORTANTE: Falta validar que exista en la API. Si no existe, tambien que redireccione a not-found. Usar la misma variable.
+  const [producto, setProducto] = useState(null);
+  const [categoria, setCategoria] = useState(null);
+  const [valido, setValido] = useState(true);
+  const { agregarProducto } = useContext(CarritoContexto);
 
+  useEffect(() => {
+    setValido(Number.isInteger(Number(id)) && Number(id) >= 0);
+    obtenerProducto();
+  }, []);
+  
   if (!valido) {
-    // Redireccionar a la página de "Not Found"
     return <Navigate to="/not-found" />;
   }
-  return (
-    
-      
-      <div class="container-lg">
+
+  if (!producto) {
+    return <div>Cargando...</div>;
+  }
+
+  function handleClickCard() {
+    console.log('se hizo click en la card. Deberia ir al link del producto');
+  };
+
+  function obtenerProducto() {
+    const URL = "http://127.0.0.1:8000/rest/productos/" + id;
+    fetch(URL)
+      .then(respuesta => {
+        if (respuesta.status === 200) return respuesta.json();
+        else setValido(false);
+      })
+      .then(resultado => {
+        setProducto(resultado);
+      })
+      .catch(error => console.log(error));
+  }
+  
+return (      
+      <div className="container-lg">
         <Card className="cardDetalleProd">
           <div className='productoDetalle'>
            
-          <div class='contenedorTitulo'><h1>Botines Puma Ultra</h1></div>
-            <div class="row">
-              <div class="col text-center">
-                <img src="/img/botines.jpeg" ></img>{/* Obtener la imagen por id */}
-                <div class="my-4"></div>
+          <div className='contenedorTitulo'><h1>{producto.nombre}</h1></div>
+            <div className="row">
+              <div className="col text-center">
+                <img src={producto.imagen} ></img>{/* Obtener la imagen por id */}
+                <div className="my-4"></div>
               </div>
-              <div class="col">
+              <div className="col">
               <Card className='cardProdDescripcion'>
-                <div class="row">
-                  <p class='categoriaProducto'>Botines</p>{/* Esta seria la categoria */}
+                <div className="row">
+                  <p className='categoriaProducto'>{producto.nombre_categoria}</p>{/* Esta seria la categoria */}
                   </div>
-                <div class="descripcion">
-                    <p>Libera un potencial ilimitado con la energía y el rendimiento de nuestra colección Ultra. El diseño impecable de nuestras botas de fútbol Ultra Match te da ventaja durante la competición gracias a nuestro exclusivo exterior potenciado con GRIP CONTROL que mejora el control del balón, una SPEEDPLATE de TPU que ofrece una tracción, control y propulsión increíbles, y un ajuste óptimo realzado por un cuello de punto de corte bajo. Son adecuadas para el training en césped.</p>
-                    <p>Estado: Nuevo</p>
-                    <p class='precio'>$5.000</p>
+                <div className="descripcion">
+                    <p>{producto.descripcion}</p>
+                    <p>{producto.estado}</p>
+                    <p>Stock disponible: {producto.stock}</p> {/** si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar */}
+                    <p className='precio'>${producto.precio}</p>
                 </div>
                 <br/>
                     </Card>
               </div>
 
-              <div class='d-flex justify-content-center align-items-center'><BotonComprar class='botonProducto' onClick={handleClick}></BotonComprar></div>
+              <div className='d-flex justify-content-center align-items-center'><BotonComprar className='botonProducto' onClick={() => agregarProducto(id)}></BotonComprar></div>
             </div>
           </div>
           
         </Card>
       <br/>
-      <div class='d-flex justify-content-center align-items-center'>
+      <div className='d-flex justify-content-center align-items-center'>
         <Card className='cardDetalleProd'>
           
-        <div class="row">
+        <div className="row">
            
          
         <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-            <BotonAnterior/> 
           </div>
           <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
@@ -66,7 +92,6 @@ function ProductoDetalle() {
           </div>
           <div className="col-md-3 col-sm-6 mb-5">
             <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-            <BotonSiguiente class='alinearDerecha'/>
           </div>
         </div>
         </Card>
@@ -79,15 +104,4 @@ function ProductoDetalle() {
     
   );
 }
-
-const handleClickCard =() =>{
-  console.log('se hizo click en la card. Deberia ir al link del producto')
-};
-
-const handleClick = () => {
-  // Lógica que se ejecutará al hacer clic en el botón
-  console.log('Se hizo clic en el botón Comprar');
-  // Otras acciones que desees realizar
-};
-
 export default ProductoDetalle;
