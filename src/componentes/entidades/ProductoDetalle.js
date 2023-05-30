@@ -5,16 +5,19 @@ import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
 import CardCategoria from '../CardCategoria';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Link } from 'react-router-dom';
 
 function ProductoDetalle() {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [valido, setValido] = useState(true);
   const { agregarProducto } = useContext(CarritoContexto);
-
+  const [productos, setProductos] = useState([]);
+    
   useEffect(() => {
     setValido(Number.isInteger(Number(id)) && Number(id) >= 0);
     obtenerProducto();
+    obtenerRecientes();
   }, []);
   
   if (!valido) {
@@ -25,8 +28,9 @@ function ProductoDetalle() {
     return <div className="mt-2 mb-2 container d-flex flex-column align-items-center"><CircularProgress /></div>;
   }
 
-  function handleClickCard() {
+  function handleClickCard(id) {
     console.log('se hizo click en la card. Deberia ir al link del producto');
+    window.location.href = 'http://127.0.0.1:3000/productos/'+id;
   };
 
   function obtenerProducto() {
@@ -39,6 +43,14 @@ function ProductoDetalle() {
       .then(resultado => {
         setProducto(resultado);
       })
+      .catch(error => console.log(error));
+  }
+
+  function obtenerRecientes(){
+    const URL = "http://127.0.0.1:8000/rest/productos/masnuevos";
+    fetch(URL)
+      .then(respuesta => respuesta.json())
+      .then(resultado => setProductos(resultado))
       .catch(error => console.log(error));
   }
   
@@ -83,20 +95,18 @@ return (
         <Card className='cardDetalleProd'>
           
         <div className="row">
-           
-         
-        <div className="col-md-3 col-sm-6 mb-5">
-            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-          </div>
+        {productos.length > 0 && productos.map((prod) => (
           <div className="col-md-3 col-sm-6 mb-5">
-            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-          </div>
-          <div className="col-md-3 col-sm-6 mb-5">
-            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-          </div>
-          <div className="col-md-3 col-sm-6 mb-5">
-            <CardCategoria imagen='https://http2.mlstatic.com/D_NQ_NP_886305-MLA45795334348_052021-O.webp' precio='$25.000' nombre='Botines Puma Borussia' onClick={handleClickCard}/>{/* Aca se obtiene la imagen y el precio por api */}
-          </div>
+               <Link to={`/productos/${prod.id}`}>
+        <CardCategoria
+          nombre={prod.nombre}
+          precio={prod.precio}
+          imagen={prod.imagen}
+          onClick={() => handleClickCard(prod.id)}
+        />
+      </Link>
+                </div>
+            ))} 
         </div>
         </Card>
         
