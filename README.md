@@ -22,8 +22,10 @@
 <p align="center">
  Se pueden generar pedidos a partir de los productos que agregue el usuario al carrito.
 </p>
+<br>
 <div align="center">
 En general,
+  <br>
   - La página cuenta con un "home" donde están los productos más nuevos y un caroucel de imagenes (de la página original del templo de fútbol). 
   <br>
   - Una lista de productos donde se podrán buscar productos dado un prefijo.
