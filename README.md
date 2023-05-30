@@ -22,10 +22,12 @@
 <p align="center">
  Se pueden generar pedidos a partir de los productos que agregue el usuario al carrito.
 </p>
-
+<div align="center">
+En general,
   - La página cuenta con un "home" donde están los productos más nuevos y un caroucel de imagenes (de la página original del templo de fútbol). 
   - Una lista de productos donde se podrán buscar productos dado un prefijo.
   - Una lista de categorias donde se podrán buscar categorias por un prefijo (al igual que productos)
   - El detalle de un producto que se puede acceder mediante un botón en cada Card del producto.
   - Los productos de una categoría en especifico.
   - Un carrito de compras donde se podrá seleccionar la cantidad del producto que se quiere comprar según el stock disponible.
+</div>
