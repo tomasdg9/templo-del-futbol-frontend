@@ -25,9 +25,14 @@
 <div align="center">
 En general,
   - La página cuenta con un "home" donde están los productos más nuevos y un caroucel de imagenes (de la página original del templo de fútbol). 
+  <br>
   - Una lista de productos donde se podrán buscar productos dado un prefijo.
+  <br>
   - Una lista de categorias donde se podrán buscar categorias por un prefijo (al igual que productos)
+  <br>
   - El detalle de un producto que se puede acceder mediante un botón en cada Card del producto.
+  <br>
   - Los productos de una categoría en especifico.
+  <br>
   - Un carrito de compras donde se podrá seleccionar la cantidad del producto que se quiere comprar según el stock disponible.
 </div>
