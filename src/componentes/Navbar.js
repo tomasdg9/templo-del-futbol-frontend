@@ -17,7 +17,7 @@ function Navbar(props) {
             <Nav.Link href="/productos">Productos</Nav.Link>
 			<Nav.Link href="/categorias">Categorias</Nav.Link>
 			
-			{/* Dropdown*/}
+			{/* Dropdown
             <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">
@@ -29,13 +29,10 @@ function Navbar(props) {
                 Separated link
               </NavDropdown.Item>
             </NavDropdown>
-			{/* end dropdown */ }
+			end dropdown */ }
 			
           </Nav>
           <Nav>
-            <a className="nav-link text-white" href="/consultar-pedido">
-                <i className="bi bi-person-fill"></i> 
-            </a>
 
             <a className="nav-link text-white" href="/carrito">
                   <i className="bi bi-cart4"></i> ({props.cantCarrito})

@@ -8,9 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 function ProductoDetalle() {
   const { id } = useParams();
-
   const [producto, setProducto] = useState(null);
-  const [categoria, setCategoria] = useState(null);
   const [valido, setValido] = useState(true);
   const { agregarProducto } = useContext(CarritoContexto);
 
@@ -58,12 +56,13 @@ return (
               <div className="col">
               <Card className='cardProdDescripcion'>
                 <div className="row">
-                  <p className='categoriaProducto'>{producto.nombre_categoria}</p>{/* Esta seria la categoria */}
+                  <p className='categoriaProducto'>Categoria: {producto.nombre_categoria}</p>{/* Esta seria la categoria */}
+                  <br></br><br></br>
                   </div>
                 <div className="descripcion">
-                    <p>{producto.descripcion}</p>
-                    <p>{producto.estado}</p>
-                    <p>Stock disponible: {producto.stock}</p> {/*si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar*/ }
+                    <p><b>Descripción:</b> {producto.descripcion}</p>
+                    <p><b>Estado:</b> {producto.estado}</p>
+                    <p><b>Stock disponible:</b> {producto.stock}</p> {/*si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar*/ }
                     <p className='precio'>${producto.precio}</p>
                 </div>
                 <br/>

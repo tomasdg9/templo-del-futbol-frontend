@@ -37,6 +37,11 @@ class ProductosLista extends Component {
       keyBuscador: prevState.keyBuscador + 1 
     }));
     this.datosBusqueda("");
+    toast('Productos restablecidos', {
+      duration: 2000,
+      position: 'bottom-right',
+      type: 'success'
+    });
   };
   
   datosBusqueda = (termino) => {
@@ -202,6 +207,7 @@ class ProductosLista extends Component {
                 )}
         </div>
       </div>
+      { this.state.productos.length > 0 &&
       <div className="container ">
         <div className="pagination">
           <Pagination
@@ -215,6 +221,7 @@ class ProductosLista extends Component {
           />
         </div>
       </div>
+      }
       <Toaster />
     </div>
 		); }

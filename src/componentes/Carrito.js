@@ -6,15 +6,21 @@ import BotonVaciar from './botones/BotonVaciar';
 import BotonComprarCarrito from './botones/BotonComprarCarrito';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Button, Modal } from 'react-bootstrap';
-
+import toast, { Toaster } from 'react-hot-toast';
 
 const Carrito = (props) => {
-  const { vaciarCarrito, carrito, eliminarElemento, eliminarElementos } = useContext(CarritoContexto);
+  const { vaciarCarrito, carrito, eliminarElemento } = useContext(CarritoContexto);
   const [productosCarrito, setProductosCarrito] = useState([]);
   const [cantidadesSeleccionadas, setCantidadesSeleccionadas] = useState([]);
   const [ cargando, setCargando ] = useState(true);
   const [open, setOpen] = useState(false);
-  let productosToRemove = []
+  const [showDescripcion, setshowDescripcion] = useState(false);
+  const [descripcion, setDescripcion] = useState('');
+
+  const DeshandleClose = () => setshowDescripcion(false);
+  const DeshandleShow = () => setshowDescripcion(true);
+  const DeshandleChange = (event) => setDescripcion(event.target.value);
+  
 
   const obtenerProductos = async () => {
     const URL = "http://127.0.0.1:8000/rest/productos/";
@@ -27,20 +33,6 @@ const Carrito = (props) => {
   
     try {
       let productos = await Promise.all(promesas);
-     
-      // Eliminar los elementos del carrito que tengan stock <= 0
-      productos.forEach((producto) => {
-        if (producto.stock <= 0) {
-          console.log("Se agrega: "+producto.id)
-          productosToRemove.push(producto.id);
-        }
-      });
-      
-      console.log("se borran")
-      eliminarElementos(productosToRemove);
-      // Filtrar los productos para excluir los elementos con stock <= 0
-      productos = productos.filter((producto) => producto.stock > 0);
-
       setProductosCarrito(productos);
       setCantidadesSeleccionadas(Array(productos.length).fill(1));
       setCargando(false);
@@ -48,9 +40,6 @@ const Carrito = (props) => {
       console.log(error);
     }
   }
-  
-  
-  
 
   const vaciarCarritoAux = () => {
     setOpen(true);
@@ -66,17 +55,78 @@ const Carrito = (props) => {
   };
 
   const comprarCarritoAux = () => {
-    console.log(carrito);
-    console.log(cantidadesSeleccionadas);
+    const input = document.getElementById('clienteEmail');
+    const valor = input.value;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar email
+
+    if (regex.test(valor)) {
+      DeshandleShow();
+    } else {
+      toast('El email es inválido', {
+        duration: 2000,
+        position: 'bottom-right',
+        type: 'error'
+      });
+    }
   }
+
+  const DeshandleSubmit = async () => {
+    let cadenaAPI = "";
+    for (let index = 0; index < productosCarrito.length; index++) {
+      const producto = productosCarrito[index];
+      if (producto.stock > 0) {
+        for (let i = 0; i < cantidadesSeleccionadas[index]; i++) {
+          cadenaAPI = cadenaAPI + producto.id + "-";
+        }
+      }
+    }
+    let ids = cadenaAPI.slice(0, -1);
+    const input = document.getElementById('clienteEmail');
+    const email = input.value;
+    if(descripcion === "") {
+        alert("Debes incluir una descripción para el pedido.")
+    } else {
+      const data = {
+        email: email,
+        descripcion: descripcion,
+        ids: ids
+      };
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      };
+      try {
+        const response = await fetch('http://127.0.0.1:8000/rest/pedidos/crear', requestOptions);
+        if (response.ok) {
+          toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
+            duration: 5000,
+            position: 'bottom-right',
+            type: 'success'
+          });
+          vaciarCarrito();
+        } else {
+          throw new Error('Error en la solicitud. Reintente nuevamente.');
+        }
+      } catch (error) {
+        alert(error);
+      }
+      DeshandleClose();
+    }
+  };
+  
+
+
   const obtenerPrecio = () => {
     let precioTotal = 0;
     productosCarrito.forEach((producto, index) => {
-      const { precio } = producto;
-      const cantidad = cantidadesSeleccionadas[index];
-      const precioFloat = parseFloat(precio);
-      const subtotal = precioFloat * cantidad;
-      precioTotal += subtotal;
+      const { precio, stock } = producto;
+      if(stock > 0) {
+        const cantidad = cantidadesSeleccionadas[index];
+        const precioFloat = parseFloat(precio);
+        const subtotal = precioFloat * cantidad;
+        precioTotal += subtotal;
+      }
     });
 
     return <text>{precioTotal.toFixed(2)}</text>;
@@ -97,33 +147,50 @@ const Carrito = (props) => {
 
     return productosCarrito.map((producto, index) => {
       const { id, nombre, imagen, precio, stock} = producto;
-
-      return (
-        <tr key={id}>
-          <th>
-            {nombre}
-            <br></br>
-            <img className='imgCarrito' src={imagen} alt={nombre} />
-          </th>
-          <td>${precio}</td>
-          <td>
-          <select value={cantidadesSeleccionadas[index]} onChange={(e) => handleCantidadSeleccionada(index, e)}>
-            {[...Array(stock)].map((_, i) => (
-              <option key={i + 1} value={i + 1}>{i + 1}</option>
-            ))}
-          </select>
-          </td>
-          <td>
-            <BotonBorrar onClick={() => eliminarElemento(index)}/>
-          </td>
-        </tr>
-      );
+      if(stock > 0) { // Productos con stock
+        return (
+          <tr key={id}>
+            <th>
+              {nombre}
+              <br></br>
+              <img className='imgCarrito' src={imagen} alt={nombre} />
+            </th>
+            <td>${precio}</td>
+            <td>
+            <select value={cantidadesSeleccionadas[index]} onChange={(e) => handleCantidadSeleccionada(index, e)}>
+              {[...Array(stock)].map((_, i) => (
+                <option key={i + 1} value={i + 1}>{i + 1}</option>
+              ))}
+            </select>
+            </td>
+            <td>
+              <BotonBorrar onClick={() => eliminarElemento(index)}/>
+            </td>
+          </tr>
+        );
+      } else { // Productos sin stock
+        return ( <tr key={id}>
+        <th>
+          {nombre}
+          <br></br>
+          <img className='imgCarrito' src={imagen} alt={nombre} />
+        </th>
+        <td><del>${precio}</del></td>
+        <td>
+        No disponible
+        </td>
+        <td>
+          <BotonBorrar onClick={() => eliminarElemento(index)}/>
+        </td>
+      </tr> );
+      }
     });
   };
 
   return (
     <div>
-      <div>{carrito}</div>
+      <Toaster />
+      { /* Modal vaciar carrito */ }
       <Modal show={open} onHide={handleCancel}>
         <Modal.Header closeButton>
           <Modal.Title>Confirmación</Modal.Title>
@@ -140,6 +207,31 @@ const Carrito = (props) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      { /* Modal descripción del producto */ }
+      <Modal show={showDescripcion} onHide={DeshandleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Descripción del pedido</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <label htmlFor="descripcion">Ingrese la descripción:</label>
+          <input
+            type="text"
+            id="descripcion"
+            className="form-control"
+            value={descripcion}
+            onChange={DeshandleChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={DeshandleClose}>
+            Cerrar
+          </Button>
+          <Button variant="primary" onClick={DeshandleSubmit}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className='d-flex align-items-center justify-content-center'>
         <h1 className="display-3">Carrito de compras</h1>
       </div>
@@ -169,15 +261,16 @@ const Carrito = (props) => {
             </tbody>
           </table>
           
-          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total: ${obtenerPrecio()}</b></Card></div>
+          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${obtenerPrecio()}</b></Card></div>
           <div className='d-flex align-items-center justify-content-center'>
           
           <form>
           <br/>
             <label>
               Cliente (*):  
-              <input className='email mx-2' type="text" name="email" placeholder='cliente@gmail.com' />
+              <input id="clienteEmail" className='email mx-2' type="text" name="email" placeholder='cliente@gmail.com' />
             </label>
+            
           </form></div><br/>
           
           <div className='d-flex align-items-center justify-content-center'>

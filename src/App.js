@@ -74,17 +74,6 @@ class App extends Component {
       this.guardarCarritoEnLocalStorage();
     });
   };
-
-  eliminarElementos = (elementos) => {
-    // No funciona. Seguir con esto.
-  };
-  
-  
-
-  
-
-  
-
   vaciarCarrito = () => {
     this.setState(
       {
@@ -111,7 +100,7 @@ class App extends Component {
           />
           {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
           { /* test contextos de react */ }
-          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento, eliminarElementos: this.eliminarElementos}}>
+          <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento}}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route

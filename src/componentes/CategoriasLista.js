@@ -76,6 +76,11 @@ class CategoriasLista extends Component {
       keyBuscador: prevState.keyBuscador + 1 
     }));
     this.obtenerCategorias();
+    toast('Categorias restablecidas', {
+      duration: 2000,
+      position: 'bottom-right',
+      type: 'success'
+    });
   };
 
   render() {
@@ -120,6 +125,7 @@ class CategoriasLista extends Component {
             </div>
           )}
         </div>
+        { this.state.categorias.length > 0 &&
         <div className="container ">
             <div className="pagination">
                 <Pagination
@@ -133,6 +139,7 @@ class CategoriasLista extends Component {
                 />
             </div>
         </div>
+        }
         <Toaster />
       </div>
     );
