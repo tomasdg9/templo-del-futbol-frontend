@@ -6,6 +6,8 @@ import NotFound from './NotFound';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast, { Toaster } from 'react-hot-toast';
 
+import Grid from '@mui/material/Grid';
+
 class ProductosLista extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +18,7 @@ class ProductosLista extends Component {
         cargando: true,
         busqueda: false,
         currentPage: 1,
-        itemsPerPage: 9,
+        itemsPerPage: 8,
         noExiste: false,
         keyBuscador: 0, // Esto funciona para borrar el value del buscador al momento de limpiar la busqueda.
     };
@@ -155,7 +157,7 @@ class ProductosLista extends Component {
               : 
                 (
                   <div>
-                    <div className="row justify-content-center mt-2">
+                    <Grid container spacing={1}>
                     {productosPaginados && productosPaginados.map((producto) => (
                         <Producto
                           key={producto.id}
@@ -167,7 +169,7 @@ class ProductosLista extends Component {
                           imagen={producto.imagen}
                         />
                       ))}
-                    </div>
+                    </Grid>
                   </div>
                 )}
         </div>

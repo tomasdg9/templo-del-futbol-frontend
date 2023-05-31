@@ -1,9 +1,10 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useParams, Navigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
-import CardCategoria from '../CardCategoria';
+import Producto from './Producto';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
 import numeral from 'numeral';
@@ -19,6 +20,7 @@ function ProductoDetalle() {
     setValido(Number.isInteger(Number(id)) && Number(id) >= 0);
     obtenerProducto();
     obtenerRecientes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   
   if (!valido) {
@@ -30,7 +32,6 @@ function ProductoDetalle() {
   }
 
   function handleClickCard(id) {
-    console.log('se hizo click en la card. Deberia ir al link del producto');
     window.location.href = 'http://127.0.0.1:3000/productos/'+id;
   };
 
@@ -63,7 +64,7 @@ return (
           <div className='contenedorTitulo mt-3'><h1>{producto.nombre}</h1></div>
             <div className="row">
               <div className="col text-center">
-                <img height="550px" src={producto.imagen} ></img>{/* Obtener la imagen por id */}
+                <img src={producto.imagen} />{/* Obtener la imagen por id */}
                 <div className="my-4"></div>
               </div>
               <div className="col">
@@ -94,12 +95,12 @@ return (
         <Card className='cardDetalleProd'>
           
         <div className="row">
-        <div className='d-flex justify-content-center align-items-center mt-2'><h1>Productos recientes</h1></div>
+        {productos.length > 0 && <div className='d-flex justify-content-center align-items-center mt-2'><h1>Productos recientes</h1></div>}
           
         {productos.length > 0 && productos.map((prod) => (
           <div className="col-md-3 col-sm-6 mb-5">
                <Link to={`/productos/${prod.id}`}>
-        <CardCategoria
+        <Producto
           nombre={prod.nombre}
           precio={prod.precio}
           imagen={prod.imagen}

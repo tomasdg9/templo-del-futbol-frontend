@@ -142,6 +142,7 @@ const Carrito = (props) => {
 
   useEffect(() => {
     obtenerProductos();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carrito]);
 
   const renderProductos = () => {
@@ -244,6 +245,7 @@ const Carrito = (props) => {
       {cargando === false && productosCarrito.length === 0 && (
         <div className="container text-center">
           <h1>El carrito está vacío.</h1>
+          <a href="/productos/" className="btn mx-1 btn-success">Ver productos</a>
         </div>
       )}
       {productosCarrito.length > 0 && cargando === false && <div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CaroucelImg from './CaroucelImg';
 import Footer from './Footer';
 import Producto from './entidades/Producto';
+import Grid from '@mui/material/Grid';
 
 function Home() {
   let URL = "http://127.0.0.1:8000/rest/productos/masnuevos";
@@ -12,6 +13,7 @@ function Home() {
       .then(respuesta => respuesta.json())
       .then(resultado => setProductos(resultado))
       .catch(error => console.log(error));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -24,7 +26,7 @@ function Home() {
         <hr></hr>
         <div>
           {productos.length > 0 && (<h1>LO MÁS NUEVO</h1>)}
-          <div className="row d-flex justify-content-center">
+          <Grid container spacing={1}>
             {productos.length > 0 && productos.map((producto) => (
               <Producto
                 key={producto.id}
@@ -36,7 +38,7 @@ function Home() {
                 imagen={producto.imagen}
                 />
             ))}
-          </div>
+          </Grid>
         </div>
         <Footer />
       </div>
