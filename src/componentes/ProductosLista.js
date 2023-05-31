@@ -6,7 +6,10 @@ import NotFound from './NotFound';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast, { Toaster } from 'react-hot-toast';
 
-
+/*
+  En vez de hacer tantas llamadas a la API cuando se busca, por qué no almacenar todos los productos disponibles en "productos"
+  y cuando se tengan que mostrar se use otro state que sea productosamostrar y que ahi filtre segun lo que ingresa el usuario
+*/
 class ProductosLista extends Component {
   constructor(props) {
     super(props);

@@ -7,6 +7,7 @@ import BotonComprarCarrito from './botones/BotonComprarCarrito';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Button, Modal } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
+import numeral from 'numeral';
 
 const Carrito = (props) => {
   const { vaciarCarrito, carrito, eliminarElemento } = useContext(CarritoContexto);
@@ -129,7 +130,7 @@ const Carrito = (props) => {
       }
     });
 
-    return <text>{precioTotal.toFixed(2)}</text>;
+    return precioTotal;
   };
 
   const handleCantidadSeleccionada = (index, e) => {
@@ -155,7 +156,7 @@ const Carrito = (props) => {
               <br></br>
               <img className='imgCarrito' src={imagen} alt={nombre} />
             </th>
-            <td>${precio}</td>
+            <td>${numeral(precio).format('0,0.00')}</td>
             <td>
             <select value={cantidadesSeleccionadas[index]} onChange={(e) => handleCantidadSeleccionada(index, e)}>
               {[...Array(stock)].map((_, i) => (
@@ -175,7 +176,7 @@ const Carrito = (props) => {
           <br></br>
           <img className='imgCarrito' src={imagen} alt={nombre} />
         </th>
-        <td><del>${precio}</del></td>
+        <td><del>${numeral(precio).format('0,0.00')}</del></td>
         <td>
         No disponible
         </td>
@@ -261,7 +262,7 @@ const Carrito = (props) => {
             </tbody>
           </table>
           
-          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${obtenerPrecio()}</b></Card></div>
+          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${numeral(obtenerPrecio()).format('0,0.00')}</b></Card></div>
           <div className='d-flex align-items-center justify-content-center'>
           
           <form>

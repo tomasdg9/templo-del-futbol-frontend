@@ -25,7 +25,7 @@ class App extends Component {
     // Recuperar el estado del carrito desde localStorage
     const carrito = localStorage.getItem('carrito');
     this.state = {
-      carrito: carrito ? JSON.parse(carrito) : [1,4,3], // Carrito de prueba
+      carrito: carrito ? JSON.parse(carrito) : [], // Carrito de prueba
     };
   }
 

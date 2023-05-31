@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import numeral from 'numeral';
 
 class Producto extends Component {
 
@@ -14,7 +15,7 @@ class Producto extends Component {
           <Card.Img variant="top" src={this.props.imagen} />
           <Card.Body>
             <div className="d-flex justify-content-center align-items-center"><Card.Title><b>{this.props.nombre}</b></Card.Title></div>
-            <div className="d-flex justify-content-center align-items-center"><Card.Text>{"$"+this.props.precio}</Card.Text></div>
+            <div className="d-flex justify-content-center align-items-center"><Card.Text>${numeral(this.props.precio).format('0,0.00')}</Card.Text></div>
             <div className="d-flex justify-content-center align-items-center">
               <Link to={`/productos/${this.props.id}`} className="btn btn-primary btn-sm mx-2">Ver producto</Link></div>
           </Card.Body>

@@ -6,6 +6,7 @@ import BotonComprar from '../botones/BotonComprar';
 import CardCategoria from '../CardCategoria';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
+import numeral from 'numeral';
 
 function ProductoDetalle() {
   const { id } = useParams();
@@ -59,7 +60,7 @@ return (
         <Card className="cardDetalleProd">
           <div className='productoDetalle'>
            
-          <div className='contenedorTitulo'><h1>{producto.nombre}</h1></div>
+          <div className='contenedorTitulo mt-3'><h1>{producto.nombre}</h1></div>
             <div className="row">
               <div className="col text-center">
                 <img height="550px" src={producto.imagen} ></img>{/* Obtener la imagen por id */}
@@ -67,15 +68,12 @@ return (
               </div>
               <div className="col">
               <Card className='cardProdDescripcion'>
-                <div className="row">
-                  <p className='categoriaProducto'>Categoria: {producto.nombre_categoria}</p>{/* Esta seria la categoria */}
-                  <br></br><br></br>
-                  </div>
-                <div className="descripcion">
+                <div className="descripcion mx-2 mt-2">
+                    <p className='categoriaProducto'>Categoria: {producto.nombre_categoria}</p>{/* Esta seria la categoria */}
                     <p><b>Descripción:</b> {producto.descripcion}</p>
                     <p><b>Estado:</b> {producto.estado}</p>
                     <p><b>Stock disponible:</b> {producto.stock}</p> {/*si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar*/ }
-                    <p className='precio'>${producto.precio}</p>
+                    <p className='precio'>${numeral(producto.precio).format('0,0.00')}</p>
                 </div>
                 <br/>
                     </Card>
@@ -92,9 +90,12 @@ return (
         </Card>
       <br/>
       <div className='d-flex justify-content-center align-items-center'>
+        
         <Card className='cardDetalleProd'>
           
         <div className="row">
+        <div className='d-flex justify-content-center align-items-center mt-2'><h1>Productos recientes</h1></div>
+          
         {productos.length > 0 && productos.map((prod) => (
           <div className="col-md-3 col-sm-6 mb-5">
                <Link to={`/productos/${prod.id}`}>
