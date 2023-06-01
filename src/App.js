@@ -11,7 +11,7 @@ import Home from './componentes/Home';
 import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
 import Carrito from './componentes/Carrito';
 import ProductoDetalle from './componentes/entidades/ProductoDetalle'
-
+import FooterContacto from './componentes/FooterContacto'
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
 
@@ -110,7 +110,7 @@ class App extends Component {
             </Routes>
           </CarritoContexto.Provider>
           <Toaster />
-        </div>
+        </div><FooterContacto></FooterContacto>
       </Router>
     );
   }
