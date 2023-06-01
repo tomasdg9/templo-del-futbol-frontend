@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const NotFound = () => {
   return (
@@ -11,7 +12,10 @@ const NotFound = () => {
             <h2 className="display-4">PÁGINA NO ENCONTRADA</h2>
             <p>Revisá si la página ingresada es correcta.</p>
             <br/>
-            <Button variant="primary" href="/">Volver al inicio</Button>
+            <Link to={`/`}>
+            <Button variant="primary">Volver al inicio</Button>
+            </Link>
+            
           </div>
         </Col>
       </Row>
