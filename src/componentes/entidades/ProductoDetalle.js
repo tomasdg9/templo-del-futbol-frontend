@@ -102,7 +102,7 @@ return (
         
         <Card className='cardDetalleProd'>
           
-        <div className="row">
+        <div className="row mx-2">
         {productos.length > 0 && <div className='d-flex justify-content-center align-items-center mt-2'><h1>Productos recientes</h1></div>}
           
         {productos.length > 0 && productos.map((prod) => (
