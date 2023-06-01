@@ -17,11 +17,11 @@ const Carrito = (props) => {
   const [open, setOpen] = useState(false);
   const [showDescripcion, setshowDescripcion] = useState(false);
   const [descripcion, setDescripcion] = useState('');
-
+  const [openBorrar, setOpenBorrar] = useState(false);
   const DeshandleClose = () => setshowDescripcion(false);
   const DeshandleShow = () => setshowDescripcion(true);
   const DeshandleChange = (event) => setDescripcion(event.target.value);
-  
+  let indexBorrar = 0;
 
   const obtenerProductos = async () => {
     const URL = "http://127.0.0.1:8000/rest/productos/";
@@ -40,6 +40,20 @@ const Carrito = (props) => {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  const handleConfirmDelete = () =>{
+    eliminarElemento(indexBorrar);
+    setOpenBorrar(false);
+  }
+
+  const handleCancelDelete = () =>{
+    setOpenBorrar(false);
+  }
+
+  const modalBorrarProducto = (index)=>{
+    indexBorrar = index;
+    setOpenBorrar(true);
   }
 
   const vaciarCarritoAux = () => {
@@ -166,7 +180,7 @@ const Carrito = (props) => {
             </select>
             </td>
             <td>
-              <BotonBorrar onClick={() => eliminarElemento(index)}/>
+              <BotonBorrar onClick={() => modalBorrarProducto(index)}/>
             </td>
           </tr>
         );
@@ -182,7 +196,7 @@ const Carrito = (props) => {
         No disponible
         </td>
         <td>
-          <BotonBorrar onClick={() => eliminarElemento(index)}/>
+          <BotonBorrar onClick={() => modalBorrarProducto(index)}/>
         </td>
       </tr> );
       }
@@ -234,6 +248,24 @@ const Carrito = (props) => {
         </Modal.Footer>
       </Modal>
 
+      { /* Modal borrar producto */ }
+      <Modal show={openBorrar} onHide={handleCancelDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmación</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          ¿Estás seguro que quieres borrar el producto?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCancelDelete}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={handleConfirmDelete}>
+            Aceptar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <div className='d-flex align-items-center justify-content-center'>
         <h1 className="display-3">Carrito de compras</h1>
       </div>
@@ -277,7 +309,7 @@ const Carrito = (props) => {
           </form></div><br/>
           
           <div className='d-flex align-items-center justify-content-center'>
-            <BotonVaciar onClick={() => vaciarCarritoAux()}></BotonVaciar>
+            <BotonVaciar className='botonRojo' onClick={() => vaciarCarritoAux()}></BotonVaciar>
             <BotonComprarCarrito onClick={() => comprarCarritoAux()}></BotonComprarCarrito>
           </div>
           </div>

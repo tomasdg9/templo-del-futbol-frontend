@@ -8,6 +8,7 @@ import Producto from './Producto';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
 import numeral from 'numeral';
+import CardCategoria from '../CardCategoria';
 
 function ProductoDetalle() {
   const { id } = useParams();
@@ -94,13 +95,13 @@ return (
         
         <Card className='cardDetalleProd'>
           
-        <div className="row">
+        <div className="row mx-2">
         {productos.length > 0 && <div className='d-flex justify-content-center align-items-center mt-2'><h1>Productos recientes</h1></div>}
           
         {productos.length > 0 && productos.map((prod) => (
           <div className="col-md-3 col-sm-6 mb-5">
                <Link to={`/productos/${prod.id}`}>
-        <Producto
+        <CardCategoria
           nombre={prod.nombre}
           precio={prod.precio}
           imagen={prod.imagen}
