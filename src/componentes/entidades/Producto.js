@@ -30,9 +30,6 @@ class Producto extends Component {
     <Typography variant="body2" color="text.secondary">
       <b>${numeral(this.props.precio).format('0,0.00')}</b>
     </Typography>
-    <Typography variant="body2" color="text.secondary">
-      {this.props.descripcion}
-    </Typography>
   </CardContent>
   <div style={{ marginTop: 'auto' }}>
     <CardActions>

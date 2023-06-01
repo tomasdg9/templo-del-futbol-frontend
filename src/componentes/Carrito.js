@@ -8,9 +8,11 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Button, Modal } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import numeral from 'numeral';
+import { Link } from 'react-router-dom';
 
 const Carrito = (props) => {
   const { vaciarCarrito, carrito, eliminarElemento } = useContext(CarritoContexto);
+  const [ comprando, setComprando ] = useState(false);
   const [productosCarrito, setProductosCarrito] = useState([]);
   const [cantidadesSeleccionadas, setCantidadesSeleccionadas] = useState([]);
   const [ cargando, setCargando ] = useState(true);
@@ -87,6 +89,7 @@ const Carrito = (props) => {
     if(descripcion === "") {
         alert("Debes incluir una descripción para el pedido.")
     } else {
+      setComprando(true);
       const data = {
         email: email,
         descripcion: descripcion,
@@ -106,6 +109,7 @@ const Carrito = (props) => {
             type: 'success'
           });
           vaciarCarrito();
+          setComprando(false);
         } else {
           throw new Error('Error en la solicitud. Reintente nuevamente.');
         }
@@ -214,7 +218,9 @@ const Carrito = (props) => {
         <Modal.Header closeButton>
           <Modal.Title>Descripción del pedido</Modal.Title>
         </Modal.Header>
+        
         <Modal.Body>
+        { comprando === false && <div>
           <label htmlFor="descripcion">Ingrese la descripción:</label>
           <input
             type="text"
@@ -223,14 +229,20 @@ const Carrito = (props) => {
             value={descripcion}
             onChange={DeshandleChange}
           />
+          </div>
+        }
+        { comprando === true && <div>Comprando...</div> }
         </Modal.Body>
         <Modal.Footer>
+        { comprando === false && <div>
           <Button variant="secondary" onClick={DeshandleClose}>
             Cerrar
           </Button>
           <Button variant="primary" onClick={DeshandleSubmit}>
-            Guardar
+            Comprar
           </Button>
+          </div>
+        }
         </Modal.Footer>
       </Modal>
 
@@ -244,8 +256,10 @@ const Carrito = (props) => {
       }
       {cargando === false && productosCarrito.length === 0 && (
         <div className="container text-center">
+          <br></br>
           <h1>El carrito está vacío.</h1>
-          <a href="/productos/" className="btn mx-1 btn-success">Ver productos</a>
+          <br></br>
+          <Link to={`/productos`} className="btn mx-1 btn-success">Ver productos</Link>
         </div>
       )}
       {productosCarrito.length > 0 && cargando === false && <div>

@@ -31,8 +31,7 @@ class CategoriasLista extends Component {
   
   datosBusqueda = (termino) => {
     if(termino === "") {
-      //this.obtenerCategorias();
-      this.setState({ busqueda: false, categoriasamostrar: this.state.categorias });
+      this.setState({ busqueda: false, categoriasamostrar: this.state.categorias, currentPage: 1 });
     }
     else {
       const categoriasFiltradas = this.state.categorias.filter(categoria =>
@@ -44,7 +43,7 @@ class CategoriasLista extends Component {
           position: 'bottom-right',
           type: 'success'
         });
-        this.setState({categoriasamostrar: categoriasFiltradas, busqueda:true });
+        this.setState({categoriasamostrar: categoriasFiltradas, busqueda:true, currentPage: 1 });
       } else {
         toast('No se encontraron resultados', {
           duration: 2000,
@@ -70,7 +69,8 @@ class CategoriasLista extends Component {
     this.setState((prevState) => ({
       busqueda: false, 
       keyBuscador: prevState.keyBuscador + 1,
-      categoriasamostrar: this.state.categorias
+      categoriasamostrar: this.state.categorias,
+      currentPage: 1
     }));
     toast('Categorias restablecidas', {
       duration: 2000,

@@ -12,7 +12,6 @@ import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
 import Carrito from './componentes/Carrito';
 import ProductoDetalle from './componentes/entidades/ProductoDetalle'
 
-
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
 
@@ -25,7 +24,7 @@ class App extends Component {
     // Recuperar el estado del carrito desde localStorage
     const carrito = localStorage.getItem('carrito');
     this.state = {
-      carrito: carrito ? JSON.parse(carrito) : [], // Carrito de prueba
+      carrito: carrito ? JSON.parse(carrito) : [], 
     };
   }
 
@@ -38,7 +37,6 @@ class App extends Component {
     console.log(termino);
   };
 
-  // Pruebas comunicacion con context
   agregarProducto = (id) => {
     if (!this.state.carrito.includes(id)) {
       this.setState(
@@ -64,7 +62,6 @@ class App extends Component {
     }
   };
   
-  //esto anda bien con el index, no hay que modificarlo
   eliminarElemento = (index) => {
     this.setState((prevState) => {
       const newList = [...prevState.carrito];
@@ -98,20 +95,14 @@ class App extends Component {
           <Navbar 
               cantCarrito={this.state.carrito.length}
           />
-          {/*<p>Carrito: (productos ids) {this.state.carrito}</p>*/}
-          { /* test contextos de react */ }
           <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento}}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route
                 path="/productos"
                 element={<ProductosLista datosBusqueda={this.vaciarCarrito} categoria={-1}/>}
-                // Esto es un ejemplo como comunicar a los componentes hijo-padre usando funciones 
-                // pero con el texto se puede solucionar si no son clases.
-                // son dos formas distintas de hacerlo
               />
               <Route path="/productos/:id" element={<ProductoDetalle />} />
-
               <Route path="/categorias" element={<CategoriasLista />} />
               <Route path="/categorias/:id" element={<CategoriaDetalle />} />
               <Route path="/carrito" element={<Carrito nombre="Prueba" />} />

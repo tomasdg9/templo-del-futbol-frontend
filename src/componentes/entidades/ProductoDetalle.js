@@ -4,17 +4,18 @@ import { useState, useEffect, useContext } from 'react';
 import Card from 'react-bootstrap/Card';
 import CarritoContexto from '../../contextos/CarritoContexto';
 import BotonComprar from '../botones/BotonComprar';
-import Producto from './Producto';
+import CardCategoria from '../CardCategoria';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
 import numeral from 'numeral';
 
 function ProductoDetalle() {
-  const { id } = useParams();
+  let { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [valido, setValido] = useState(true);
   const { agregarProducto } = useContext(CarritoContexto);
   const [productos, setProductos] = useState([]);
+  const [cargando, setCargando] = useState(true);
     
   useEffect(() => {
     setValido(Number.isInteger(Number(id)) && Number(id) >= 0);
@@ -27,12 +28,16 @@ function ProductoDetalle() {
     return <Navigate to="/not-found" />;
   }
 
-  if (!producto) {
+  if (!producto || cargando === true) {
     return <div className="mt-2 mb-2 container d-flex flex-column align-items-center"><CircularProgress /></div>;
   }
 
-  function handleClickCard(id) {
-    window.location.href = 'http://127.0.0.1:3000/productos/'+id;
+  function handleClickCard(idClick) {
+    if(producto.id != idClick) {
+      id = idClick;
+      setCargando(true);
+      obtenerProducto();
+    }
   };
 
   function obtenerProducto() {
@@ -44,6 +49,7 @@ function ProductoDetalle() {
       })
       .then(resultado => {
         setProducto(resultado);
+        setCargando(false);
       })
       .catch(error => console.log(error));
   }
@@ -58,6 +64,7 @@ function ProductoDetalle() {
   
 return (      
       <div className="container-lg">
+        { cargando === false && <div>
         <Card className="cardDetalleProd">
           <div className='productoDetalle'>
            
@@ -89,6 +96,7 @@ return (
           </div>
           
         </Card>
+        </div>}
       <br/>
       <div className='d-flex justify-content-center align-items-center'>
         
@@ -99,14 +107,16 @@ return (
           
         {productos.length > 0 && productos.map((prod) => (
           <div className="col-md-3 col-sm-6 mb-5">
-               <Link to={`/productos/${prod.id}`}>
-        <Producto
+              <Link to={`/productos/${prod.id}`}>
+        <CardCategoria
+          key={prod.id}
           nombre={prod.nombre}
+          id={prod.id}
           precio={prod.precio}
           imagen={prod.imagen}
           onClick={() => handleClickCard(prod.id)}
         />
-      </Link>
+        </Link>
                 </div>
             ))} 
         </div>

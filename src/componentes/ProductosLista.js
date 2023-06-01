@@ -33,6 +33,7 @@ class ProductosLista extends Component {
     this.setState((prevState) => ({
       busqueda: false, 
       keyBuscador: prevState.keyBuscador + 1,
+      currentPage: 1
     }), () => { // Se ejecuta luego de actualizar el state
       this.datosBusqueda("")
     });
@@ -45,7 +46,7 @@ class ProductosLista extends Component {
   
   datosBusqueda = (termino) => {
         if(termino === "") {
-          this.setState({ busqueda: false, productosamostrar: this.state.productos });
+          this.setState({ busqueda: false, productosamostrar: this.state.productos, currentPage: 1 });
         }
         else {
           const productosFiltrados = this.state.productos.filter(producto =>
@@ -57,7 +58,7 @@ class ProductosLista extends Component {
               position: 'bottom-right',
               type: 'success'
             });
-            this.setState({productosamostrar: productosFiltrados, busqueda:true });
+            this.setState({productosamostrar: productosFiltrados, busqueda:true, currentPage: 1 });
           } else {
             toast('No se encontraron resultados', {
               duration: 2000,

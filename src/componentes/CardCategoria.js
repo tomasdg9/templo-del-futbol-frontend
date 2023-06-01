@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
+import numeral from 'numeral';
 
 const CardCategoria = ({imagen, precio, nombre, onClick}) => {
     
@@ -9,7 +10,7 @@ const CardCategoria = ({imagen, precio, nombre, onClick}) => {
                 <img src={imagen} />
                 <hr/>
                 <div className='d-flex justify-content-center align-items-center'>
-                <p className='precio'>{precio}</p>
+                <p className='precio'>${numeral(precio).format('0,0.00')}</p>
                 </div>
                 
                 <div className='d-flex justify-content-center align-items-center'>
