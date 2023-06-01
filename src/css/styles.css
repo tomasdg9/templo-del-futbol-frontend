@@ -144,3 +144,8 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   background-color: rgb(228, 246, 212);
 }
+
+.card-media-override .MuiCardMedia-img {
+  object-fit: unset !important;
+  object-position: unset !important;
+}

@@ -11,6 +11,7 @@ class CategoriasLista extends Component {
       super(props);
       this.state = {
           categorias: [],
+          categoriasamostrar: [],
           currentPage: 1,
           itemsPerPage: 9,
           busqueda: false,
@@ -30,52 +31,47 @@ class CategoriasLista extends Component {
   
   datosBusqueda = (termino) => {
     if(termino === "") {
-      this.obtenerCategorias();
-      this.setState({ busqueda: false });
+      //this.obtenerCategorias();
+      this.setState({ busqueda: false, categoriasamostrar: this.state.categorias });
     }
     else {
-      let URL = "http://127.0.0.1:8000/rest/categorias/buscar/"+termino;
-      fetch(URL)
-        .then(respuesta => respuesta.json())
-        .then(resultado => {this.setState({ categorias: resultado, busqueda: true })
-        if (resultado.length > 0) {
-          toast('Búsqueda exitosa', {
-            duration: 2000,
-            position: 'bottom-right',
-            type: 'success'
-          });
-        } else {
-          toast('No se encontraron resultados', {
-            duration: 2000,
-            position: 'bottom-right',
-            type: 'error'
-          });
-        }
-        })
-        .catch(error => console.log(error));
+      const categoriasFiltradas = this.state.categorias.filter(categoria =>
+        categoria.nombre.toLowerCase().startsWith(termino.toLowerCase())
+      );
+      if (categoriasFiltradas.length > 0) {
+        toast('Búsqueda exitosa', {
+          duration: 2000,
+          position: 'bottom-right',
+          type: 'success'
+        });
+        this.setState({categoriasamostrar: categoriasFiltradas, busqueda:true });
+      } else {
+        toast('No se encontraron resultados', {
+          duration: 2000,
+          position: 'bottom-right',
+          type: 'error'
+        });
+      }
       }
       
   };
 
+  // Unica llamada a la API
   obtenerCategorias = () => {
     let URL = "http://127.0.0.1:8000/rest/categorias";
-    
     fetch(URL)
       .then(respuesta => respuesta.json())
-      .then(resultado => this.setState({ categorias: resultado, cargando:false }))
+      .then(resultado => this.setState({ categorias: resultado, cargando:false, categoriasamostrar: resultado }))
       .catch(error => console.log(error));
   }
   
 
   limpiarBusqueda = () => {
-    this.setState({
-      busqueda: false, 
-      categorias: [], 
-    });
     this.setState((prevState) => ({
-      keyBuscador: prevState.keyBuscador + 1 
+      busqueda: false, 
+      keyBuscador: prevState.keyBuscador + 1,
+      categoriasamostrar: this.state.categorias
     }));
-    this.obtenerCategorias();
     toast('Categorias restablecidas', {
       duration: 2000,
       position: 'bottom-right',
@@ -84,17 +80,17 @@ class CategoriasLista extends Component {
   };
 
   render() {
-    const { categorias, currentPage, itemsPerPage } = this.state;
+    const { categoriasamostrar, currentPage, itemsPerPage } = this.state;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const categoriasPaginadas = categorias.slice(startIndex, endIndex);
+    const categoriasPaginadas = categoriasamostrar.slice(startIndex, endIndex);
 
     return (
       <div>
         <div className="mt-2 d-flex justify-content-end">
-        {this.state.categorias.length > 0 && this.state.busqueda === true &&
+        {this.state.categoriasamostrar.length > 0 && this.state.busqueda === true &&
               <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
-        }   {this.state.categorias.length > 0 &&
+        }   {this.state.categoriasamostrar.length > 0 &&
           <Buscador 
             datosBusqueda={this.datosBusqueda} 
             key={this.state.keyBuscador} />
@@ -105,9 +101,9 @@ class CategoriasLista extends Component {
       <div>
         <div className="mt-2"><CircularProgress /></div>
       </div> :
-          categorias.length === 0 ? ( <div><h1 className="display-4">Lista de categorias</h1>
+          categoriasamostrar.length === 0 ? ( <div><h1 className="display-4">Lista de categorias</h1>
             <div className="mt-2">No se encontraron categorias.<br></br>
-            <button onClick={this.limpiarBusqueda} className="btn mb-2 mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+            {this.state.categorias.length > 0 && <button onClick={this.limpiarBusqueda} className="btn mb-2 mx-1 btn-sm btn-danger">Limpiar busqueda</button>}
             </div></div>
           ) : (
             <div>
@@ -125,13 +121,13 @@ class CategoriasLista extends Component {
             </div>
           )}
         </div>
-        { this.state.categorias.length > 0 &&
+        { this.state.categoriasamostrar.length > 0 &&
         <div className="container ">
             <div className="pagination">
                 <Pagination
                     activePage={currentPage}
                     itemsCountPerPage={itemsPerPage}
-                    totalItemsCount={categorias.length}
+                    totalItemsCount={categoriasamostrar.length}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange}
                     itemClass="page-item"

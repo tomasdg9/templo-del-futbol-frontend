@@ -25,7 +25,7 @@ class App extends Component {
     // Recuperar el estado del carrito desde localStorage
     const carrito = localStorage.getItem('carrito');
     this.state = {
-      carrito: carrito ? JSON.parse(carrito) : [1,4,3], // Carrito de prueba
+      carrito: carrito ? JSON.parse(carrito) : [], // Carrito de prueba
     };
   }
 
@@ -84,7 +84,7 @@ class App extends Component {
 
   comprarCarrito = (lista) =>{
     const URL = "http://127.0.0.1:8000/rest/pedidos/crear/";
-    const compra = lista.map((idProd) => {
+    lista.map((idProd) => {
       const productoURL = URL + idProd;
       return fetch(productoURL)
         .then(respuesta => respuesta.json());
