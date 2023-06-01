@@ -313,14 +313,15 @@ const Carrito = (props) => {
           <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${numeral(obtenerPrecio()).format('0,0.00')}</b></Card></div>
           <div className='d-flex align-items-center justify-content-center'>
           
-          <form>
           <br/>
             <label>
+            <div className="mt-2">
               Cliente (*):  
-              <input id="clienteEmail" className='email mx-2' type="text" name="email" placeholder='cliente@gmail.com' />
+              <input id="clienteEmail" className='email mt-2 mx-2' type="text" name="email" placeholder='cliente@gmail.com' />
+              </div>
             </label>
-            
-          </form></div><br/>
+            </div>
+            <br/>
           
           <div className='d-flex align-items-center justify-content-center'>
             <BotonVaciar className='botonRojo' onClick={() => vaciarCarritoAux()}></BotonVaciar>
