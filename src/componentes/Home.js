@@ -5,7 +5,7 @@ import Producto from './entidades/Producto';
 import Grid from '@mui/material/Grid';
 
 function Home() {
-  let URL = "http://127.0.0.1:8000/rest/productos/masnuevos";
+  let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/masnuevos";
   const [productos, setProductos] = useState([]);
     
   useEffect(() => {

@@ -57,7 +57,7 @@ class CategoriasLista extends Component {
 
   // Unica llamada a la API
   obtenerCategorias = () => {
-    let URL = "http://127.0.0.1:8000/rest/categorias";
+    let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/categorias";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => this.setState({ categorias: resultado, cargando:false, categoriasamostrar: resultado }))

@@ -26,7 +26,7 @@ const Carrito = (props) => {
   let indexBorrar = 0;
 
   const obtenerProductos = async () => {
-    const URL = "http://127.0.0.1:8000/rest/productos/";
+    const URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -115,7 +115,7 @@ const Carrito = (props) => {
         body: JSON.stringify(data)
       };
       try {
-        const response = await fetch('http://127.0.0.1:8000/rest/pedidos/crear', requestOptions);
+        const response = await fetch('https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/pedidos/crear', requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,

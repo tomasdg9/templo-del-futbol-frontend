@@ -80,7 +80,7 @@ class App extends Component {
   };
 
   comprarCarrito = (lista) =>{
-    const URL = "http://127.0.0.1:8000/rest/pedidos/crear/";
+    const URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/pedidos/crear/";
     lista.map((idProd) => {
       const productoURL = URL + idProd;
       return fetch(productoURL)
