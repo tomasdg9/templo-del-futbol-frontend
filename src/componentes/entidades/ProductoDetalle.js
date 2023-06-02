@@ -33,7 +33,7 @@ function ProductoDetalle() {
   }
 
   function handleClickCard(idClick) {
-    if(producto.id != idClick) {
+    if(producto.id !== idClick) {
       id = idClick;
       setCargando(true);
       obtenerProducto();
