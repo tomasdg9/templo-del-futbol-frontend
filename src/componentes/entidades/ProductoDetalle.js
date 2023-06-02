@@ -109,7 +109,6 @@ return (
           <div className="col-md-3 col-sm-6 mb-5">
               <Link to={`/productos/${prod.id}`}>
         <CardCategoria
-          key={prod.id}
           nombre={prod.nombre}
           id={prod.id}
           precio={prod.precio}

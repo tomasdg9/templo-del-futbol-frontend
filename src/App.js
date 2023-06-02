@@ -33,9 +33,7 @@ class App extends Component {
     localStorage.setItem('carrito', JSON.stringify(this.state.carrito));
   };
 
-  datosBusqueda = (termino) => {
-    console.log(termino);
-  };
+  
 
   agregarProducto = (id) => {
     if (!this.state.carrito.includes(id)) {
@@ -47,7 +45,6 @@ class App extends Component {
           this.guardarCarritoEnLocalStorage();
         }
       );
-      console.log(this.state.carrito)
       toast('Producto agregado al carrito', {
         duration: 2000,
         position: 'bottom-right',

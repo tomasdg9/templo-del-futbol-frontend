@@ -27,13 +27,13 @@ class Producto extends Component {
     <Typography gutterBottom variant="h5" component="div">
       <b>{this.props.nombre}</b>
     </Typography>
-    <div class="col-md-6 offset-md-3 text-center">
+    <div className="col-md-6 offset-md-3 text-center">
     <Typography variant="body2" color="text.secondary">
       <b>${numeral(this.props.precio).format('0,0.00')}</b>
     </Typography>
     </div>
   </CardContent>
-  <div class="col-md-6 offset-md-3 text-center">
+  <div className="col-md-6 offset-md-3 text-center">
   <div style={{ marginTop: 'auto' }}>
     <CardActions>
       <Link to={`/productos/${this.props.id}`} className="btn btn-primary btn-sm mx-2 ">Ver producto</Link>
