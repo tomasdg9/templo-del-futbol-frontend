@@ -125,7 +125,7 @@ const Carrito = (props) => {
           vaciarCarrito();
           setComprando(false);
         } else {
-          throw new Error('Error en la solicitud. Reintente nuevamente.');
+          throw new Error('Esta intentando comprar un producto sin stock o se produjo un error en la solicitud.');
         }
       } catch (error) {
         alert(error);
