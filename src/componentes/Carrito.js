@@ -171,7 +171,7 @@ const Carrito = (props) => {
         return (
           <tr key={id}>
             <th>
-              {nombre}
+            <Link to={`/productos/${id}`} >{nombre}</Link>
               <br></br>
               <img className='imgCarrito' src={imagen} alt={nombre} />
             </th>
