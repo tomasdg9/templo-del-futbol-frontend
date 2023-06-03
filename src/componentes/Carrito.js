@@ -25,6 +25,10 @@ const Carrito = (props) => {
   const DeshandleChange = (event) => setDescripcion(event.target.value);
   let indexBorrar = 0;
 
+  const actualizarCarrito = () => {
+    obtenerProductos();
+  }
+
   const obtenerProductos = async () => {
     const URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/";
   
@@ -129,6 +133,7 @@ const Carrito = (props) => {
         }
       } catch (error) {
         alert(error);
+        actualizarCarrito();
       }
       DeshandleClose();
     }
