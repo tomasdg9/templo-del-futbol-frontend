@@ -27,6 +27,11 @@ const Carrito = (props) => {
 
   const actualizarCarrito = () => {
     obtenerProductos();
+	toast('Se actualizó el carrito', {
+		duration: 3000,
+        position: 'bottom-right',
+		icon: '⚠️',
+	});
   }
 
   const obtenerProductos = async () => {
