@@ -20,10 +20,10 @@ const Carrito = (props) => {
   const [showDescripcion, setshowDescripcion] = useState(false);
   const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
+  const [indexBorrar, setIndexBorrar] = useState(null);
   const DeshandleClose = () => setshowDescripcion(false);
   const DeshandleShow = () => setshowDescripcion(true);
   const DeshandleChange = (event) => setDescripcion(event.target.value);
-  let indexBorrar = 0;
 
   const actualizarCarrito = () => {
     obtenerProductos();
@@ -62,10 +62,15 @@ const Carrito = (props) => {
     setOpenBorrar(false);
   }
 
-  const modalBorrarProducto = (index)=>{
-    indexBorrar = index;
-    setOpenBorrar(true);
+  const modalBorrarProducto = (index) => {
+    setIndexBorrar(index);
   }
+
+  useEffect(() => {
+    if (indexBorrar !== null) {
+      setOpenBorrar(true);
+    }
+  }, [indexBorrar]);
 
   const vaciarCarritoAux = () => {
     setOpen(true);
@@ -194,7 +199,7 @@ const Carrito = (props) => {
             </select>
             </td>
             <td>
-              <BotonBorrar onClick={() => modalBorrarProducto(index)}/>
+              <button onClick={() => modalBorrarProducto(index)} type="button" className="btn btn-danger mr-2">Borrar</button>
             </td>
           </tr>
         );
@@ -210,7 +215,7 @@ const Carrito = (props) => {
         No disponible
         </td>
         <td>
-          <BotonBorrar onClick={() => modalBorrarProducto(index)}/>
+          <button onClick={() => modalBorrarProducto(index)} type="button" className="btn btn-danger mr-2">Borrar</button>
         </td>
       </tr> );
       }

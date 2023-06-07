@@ -136,9 +136,29 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 20px;
 }
 
-.imgCarrito{
-  width: 15%;
+.imgCarrito {
+  width: 20%;
 }
+
+@media (max-width: 800px) {
+  .imgCarrito {
+    width: 25%;
+  }
+}
+
+@media (max-width: 600px) {
+  .imgCarrito {
+    width: 35%;
+  }
+}
+
+@media (max-width: 420px) {
+  .imgCarrito {
+    width: 70%;
+  }
+}
+
+
 
 .precioCarrito{
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);

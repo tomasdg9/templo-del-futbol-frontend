@@ -157,8 +157,12 @@ class ProductosLista extends Component {
                 {this.state.productos.length > 0 && <button onClick={this.limpiarBusqueda} className="btn mb-2 mx-1 btn-sm btn-danger">Limpiar busqueda</button>}</div>) 
               : 
                 (
-                  <div>
-                    <Grid container spacing={1}>
+                  <div className="d-flex justify-content-center">
+                    <Grid container spacing={1}
+                      direction="row"
+                      justifyContent="center"
+                      alignItems="center"
+                    >
                     {productosPaginados && productosPaginados.map((producto) => (
                         <Producto
                           key={producto.id}
