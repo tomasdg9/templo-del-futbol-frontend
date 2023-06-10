@@ -1,0 +1,177 @@
+
+/* Buscar paleta de colores y modificarlos */
+body {
+  color: rgb(0, 0, 0); 
+  background-color: rgb(219, 219, 219);
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+  
+button {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+a{
+  color: black; 
+  font-family: Arial, Helvetica, sans-serif
+}
+p{
+  color: black; 
+  font-family: "Helvetica", sans-serif;
+  font-size: 120%;
+}
+  
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(46, 46, 46); 
+  font-family: Arial, Helvetica, sans-serif
+}
+  
+.navbarColor { /* Navbar */
+  color: white; 
+  background-color: rgb(129, 59, 59); 
+}
+
+
+.footerColor {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: #ffffff; 
+  height: 80px;
+  border-radius: 40px;
+}
+  
+.caroucel-image {
+  height: 470px; /* Cambia 200px por la altura deseada */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.cardProducto{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  border-color: rgb(0, 0, 0);
+  background-color: rgb(241, 255, 231);
+}
+
+.cardProducto Img{
+  border-radius: 22px;
+}
+
+.botonProducto{
+  background-color: rgb(170, 196, 123);
+  border-color: rgb(68, 109, 107);
+}
+
+
+.productoDetalle img{
+  margin-top: 5%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  width: 80%;
+}
+
+.cardDetalleProd {
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 1%;
+  border-radius: 20px;
+}
+
+.cardProdDescripcion{
+  color: #ffffffee;
+  border-color: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
+}
+
+.contenedorTitulo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.categoriaProducto{
+  font-weight: bold;
+}
+
+.precio{
+  font-weight: bold;
+}
+
+.cardCategoria{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  border-color: rgb(204, 204, 204);
+  border-radius: 5%;
+  margin: 5%;
+  width: 90%;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.cardCategoria:hover {
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.5);
+}
+
+.cardCategoria img{
+  border-radius: 17%;
+}
+
+.alinearDerecha{
+  margin-right: 1%;
+}
+
+.nombreCat{
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  color: rgb(78, 48, 48)
+}
+
+.text-justify{
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.cardCarrito{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin: 3%;
+  border-radius: 20px;
+}
+
+.imgCarrito {
+  width: 20%;
+}
+
+@media (max-width: 800px) {
+  .imgCarrito {
+    width: 25%;
+  }
+}
+
+@media (max-width: 600px) {
+  .imgCarrito {
+    width: 35%;
+  }
+}
+
+@media (max-width: 420px) {
+  .imgCarrito {
+    width: 70%;
+  }
+}
+
+
+
+.precioCarrito{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: rgb(228, 246, 212);
+}
+
+.card-media-override .MuiCardMedia-img {
+  object-fit: unset !important;
+  object-position: unset !important;
+}
+
+footer {
+  background-color: #f2f2f2;
+  padding: 20px;
+  text-align: center;
+}
