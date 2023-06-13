@@ -10,6 +10,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
 
+import Cookies from 'universal-cookie';
+const cookies = new Cookies();
+
 const Carrito = (props) => {
   const { vaciarCarrito, carrito, eliminarElemento } = useContext(CarritoContexto);
   const [ comprando, setComprando ] = useState(false);
@@ -35,7 +38,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/";
+    const URL = "http://127.0.0.1:3001/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -86,8 +89,7 @@ const Carrito = (props) => {
   };
 
   const comprarCarritoAux = () => {
-    const input = document.getElementById('clienteEmail');
-    const valor = input.value;
+    const valor = cookies.get('email');
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar email
 
     if (regex.test(valor)) {
@@ -112,8 +114,7 @@ const Carrito = (props) => {
       }
     }
     let ids = cadenaAPI.slice(0, -1);
-    const input = document.getElementById('clienteEmail');
-    const email = input.value;
+    const email = cookies.get('email');
     if(descripcion === "") {
         alert("Debes incluir una descripción para el pedido.")
     } else {
@@ -129,7 +130,7 @@ const Carrito = (props) => {
         body: JSON.stringify(data)
       };
       try {
-        const response = await fetch('https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/pedidos/crear', requestOptions);
+        const response = await fetch('http://127.0.0.1:3001/pedidos/crear', requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,
@@ -324,24 +325,22 @@ const Carrito = (props) => {
               {renderProductos()}
             </tbody>
           </table>
-          
           <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${numeral(obtenerPrecio()).format('0,0.00')}</b></Card></div>
           <div className='d-flex align-items-center justify-content-center'>
-          
           <br/>
             <label>
-            <div className="mt-2">
-              Cliente (*):  
-              <input id="clienteEmail" className='email mt-2 mx-2' type="text" name="email" placeholder='cliente@gmail.com' />
-              </div>
             </label>
             </div>
             <br/>
-          
-          <div className='d-flex align-items-center justify-content-center'>
-            <BotonVaciar className='botonRojo' onClick={() => vaciarCarritoAux()}></BotonVaciar>
-            <BotonComprarCarrito onClick={() => comprarCarritoAux()}></BotonComprarCarrito>
-          </div>
+            <div className='d-flex align-items-center justify-content-center'>
+              <BotonVaciar className='botonRojo' onClick={() => vaciarCarritoAux()}></BotonVaciar>
+              {props.ingreso && 
+              <BotonComprarCarrito onClick={() => comprarCarritoAux()}></BotonComprarCarrito>
+              }
+            </div>
+            <div className='d-flex align-items-center justify-content-center'>
+              { !props.ingreso && (<div><br></br>Debes iniciar sesión para comprar el carrito.</div>)}
+            </div>
           </div>
           <br/>
       </Card>
