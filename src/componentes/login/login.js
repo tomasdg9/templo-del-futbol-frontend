@@ -10,12 +10,14 @@ import CircularProgress from '@mui/material/CircularProgress';
 const baseUrl = "http://127.0.0.1:3001/clientes/login";
 const cookies = new Cookies();
 
+// Tareas -> Cuando se apreta "registrarse" quiere guardar los datos, no debe hacer eso.
 class login extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
           shouldRedirect: false,
+          redirectRegister: false,
           cargando: false
         };
       }
@@ -24,6 +26,15 @@ class login extends Component {
     if (cookies.get('email')) {
       this.setState({ shouldRedirect: true });
     }
+  }
+
+  handleRegisterClick = () => {
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    emailInput.value = '';
+    passwordInput.value = '';
+
+    this.setState({ redirectRegister: true });
   }
 
   handleChange = () => {
@@ -59,6 +70,10 @@ class login extends Component {
         return <Navigate to="/" />;
     }
 
+    if (this.state.redirectRegister) {
+      return <Navigate to="/register" />;
+  }
+
     return (
         <div className="container">
               
@@ -77,10 +92,18 @@ class login extends Component {
                 <label htmlFor="password">Contraseña:</label>
                 <input type="password" className="form-control" id="password" placeholder="Ingrese su contraseña" />
               </div>
-              {this.state.cargando == false &&
+              {this.state.cargando == false && <div>
               <div className="d-flex justify-content-center">
                 <button onClick={this.handleChange} className="btn btn-primary mb-2 mt-2">Ingresar</button>
-                <Link to={`/register`} className="btn btn-primary mb-2 mt-2 mx-2">Registrarse</Link>
+                {/*  <Link onClick={this.clearInputs} to={`/register`} className="btn btn-primary mb-2 mt-2 mx-2">Registrarse</Link>
+              */}
+              <Link onClick={this.handleRegisterClick} className="btn btn-primary mb-2 mt-2 mx-2">
+                Registrarse
+              </Link>
+              </div>
+              <div className="d-flex justify-content-center mb-2">
+                <Link to={`/recuperarcontraseña`}><p>¿Olvidó su contraseña?</p></Link>
+              </div>
               </div>}
               {this.state.cargando == true && <div className="d-flex justify-content-center mb-2 mt-2"><CircularProgress /></div>}
 

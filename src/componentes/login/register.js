@@ -82,7 +82,7 @@ class register extends Component {
                 
                 <div className="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="texpasswordt" className="form-control" id="password" placeholder="Ingrese su contraseña"/>
+                    <input type="text" className="form-control" id="password" placeholder="Ingrese su contraseña"/>
                 </div>
                 <div className="form-group">
                     <label for="nombre">Nombre:</label>
@@ -92,7 +92,9 @@ class register extends Component {
                     <label for="apellido">Apellido:</label>
                     <input type="text" className="form-control" id="apellido" placeholder="Ingrese su apellido"/>
                 </div>
-                <button onClick={this.handleChange} className="btn btn-primary mb-2 mt-2">Registrarse</button>
+                <div className="d-flex justify-content-center">
+                  <button onClick={this.handleChange} className="btn btn-primary mb-2 mt-2">Registrarse</button>
+                </div>
             </div>
             </div>
         </div>)
