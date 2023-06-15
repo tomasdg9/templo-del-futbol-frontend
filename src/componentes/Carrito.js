@@ -29,8 +29,9 @@ const Carrito = (props) => {
   const DeshandleChange = (event) => setDescripcion(event.target.value);
 
   const actualizarCarrito = () => {
+    setComprando(false);
     obtenerProductos();
-	toast('Se actualizó el carrito', {
+	  toast('Se actualizó el carrito', {
 		duration: 3000,
         position: 'bottom-right',
 		icon: '⚠️',
