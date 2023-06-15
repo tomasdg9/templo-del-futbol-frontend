@@ -92,7 +92,8 @@ class App extends Component {
   };
 
   comprarCarrito = (lista) =>{
-    const URL = "http://127.0.0.1:3001/pedidos/crear/";
+	const token = cookies.get('token');
+    const URL = "http://127.0.0.1:3001/pedidos/crear/"+token;
     lista.map((idProd) => {
       const productoURL = URL + idProd;
       return fetch(productoURL)
