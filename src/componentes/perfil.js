@@ -14,14 +14,29 @@ class perfil extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          shouldRedirect: false
+          logeado: false
         };
       }
 
+      componentDidMount() {
+        if (cookies.get('email')) {
+          this.setState({ logeado: true });
+        }
+      }
+      
   render() {
+
+    // Si no está logeado no se le permite el acceso a esta página.
+    if (this.state.shouldRedirect) {
+      return <Navigate to="/" />;
+    }
+
+    // Lógica si está logeado.
     return (
         <div>
-            
+          { cookies.get('email') }
+          { cookies.get('token') }
+            Hola.
         </div>
       )
     }      

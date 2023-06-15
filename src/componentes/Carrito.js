@@ -131,7 +131,8 @@ const Carrito = (props) => {
         body: JSON.stringify(data)
       };
       try {
-        const response = await fetch('http://127.0.0.1:3001/pedidos/crear', requestOptions);
+		const token = cookies.get('token');  
+        const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,
