@@ -102,7 +102,7 @@ class login extends Component {
               </Link>
               </div>
               <div className="d-flex justify-content-center mb-2">
-                <Link to={`/recuperarcontraseña`}><p>¿Olvidó su contraseña?</p></Link>
+                <Link to={`/recuperar`}><p>¿Olvidó su contraseña?</p></Link>
               </div>
               </div>}
               {this.state.cargando == true && <div className="d-flex justify-content-center mb-2 mt-2"><CircularProgress /></div>}

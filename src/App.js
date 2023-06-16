@@ -17,6 +17,8 @@ import Login from './componentes/login/login'
 import Register from './componentes/login/register'
 import Perfil from './componentes/perfil'
 import Recuperar from './componentes/login/recuperarcontra'
+import Cambiar from './componentes/login/changepassword'
+
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
 
@@ -109,6 +111,7 @@ class App extends Component {
                 element={<ProductosLista datosBusqueda={this.vaciarCarrito} categoria={-1}/>}
               />
               <Route path="/productos/:id" element={<ProductoDetalle />} />
+              <Route path="/cambiar/:email/:token" element={<Cambiar />} />
               <Route path="/categorias" element={<CategoriasLista />} />
               <Route path="/perfil" element={<Perfil ingreso={this.state.ingreso} />} />
               <Route path="/recuperar" element={<Recuperar ingreso={this.state.ingreso} />} />

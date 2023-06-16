@@ -51,13 +51,15 @@ class perfil extends Component {
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
-        resultado.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-        this.setState({
-          pedidos: resultado,
-          cargando: false
-        });
+          resultado.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+          this.setState({
+            pedidos: resultado,
+            cargando: false
+          });
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        this.setState({cargando: false});
+      });
   }
 
   obtenerDetalle = (id) => { // ¿Tendria que validar con un token?
@@ -92,8 +94,20 @@ class perfil extends Component {
 
     if(this.state.cargando == true){
       return <div className="container text-center">
-      <CircularProgress />
-      </div>;
+              <CircularProgress />
+            </div>;
+    }
+
+    if(this.state.pedidos.length == 0){
+      return (
+        <div>
+          <div className="container">
+            <div className="d-flex justify-content-center mb-2">
+              <h1>No tienes pedidos.</h1>
+            </div>
+          </div>
+        </div>
+      );
     }
 
     if(this.state.visualizando == -1){ // Visualizando sus pedidos
