@@ -122,7 +122,7 @@ class App extends Component {
               />
               <Route path="/productos/:id" element={<ProductoDetalle />} />
               <Route path="/categorias" element={<CategoriasLista />} />
-              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/perfil" element={<Perfil ingreso={this.state.ingreso} />} />
               <Route path="/login" element={<Login onLogin={this.iniciarSesion} />} />
               <Route path="/register" element={<Register onLogin={this.iniciarSesion} />} />
               <Route path="/categorias/:id" element={<CategoriaDetalle />} />

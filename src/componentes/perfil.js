@@ -10,7 +10,6 @@ class perfil extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      logeado: false,
       cargando: true,
       visualizando: -1, // -1 si no está visualizando un pedido. visualizando>=0 si está visualizando el detalle de un pedido.
       productosDelPedido: [],
@@ -26,10 +25,8 @@ class perfil extends Component {
   };
 
   componentDidMount() {
-    if (cookies.get('email')) {
-      this.setState({ logeado: true });
-    }
-    this.obtenerPedidos();
+    if(this.props.ingreso)
+      this.obtenerPedidos();
   }    
 
   volver = () => {
@@ -89,7 +86,7 @@ class perfil extends Component {
 
   render() {
     // Si no está logeado no se le permite el acceso a esta página.
-    if (this.state.shouldRedirect) {
+    if (this.props.ingreso == false) {
       return <Navigate to="/" />;
     }
 
