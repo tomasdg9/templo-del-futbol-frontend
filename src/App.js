@@ -16,7 +16,7 @@ import FooterContacto from './componentes/FooterContacto'
 import Login from './componentes/login/login'
 import Register from './componentes/login/register'
 import Perfil from './componentes/perfil'
-
+import Recuperar from './componentes/login/recuperarcontra'
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
 
@@ -92,18 +92,6 @@ class App extends Component {
     );
   };
 
-/*
-  comprarCarrito = (lista) =>{
-	const token = cookies.get('token');
-    const URL = "http://127.0.0.1:3001/pedidos/crear/"+token;
-	console.log(URL);
-    lista.map((idProd) => {
-      const productoURL = URL + idProd;
-      return fetch(productoURL)
-        .then(respuesta => respuesta.json());
-    });
-  }*/
-
   render() {
     return (
       <Router>
@@ -123,6 +111,7 @@ class App extends Component {
               <Route path="/productos/:id" element={<ProductoDetalle />} />
               <Route path="/categorias" element={<CategoriasLista />} />
               <Route path="/perfil" element={<Perfil ingreso={this.state.ingreso} />} />
+              <Route path="/recuperar" element={<Recuperar ingreso={this.state.ingreso} />} />
               <Route path="/login" element={<Login onLogin={this.iniciarSesion} />} />
               <Route path="/register" element={<Register onLogin={this.iniciarSesion} />} />
               <Route path="/categorias/:id" element={<CategoriaDetalle />} />
