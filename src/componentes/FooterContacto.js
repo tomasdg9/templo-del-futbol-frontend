@@ -7,7 +7,7 @@ function FooterContacto() {
         <div>
           <br/>
           <footer>
-            <b>Informacion de contacto</b>
+            <b>Información de contacto</b>
             <br/>
             <br/>
             <a href='https://github.com/nicolasberti'>Nicolás Berti</a> -

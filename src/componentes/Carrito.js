@@ -270,7 +270,7 @@ const Carrito = (props) => {
           <Button variant="secondary" onClick={DeshandleClose}>
             Cerrar
           </Button>
-          <Button variant="primary" onClick={DeshandleSubmit}>
+          <Button className="mx-2" variant="primary" onClick={DeshandleSubmit}>
             Comprar
           </Button>
           </div>
