@@ -9,6 +9,7 @@ import { Button, Modal } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
+import { initMercadoPago, Payment } from '@mercadopago/sdk-react';
 
 import Cookies from 'universal-cookie';
 const cookies = new Cookies();
@@ -39,7 +40,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "http://127.0.0.1:3001/productos/";
+    const URL = "http://127.0.0.1:8000/rest/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -132,7 +133,7 @@ const Carrito = (props) => {
       };
       try {
 		const token = cookies.get('token');  
-        const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
+        const response = await fetch('http://127.0.0.1:8000/rest/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,
@@ -176,8 +177,57 @@ const Carrito = (props) => {
     setCantidadesSeleccionadas(nuevasCantidades);
   };
 
+  
+  const initialization = {
+    amount: 100,
+    preferenceId: "<PREFERENCE_ID>",
+  };
+  const customization = {
+    paymentMethods: {
+      ticket: "all",
+      creditCard: "all",
+      debitCard: "all",
+      mercadoPago: "all",
+    },
+  };
+  const onSubmit = async (
+    { selectedPaymentMethod, formData }
+  ) => {
+    // callback llamado al hacer clic en el botón enviar datos
+    return new Promise((resolve, reject) => {
+      fetch("/process_payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // recibir el resultado del pago
+          resolve();
+        })
+        .catch((error) => {
+          // manejar la respuesta de error al intentar crear el pago
+          reject();
+        });
+    });
+  };
+  const onError = async (error) => {
+    // callback llamado para todos los casos de error de Brick
+    console.log(error);
+  };
+  const onReady = async () => {
+    /*
+      Callback llamado cuando el Brick está listo.
+      Aquí puede ocultar cargamentos de su sitio, por ejemplo.
+    */
+  };
+ 
+
   useEffect(() => {
     obtenerProductos();
+    initMercadoPago('APP_USR-24db822e-13e3-40d1-abb9-bd2e82241ec7');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carrito]);
 
@@ -332,6 +382,13 @@ const Carrito = (props) => {
           <br/>
             <label>
             </label>
+            <Payment
+              initialization={initialization}
+              customization={customization}
+              onSubmit={onSubmit}
+              onReady={onReady}
+              onError={onError}
+            />
             </div>
             <br/>
             <div className='d-flex align-items-center justify-content-center'>
@@ -343,6 +400,7 @@ const Carrito = (props) => {
             <div className='d-flex align-items-center justify-content-center'>
               { !props.ingreso && (<div><br></br>Debes iniciar sesión para comprar el carrito.</div>)}
             </div>
+            
           </div>
           <br/>
       </Card>

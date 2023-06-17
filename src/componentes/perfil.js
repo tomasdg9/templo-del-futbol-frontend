@@ -47,7 +47,7 @@ class perfil extends Component {
 
   obtenerPedidos = () => {
     /* Obtener los pedidos del usuario */
-    let URL = "http://127.0.0.1:3001/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
+    let URL = "http://127.0.0.1:8000/rest/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -64,7 +64,7 @@ class perfil extends Component {
 
   obtenerDetalle = (id) => { // ¿Tendria que validar con un token?
     this.setState({cargando: true, visualizando: id}, () => {
-      let URL = "http://127.0.0.1:3001/pedidos/verdetalle/"+id;
+      let URL = "http://127.0.0.1:8000/rest/pedidos/verdetalle/"+id;
       fetch(URL)
         .then(respuesta => respuesta.json())
         .then(resultado => {
