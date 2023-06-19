@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import CarritoContexto from '../contextos/CarritoContexto';
 import Card from 'react-bootstrap/Card';
-import BotonBorrar from './botones/BotonBorrar';
 import BotonVaciar from './botones/BotonVaciar';
 import BotonComprarCarrito from './botones/BotonComprarCarrito';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -25,7 +24,10 @@ const Carrito = (props) => {
   const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
-  const DeshandleClose = () => setshowDescripcion(false);
+  const DeshandleClose = () => {
+    setshowDescripcion(false);
+    window.paymentBrickController.unmount();
+  }
   const DeshandleShow = () => setshowDescripcion(true);
   const DeshandleChange = (event) => setDescripcion(event.target.value);
 
@@ -96,7 +98,7 @@ const Carrito = (props) => {
 
     if (regex.test(valor)) {
       DeshandleShow();
-    } else {
+  } else {
       toast('El email es inválido', {
         duration: 2000,
         position: 'bottom-right',
@@ -303,6 +305,14 @@ const Carrito = (props) => {
         
         <Modal.Body>
         { comprando === false && <div>
+          <Payment
+              initialization={initialization}
+              customization={customization}
+              onSubmit={onSubmit}
+              onReady={onReady}
+              onError={onError}
+            />
+            
           <label htmlFor="descripcion">Ingrese la descripción:</label>
           <input
             type="text"
@@ -382,13 +392,6 @@ const Carrito = (props) => {
           <br/>
             <label>
             </label>
-            <Payment
-              initialization={initialization}
-              customization={customization}
-              onSubmit={onSubmit}
-              onReady={onReady}
-              onError={onError}
-            />
             </div>
             <br/>
             <div className='d-flex align-items-center justify-content-center'>
