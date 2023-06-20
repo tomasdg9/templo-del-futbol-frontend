@@ -79,7 +79,7 @@ class ProductosLista extends Component {
   
   // Llamadas a la API
   obtenerProductos = () => {
-    let URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
+    let URL = "http://127.0.0.1:3001/productos/filtrar/";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -91,8 +91,8 @@ class ProductosLista extends Component {
 
 
   obtenerProductosCategoria = (id) => {
-    let URL = "http://127.0.0.1:8000/rest/productos/categoria/" + id;
-    fetch(URL)
+    // Obtiene los productos de la categoría
+    fetch("http://127.0.0.1:3001/productos/categoria/"+id)
       .then(respuesta => respuesta.json())
       .then(resultado => {
         if (resultado?.mensaje === "La categoría no tiene productos") {
@@ -109,9 +109,8 @@ class ProductosLista extends Component {
         
       })
       .catch(error => console.log(error));
-
-    let URL2 = "http://127.0.0.1:8000/rest/categorias/" + id;
-    fetch(URL2)
+    // Obtiene el nombre de la categoría  
+    fetch("http://127.0.0.1:3001/categorias/"+id)
       .then(respuesta => respuesta.json())
       .then(resultado => {
         this.setState({categorianombre: resultado.nombre})
@@ -119,33 +118,39 @@ class ProductosLista extends Component {
       .catch(error => console.log(error));
   }
   
+  renderTitulosProductos = () => {
+    if(this.props.categoria === -1){
+      return (<h1 className="display-4">Lista de productos</h1>);
+    } else {
+      return (<h1 className="display-4">Productos de {this.state.categorianombre}</h1>);
+    }
+  }
+
   render() {
     if(this.state.noExiste === true){
         return (<div><NotFound /></div>);
     } else {
-      const { productosamostrar, currentPage, itemsPerPage } = this.state;
+    
+    const { productosamostrar, currentPage, itemsPerPage } = this.state;
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const productosPaginados = productosamostrar.slice(startIndex, endIndex);
 	  return (
     <div>
         <div className="mt-2 d-flex justify-content-end">
-        {this.state.productosamostrar.length > 0 && this.state.busqueda === true &&
-          <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
-        } { this.state.productosamostrar.length > 0 &&
-          <Buscador 
-            datosBusqueda={this.datosBusqueda}
-            key={this.state.keyBuscador}
-          /> }
+          { /* Buscador de productos */ }
+          { this.state.productosamostrar.length > 0 && this.state.busqueda === true &&
+            <button onClick={this.limpiarBusqueda} className="btn mx-1 btn-sm btn-danger">Limpiar busqueda</button>
+          } { this.state.productosamostrar.length > 0 &&
+            <Buscador 
+              datosBusqueda={this.datosBusqueda}
+              key={this.state.keyBuscador}
+            /> }
         </div>
         <div className="mt-2 mb-2 container d-flex flex-column align-items-center">
-        
           <div className="container text-center">
-            { this.state.cargando === false && (
-              this.props.categoria === -1 ? 
-                (<h1 className="display-4">Lista de productos</h1>) 
-              : 
-                <h1 className="display-4">Productos de {this.state.categorianombre}</h1>)
+            { this.state.cargando === false && 
+                this.renderTitulosProductos() // Se renderiza el titulo de la lista de productos.
             }
             
             {this.state.cargando === true ?
@@ -179,6 +184,7 @@ class ProductosLista extends Component {
                 )}
         </div>
       </div>
+      { /* Barra de paginación */ }
       { this.state.productosamostrar.length > 0 &&
       <div className="container ">
         <div className="pagination">
