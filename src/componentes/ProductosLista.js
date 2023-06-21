@@ -79,7 +79,7 @@ class ProductosLista extends Component {
   
   // Llamadas a la API
   obtenerProductos = () => {
-    let URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
+    let URL = "http://127.0.0.1:3001/productos/filtrar/";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -91,7 +91,7 @@ class ProductosLista extends Component {
 
 
   obtenerProductosCategoria = (id) => {
-    let URL = "http://127.0.0.1:8000/rest/productos/categoria/" + id;
+    let URL = "http://127.0.0.1:3001/productos/categoria/" + id;
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -110,7 +110,7 @@ class ProductosLista extends Component {
       })
       .catch(error => console.log(error));
 
-    let URL2 = "http://127.0.0.1:8000/rest/categorias/" + id;
+    let URL2 = "http://127.0.0.1:3001/categorias/" + id;
     fetch(URL2)
       .then(respuesta => respuesta.json())
       .then(resultado => {

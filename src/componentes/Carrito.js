@@ -24,6 +24,7 @@ const Carrito = (props) => {
   const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
+  const [preferenceID, setPreferenceId] = useState('');
   const DeshandleClose = () => {
     setshowDescripcion(false);
     window.paymentBrickController.unmount();
@@ -42,7 +43,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "http://127.0.0.1:8000/rest/productos/";
+    const URL = "http://127.0.0.1:3001/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -135,7 +136,7 @@ const Carrito = (props) => {
       };
       try {
 		const token = cookies.get('token');  
-        const response = await fetch('http://127.0.0.1:8000/rest/pedidos/crear/'+token, requestOptions);
+        const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,
@@ -179,10 +180,32 @@ const Carrito = (props) => {
     setCantidadesSeleccionadas(nuevasCantidades);
   };
 
+  const obtenerPreferenceId = async () => {
+    try {
+      // Realiza la solicitud al backend para generar el preference ID
+      const response = await fetch('http://127.0.0.1:3001/obtener-preference-id', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        const preferenceId = data.preferenceId;
+        return preferenceId;
+      } else {
+        throw new Error('No se pudo obtener el preference ID');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   
   const initialization = {
     amount: 100,
-    preferenceId: "<PREFERENCE_ID>",
+    preferenceId: preferenceID,
   };
   const customization = {
     paymentMethods: {
@@ -211,6 +234,7 @@ const Carrito = (props) => {
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
+          console.log("Error en el pago");
           reject();
         });
     });
@@ -230,6 +254,12 @@ const Carrito = (props) => {
   useEffect(() => {
     obtenerProductos();
     initMercadoPago('APP_USR-24db822e-13e3-40d1-abb9-bd2e82241ec7');
+    const obtenerPreference = async () => {
+      const preference = await obtenerPreferenceId();
+      setPreferenceId(preference);
+    };
+  
+    obtenerPreference();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carrito]);
 
