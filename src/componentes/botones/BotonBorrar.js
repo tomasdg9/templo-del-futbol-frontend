@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react'
 
 const BotonBorrar = ({onClick}) => (
   <div>
-    <Button animated onClick={onClick}>
+    <Button className="red" animated onClick={onClick}>
       <Button.Content visible>Borrar</Button.Content>
       <Button.Content hidden>
         <Icon name='delete' />

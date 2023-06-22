@@ -41,7 +41,7 @@ function ProductoDetalle() {
   };
 
   function obtenerProducto() {
-    const URL = "http://127.0.0.1:3001/productos/" + id;
+    const URL = "http://127.0.0.1:8000/rest/productos/" + id;
     fetch(URL)
       .then(respuesta => {
         if (respuesta.status === 200) return respuesta.json();

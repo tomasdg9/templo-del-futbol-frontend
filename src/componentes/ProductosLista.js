@@ -70,29 +70,24 @@ class ProductosLista extends Component {
   }
 
   componentDidMount() { // Ejecuta cuando se abre la pagina
-    if(this.props.categoria === -1){
-      this.obtenerProductos();
-    } else {
-      this.obtenerProductosCategoria(this.props.categoria);
-    }
+      this.getProductos(this.props.categoria);
   }
-  
-  // Llamadas a la API
-  obtenerProductos = () => {
-    let URL = "http://127.0.0.1:3001/productos/filtrar/";
-    fetch(URL)
+
+  getProductos = (id) => {
+    let URL = "";
+    if(id == -1){
+      URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
+    } else {
+      URL = "http://127.0.0.1:3001/productos/categoria/"+id;
+      // Obtiene el nombre de la categoría
+      fetch("http://127.0.0.1:3001/categorias/"+id)
       .then(respuesta => respuesta.json())
       .then(resultado => {
-        this.setState({ productos: resultado, productosamostrar: resultado });
-        this.setState({ cargando: false });
+        this.setState({categorianombre: resultado.nombre})
       })
       .catch(error => console.log(error));
-  }
-
-
-  obtenerProductosCategoria = (id) => {
-    // Obtiene los productos de la categoría
-    fetch("http://127.0.0.1:3001/productos/categoria/"+id)
+    }
+    fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
         if (resultado?.mensaje === "La categoría no tiene productos") {
@@ -107,13 +102,6 @@ class ProductosLista extends Component {
                           cargando: false });
         }
         
-      })
-      .catch(error => console.log(error));
-    // Obtiene el nombre de la categoría  
-    fetch("http://127.0.0.1:3001/categorias/"+id)
-      .then(respuesta => respuesta.json())
-      .then(resultado => {
-        this.setState({categorianombre: resultado.nombre})
       })
       .catch(error => console.log(error));
   }

@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react'
 
 const BotonVaciar = ({onClick}) => (
   <div>
-    <Button animated='vertical'  onClick={onClick}>
+    <Button className="red" animated='vertical' onClick={onClick}>
       <Button.Content visible>Vaciar Carrito</Button.Content>
       <Button.Content hidden>
         <Icon name='trash' />

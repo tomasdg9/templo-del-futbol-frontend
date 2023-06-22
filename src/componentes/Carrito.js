@@ -50,7 +50,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "http://127.0.0.1:3001/productos/";
+    const URL = "http://127.0.0.1:8000/rest/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
