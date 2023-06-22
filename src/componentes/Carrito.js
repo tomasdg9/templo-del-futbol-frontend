@@ -24,7 +24,14 @@ const Carrito = (props) => {
   const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
-  const [preferenceID, setPreferenceId] = useState('');
+  const [preferenceID, setPreferenceId] = useState('');//no va 
+  const [datos, setDatos ] = useState({
+    email: '',
+    ids: '',
+    token: '',
+    cantidad: 0
+  });
+
   const DeshandleClose = () => {
     setshowDescripcion(false);
     window.paymentBrickController.unmount();
@@ -93,12 +100,34 @@ const Carrito = (props) => {
     setOpen(false);
   };
 
-  const comprarCarritoAux = () => {
+  const setearDatos = () => {
+    
+    const emaila = cookies.get('email');
+    const tokena = cookies.get('token');
+    const cantidada = productosCarrito.length;
+    setDatos({...datos, 
+      ids: productosCarrito,
+      token: tokena,
+      email: emaila,
+      cantidad: cantidada
+    });
+    
+  }
+
+  const comprarCarritoAux = async() => {
     const valor = cookies.get('email');
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Expresión regular para validar email
 
     if (regex.test(valor)) {
       DeshandleShow();
+      await setearDatos();
+      console.log(datos);
+      const obtenerPreference = async () => {
+        const preference = await obtenerPreferenceId();
+        setPreferenceId(preference);
+      };
+    
+      obtenerPreference();
   } else {
       toast('El email es inválido', {
         duration: 2000,
@@ -182,13 +211,12 @@ const Carrito = (props) => {
 
   const obtenerPreferenceId = async () => {
     try {
-      // Realiza la solicitud al backend para generar el preference ID
-      const response = await fetch('http://127.0.0.1:3001/obtener-preference-id', {
+      const response = await fetch('http://127.0.0.1:3001/mercadopago/crear-preferencia', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ datos })
       });
   
       if (response.ok) {
@@ -202,7 +230,7 @@ const Carrito = (props) => {
       console.error(error);
     }
   };
-  
+
   const initialization = {
     amount: 100,
     preferenceId: preferenceID,
@@ -253,13 +281,8 @@ const Carrito = (props) => {
 
   useEffect(() => {
     obtenerProductos();
-    initMercadoPago('APP_USR-24db822e-13e3-40d1-abb9-bd2e82241ec7');
-    const obtenerPreference = async () => {
-      const preference = await obtenerPreferenceId();
-      setPreferenceId(preference);
-    };
-  
-    obtenerPreference();
+    initMercadoPago('TEST-9d1c09e5-7670-4cbb-97cf-ede37dc650e7', {locale: 'es-AR'});
+    setearDatos();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carrito]);
 
