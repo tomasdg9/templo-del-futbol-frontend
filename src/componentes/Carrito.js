@@ -11,6 +11,7 @@ import numeral from 'numeral';
 import { Link } from 'react-router-dom';
 import { CardPayment, initMercadoPago } from '@mercadopago/sdk-react';
 import Cookies from 'universal-cookie';
+import MercadoPagoCardPayment from './MercadoPagoCardPayment';
 
 const cookies = new Cookies();
 
@@ -22,7 +23,6 @@ const Carrito = (props) => {
   const [ cargando, setCargando ] = useState(true);
   const [open, setOpen] = useState(false);
   const [showDescripcion, setshowDescripcion] = useState(false);
-  const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
   const DeshandleClose = () => {
@@ -30,7 +30,6 @@ const Carrito = (props) => {
     window.cardPaymentBrickController.unmount();
   }
   const DeshandleShow = () => setshowDescripcion(true);
-  const DeshandleChange = (event) => setDescripcion(event.target.value);
 
   const actualizarCarrito = () => {
     setComprando(false);
@@ -66,6 +65,7 @@ const Carrito = (props) => {
   };
   
   const onSubmit = async (formData) => {
+    alert()
     // Callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
       fetch('http://127.0.0.1:3001/process_payment/', {
@@ -162,14 +162,18 @@ const Carrito = (props) => {
     }
     let ids = cadenaAPI.slice(0, -1);
     const email = cookies.get('email');
-    if(descripcion === "") {
+
+    const descripcionInput = document.querySelector('#descripcion');
+    const descripcionValor = descripcionInput.value;
+
+    if(descripcionValor === "") {
         alert("Debes incluir una descripción para el pedido.")
         
     } else {
       setComprando(true);
       const data = {
         email: email,
-        descripcion: descripcion,
+        descripcion: descripcionValor,
         ids: ids
       };
       const requestOptions = {
@@ -181,7 +185,7 @@ const Carrito = (props) => {
 		const token = cookies.get('token');  
         const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
-          toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
+          toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcionValor, {
             duration: 5000,
             position: 'bottom-right',
             type: 'success'
@@ -306,16 +310,14 @@ const Carrito = (props) => {
             type="text"
             id="descripcion"
             className="form-control"
-            value={descripcion}
-            onChange={DeshandleChange}
           />
           <br/>
-          <CardPayment
-            initialization={initialization}
-            onSubmit={onSubmit}
-            onReady={onReady}
-            onError={onError}
-          />
+          <MercadoPagoCardPayment
+          initialization={initialization}
+          onSubmit={onSubmit}
+          onReady={onReady}
+          onError={onError}
+        />
           </div>
         }
         { comprando === true && <div>Comprando...</div> }
