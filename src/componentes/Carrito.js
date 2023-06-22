@@ -50,7 +50,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "http://127.0.0.1:8000/rest/productos/";
+    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -165,7 +165,7 @@ const Carrito = (props) => {
       };
       try {
 		const token = cookies.get('token');  
-        const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
+        const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
             duration: 5000,
@@ -211,7 +211,7 @@ const Carrito = (props) => {
 
   const obtenerPreferenceId = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:3001/mercadopago/crear-preferencia', {
+      const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/mercadopago/crear-preferencia', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -296,7 +296,7 @@ const Carrito = (props) => {
             <th>
             <Link to={`/productos/${id}`} >{nombre}</Link>
               <br></br>
-              <img className='imgCarrito' src={imagen} alt={nombre} />
+              <Link to={`/productos/${id}`} ><img className='imgCarrito' src={imagen} alt={nombre} /></Link>
             </th>
             <td>${numeral(precio).format('0,0.00')}</td>
             <td>

@@ -41,7 +41,7 @@ function ProductoDetalle() {
   };
 
   function obtenerProducto() {
-    const URL = "http://127.0.0.1:8000/rest/productos/" + id;
+    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/" + id;
     fetch(URL)
       .then(respuesta => {
         if (respuesta.status === 200) return respuesta.json();
@@ -55,7 +55,7 @@ function ProductoDetalle() {
   }
 
   function obtenerRecientes(){
-    const URL = "http://127.0.0.1:8000/rest/productos/masnuevos";
+    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/masnuevos";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => setProductos(resultado))

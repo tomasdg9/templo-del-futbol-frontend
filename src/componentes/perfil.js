@@ -4,6 +4,12 @@ import { Navigate } from 'react-router-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import numeral from 'numeral';
 import Pagination from 'react-js-pagination';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+
 const cookies = new Cookies();
 
 class perfil extends Component {
@@ -47,7 +53,7 @@ class perfil extends Component {
 
   obtenerPedidos = () => {
     /* Obtener los pedidos del usuario */
-    let URL = "http://127.0.0.1:3001/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
+    let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -64,7 +70,7 @@ class perfil extends Component {
 
   obtenerDetalle = (id) => { // ¿Tendria que validar con un token?
     this.setState({cargando: true, visualizando: id}, () => {
-      let URL = "http://127.0.0.1:3001/pedidos/verdetalle/"+id;
+      let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/verdetalle/"+id;
       fetch(URL)
         .then(respuesta => respuesta.json())
         .then(resultado => {
@@ -160,17 +166,40 @@ class perfil extends Component {
              <h1>Información sobre el pedido: {this.state.visualizando}</h1>
             </div>
             <div className="d-flex justify-content-center">
+            <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+            >
               {this.state.productosDelPedido.map((producto) => (
-                  <div className="card w-25 mx-2">
-                    <img className="card-img-top w-50" src={producto.imagen} alt="Card image cap"/>
-                    <div className="card-body">
-                      <h5 className="card-title">{producto.nombre_producto}</h5>
-                      <h6 className="card-subtitle mb-2 text-muted">{producto.nombre_categoria}</h6>
-                      <p className="card-text"><b>Precio:</b> ${numeral(producto.precio).format('0,0.00')}</p>
-                      <p className="card-text"><b>Cantidad pedida:</b> {producto.cantidadpedida}</p>
-                    </div>
-                  </div>
+                <Grid item key={producto.id}>
+                  <Card sx={{ maxWidth: 250 }}>
+                    <CardContent>
+                      <CardMedia
+                            component="img"
+                            image={producto.imagen}
+                            sx={{
+                              objectFit: 'unset',
+                              objectPosition: 'unset',
+                            }}
+                      />
+                      <Typography gutterBottom variant="h5" component="div">
+                        <b>{producto.nombre_producto}</b>
+                      </Typography>
+                      <Typography variant="body2">
+                        {producto.nombre_categoria}
+                      </Typography>
+                      <Typography>
+                      <b>${numeral(producto.precio).format('0,0.00')}</b>
+                      </Typography>
+                      <b>Cantidad pedida:</b> {producto.cantidadpedida}
+                    </CardContent>
+                  </Card>
+                </Grid>
                 ))}
+                </Grid>
             </div>
             <div className="d-flex justify-content-center mt-2">
               <h3>Costo total del pedido: ${numeral(precioTotal).format('0,0.00')}</h3>

@@ -5,17 +5,7 @@ import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
-/*
-  Tareas
-- Hacer que aparezca CirculerProgress cuando se esté registrando.
-- En vez de notificaciones que diga que está mal en un div arriba de "registrarse". Si los datos o las credenciales están repetidas.
-- Validar desde el formulario que estén bien ingresado los datos.
-
-PREGUNTAR: ¿Deberiamos hacer un restablecer contraseña?
-*/
-
-
-const baseUrl = "http://127.0.0.1:3001/clientes/register"; // api node.js cambiar luego por el otro vercel.
+const baseUrl = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/clientes/register"; // api node.js cambiar luego por el otro vercel.
 const cookies = new Cookies();
 
 class register extends Component {

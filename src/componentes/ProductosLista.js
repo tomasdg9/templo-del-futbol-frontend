@@ -76,14 +76,14 @@ class ProductosLista extends Component {
   getProductos = (id) => {
     let URL = "";
     if(id === -1){
-      URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
+      URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/filtrar/";
     } else {
-      URL = "http://127.0.0.1:3001/productos/categoria/"+id;
+      URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/categoria/"+id;
       // Obtiene el nombre de la categoría
-      fetch("http://127.0.0.1:3001/categorias/"+id)
+      fetch("https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/categorias/"+id)
       .then(respuesta => respuesta.json())
       .then(resultado => {
-        this.setState({categorianombre: resultado.nombre})
+        this.setState({categorianombre: resultado[0].nombre})
       })
       .catch(error => console.log(error));
     }

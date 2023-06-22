@@ -11,7 +11,7 @@ const RecuperarContra = () => {
   const handleChange = () => {
     const password = document.getElementById('password').value;
     axios
-      .post("http://127.0.0.1:3001/clientes/newpassword", { email, password, token }, { headers: { 'Content-Type': 'application/json' } })
+      .post("https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/clientes/newpassword", { email, password, token }, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
         toast('Se cambió la contraseña.', {
           duration: 5000,
