@@ -38,10 +38,3 @@ En general,
   <br>
   - Un carrito de compras donde se podrá seleccionar la cantidad del producto que se quiere comprar según el stock disponible.
 </div>
-
-Los opcionales que serán implementados son los siguientes:
-- API en NodeJS + autenticación de usuarios
-- MercadoPago para comprar el carrito
-- Responsive app
-- Servicios externo en JS
-- Almacenamiento de archivos en Laravel
