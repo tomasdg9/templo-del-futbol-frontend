@@ -13,34 +13,34 @@ class Producto extends Component {
 
   render() {
   return (
-    <Grid item key={this.props.id} xs={12} sm={6} md={4} lg={3}>
+    <Grid item key={this.props.id}>
       <Card sx={{ maxWidth: 250 }}>
-  <CardMedia
-    component="img"
-    image={this.props.imagen}
-    sx={{
-      objectFit: 'unset',
-      objectPosition: 'unset',
-    }}
-  />
-  <CardContent>
-    <Typography gutterBottom variant="h5" component="div">
-      <b>{this.props.nombre}</b>
-    </Typography>
-    <div className="col-md-6 offset-md-3 text-center">
-    <Typography variant="body2" color="text.secondary">
-      <b>${numeral(this.props.precio).format('0,0.00')}</b>
-    </Typography>
-    </div>
-  </CardContent>
-  <div className="col-md-6 offset-md-3 text-center">
-  <div style={{ marginTop: 'auto' }}>
-    <CardActions>
-      <Link to={`/productos/${this.props.id}`} className="btn btn-primary btn-sm mx-2 ">Ver producto</Link>
-    </CardActions>
-  </div>
-  </div>
-</Card>
+        <CardMedia
+          component="img"
+          image={this.props.imagen}
+          sx={{
+            objectFit: 'unset',
+            objectPosition: 'unset',
+          }}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            <b>{this.props.nombre}</b>
+          </Typography>
+          <div className="col-md-6 offset-md-3 text-center">
+          <Typography variant="body2" color="text.secondary">
+            <b>${numeral(this.props.precio).format('0,0.00')}</b>
+          </Typography>
+          </div>
+        </CardContent>
+        <div className="col-md-6 offset-md-3 text-center">
+        <div style={{ marginTop: 'auto' }}>
+          <CardActions>
+            <Link to={`/productos/${this.props.id}`} className="btn btn-primary btn-sm mx-2 ">Ver producto</Link>
+          </CardActions>
+        </div>
+        </div>
+      </Card>
     </Grid>
   );
   }

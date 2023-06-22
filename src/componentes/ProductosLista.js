@@ -75,7 +75,7 @@ class ProductosLista extends Component {
 
   getProductos = (id) => {
     let URL = "";
-    if(id == -1){
+    if(id === -1){
       URL = "http://127.0.0.1:8000/rest/productos/filtrar/";
     } else {
       URL = "http://127.0.0.1:3001/productos/categoria/"+id;
@@ -151,12 +151,8 @@ class ProductosLista extends Component {
               : 
                 (
                   <div className="d-flex justify-content-center">
-                    <Grid container spacing={1}
-                      direction="row"
-                      justifyContent="center"
-                      alignItems="center"
-                    >
-                    {productosPaginados && productosPaginados.map((producto) => (
+                    <Grid container direction="row" spacing={2} justifyContent="center" alignItems="center">
+                      {productosPaginados && productosPaginados.map((producto) => (
                         <Producto
                           key={producto.id}
                           categoria={producto.categoria_id}

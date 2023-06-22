@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 class recuperarcontra extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   handleChange = () => {
     let email = document.getElementById('email').value;

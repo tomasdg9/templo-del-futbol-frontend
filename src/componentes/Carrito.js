@@ -440,7 +440,7 @@ const Carrito = (props) => {
               {renderProductos()}
             </tbody>
           </table>
-          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Precio total (productos disponibles): ${numeral(obtenerPrecio()).format('0,0.00')}</b></Card></div>
+          <div className='d-flex align-items-center justify-content-center'><Card className='precioCarrito'><b>Total a pagar (neto): ${numeral(obtenerPrecio()).format('0,0.00')}</b></Card></div>
           <div className='d-flex align-items-center justify-content-center'>
           <br/>
             <label>

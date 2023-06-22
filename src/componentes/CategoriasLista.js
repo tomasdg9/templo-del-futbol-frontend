@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Categoria from "./entidades/Categoria"
+import Categoria from "./entidades/CategoriaNew"
 import Buscador from './Buscador'
 import Pagination from 'react-js-pagination';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast, { Toaster } from 'react-hot-toast';
-
+import Grid from '@mui/material/Grid';
 class CategoriasLista extends Component {
 
   constructor(props) {
@@ -13,7 +13,7 @@ class CategoriasLista extends Component {
           categorias: [],
           categoriasamostrar: [],
           currentPage: 1,
-          itemsPerPage: 9,
+          itemsPerPage: 8,
           busqueda: false,
 		      cargando: true,
           keyBuscador: 0, // Esto funciona para borrar el value del buscador al momento de limpiar la busqueda.
@@ -57,7 +57,7 @@ class CategoriasLista extends Component {
 
   // Unica llamada a la API
   obtenerCategorias = () => {
-    let URL = "http://127.0.0.1:3001/categorias";
+    let URL = "http://127.0.0.1:8000/rest/categorias";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => this.setState({ categorias: resultado, cargando:false, categoriasamostrar: resultado }))
@@ -108,15 +108,17 @@ class CategoriasLista extends Component {
           ) : (
             <div>
               <h1 className="display-4">Lista de categorias</h1>
-              <div className="row justify-content-center mt-2">
-                {categoriasPaginadas.map((categoria) => (
-                  <Categoria
-                    key={categoria.id}
-                    id={categoria.id}
-                    nombre={categoria.nombre}
-                    descripcion={categoria.descripcion}
-                  />
-                ))}
+              <div className="d-flex justify-content-center">
+                <Grid container direction="row" spacing={2} justifyContent="center" alignItems="center">
+                  {categoriasPaginadas.map((categoria) => (
+                    <Categoria
+                      key={categoria.id}
+                      id={categoria.id}
+                      nombre={categoria.nombre}
+                      descripcion={categoria.descripcion}
+                    />
+                  ))}
+                </Grid>
               </div>
             </div>
           )}

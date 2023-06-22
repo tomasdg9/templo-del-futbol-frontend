@@ -55,49 +55,41 @@ function ProductoDetalle() {
   }
 
   function obtenerRecientes(){
-    const URL = "http://127.0.0.1:3001/productos/masnuevos";
+    const URL = "http://127.0.0.1:8000/rest/productos/masnuevos";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => setProductos(resultado))
       .catch(error => console.log(error));
   }
   
-return (      
-      <div className="container-lg">
+  return (      
+      <div className="container ">
         { cargando === false && <div>
-        <Card className="cardDetalleProd">
-          <div className='productoDetalle'>
-           
-          <div className='contenedorTitulo mt-3'><h1>{producto.nombre}</h1></div>
-            <div className="row">
-              <div className="col text-center">
-                <img src={producto.imagen} />{/* Obtener la imagen por id */}
-                <div className="my-4"></div>
+          <div className="mt-2 d-flex justify-content-center align-items-center">
+          <Card style={{ width: '50rem' }}>
+              <div className="d-flex align-items-center justify-content-center">
+                <Card.Img variant="top" src={producto.imagen} style={{ width: '50%', height: 'auto' }} />
               </div>
-              <div className="col">
-              <Card className='cardProdDescripcion'>
-                <div className="descripcion mx-2 mt-2">
-                    <p className='categoriaProducto'>Categoria: {producto.nombre_categoria}</p>{/* Esta seria la categoria */}
-                    <p><b>Descripción:</b> {producto.descripcion}</p>
-                    <p><b>Estado:</b> {producto.estado}</p>
-                    <p><b>Stock disponible:</b> {producto.stock}</p> {/*si no hay stock disponible hay que ver que se podria hacer, se podria mostrar el producto sin la opcion comprar*/ }
-                    <p className='precio'>${numeral(producto.precio).format('0,0.00')}</p>
-                </div>
-                <br/>
-                    </Card>
-              </div>
-
-              <div className='d-flex justify-content-center align-items-center mb-2'>
-              {producto.stock > 0 ? 
+              <Card.Body>
+                <Card.Title>{producto.nombre}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">{producto.nombre_categoria}</Card.Subtitle>
+                <Card.Subtitle className="mb-2">${numeral(producto.precio).format('0,0.00')}</Card.Subtitle>
+                <Card.Text className="mt-2">
+                {producto.estado} - Stock: {producto.stock}
+                </Card.Text>
+                {producto.descripcion}
+                <div className='mt-2 d-flex justify-content-center align-items-center mb-2'>
+                {producto.stock > 0 ? 
                 <BotonComprar className='botonProducto' onClick={() => agregarProducto(id)}></BotonComprar>
                 : <div>No se puede comprar este producto.</div> }
                 </div>
-            </div>
+              </Card.Body>
+            </Card>
           </div>
-          
-        </Card>
         </div>}
       <br/>
+
+      {/* Productos más nuevos */}
       <div className='d-flex justify-content-center align-items-center'>
         
         <Card className='cardDetalleProd'>
