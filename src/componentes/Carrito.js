@@ -65,7 +65,6 @@ const Carrito = (props) => {
   };
   
   const onSubmit = async (formData) => {
-    alert()
     // Callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
       fetch('http://127.0.0.1:3001/process_payment/', {
@@ -78,9 +77,21 @@ const Carrito = (props) => {
         .then((response) => response.json())
         .then((response) => {
           // Recibir el resultado del pago
-          if(response.status === "approved"){
-            resolve();
-            DeshandleSubmit();
+          if (response.status === "approved") {
+            // Realizar la operación de la API DeshandleSubmit
+            DeshandleSubmit()
+              .then(() => {
+                // Ambas operaciones se completaron con éxito
+                resolve();
+              })
+              .catch(() => {
+                // Error en la operación DeshandleSubmit
+                // Revertir los cambios realizados en onSubmit
+                reject();
+              });
+          } else {
+            // El pago no fue aprobado
+            reject();
           }
         })
         .catch((error) => {
@@ -90,6 +101,7 @@ const Carrito = (props) => {
         });
     });
   };
+  
   
   const onError = async (error) => {
     // Callback llamado para todos los casos de error de Brick
