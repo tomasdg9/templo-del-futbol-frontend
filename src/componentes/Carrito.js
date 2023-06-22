@@ -8,9 +8,10 @@ import { Button, Modal } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
-import { initMercadoPago, Payment } from '@mercadopago/sdk-react';
-
+import { CardPayment, initMercadoPago } from '@mercadopago/sdk-react';
 import Cookies from 'universal-cookie';
+import MercadoPagoCardPayment from './MercadoPagoCardPayment';
+
 const cookies = new Cookies();
 
 const Carrito = (props) => {
@@ -21,23 +22,14 @@ const Carrito = (props) => {
   const [ cargando, setCargando ] = useState(true);
   const [open, setOpen] = useState(false);
   const [showDescripcion, setshowDescripcion] = useState(false);
-  const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
-  const [preferenceID, setPreferenceId] = useState('');//no va 
-  const [datos, setDatos ] = useState({
-    email: '',
-    ids: '',
-    token: '',
-    cantidad: 0
-  });
 
   const DeshandleClose = () => {
     setshowDescripcion(false);
-    window.paymentBrickController.unmount();
+    window.cardPaymentBrickController.unmount();
   }
   const DeshandleShow = () => setshowDescripcion(true);
-  const DeshandleChange = (event) => setDescripcion(event.target.value);
 
   const actualizarCarrito = () => {
     setComprando(false);
@@ -67,6 +59,81 @@ const Carrito = (props) => {
       console.log(error);
     }
   }
+  const obtenerPrecio = () => {
+    let precioTotal = 0;
+    productosCarrito.forEach((producto, index) => {
+      const { precio, stock } = producto;
+      if(stock > 0) {
+        const cantidad = cantidadesSeleccionadas[index];
+        const precioFloat = parseFloat(precio);
+        const subtotal = precioFloat * cantidad;
+        precioTotal += subtotal;
+      }
+    });
+
+    return precioTotal;
+  };
+
+  const initialization = {
+    amount: obtenerPrecio(),
+  };
+  
+  const onSubmit = async (formData) => {
+    // Callback llamado al hacer clic en el botón enviar datos
+    return new Promise((resolve, reject) => {
+      fetch('http://127.0.0.1:3001/process_payment/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // Recibir el resultado del pago
+          if (response.status === "approved") {
+            // Realizar la operación de la API DeshandleSubmit
+            DeshandleSubmit()
+              .then(() => {
+                // Ambas operaciones se completaron con éxito
+                resolve();
+              })
+              .catch(() => {
+                // Error en la operación DeshandleSubmit
+                // Revertir los cambios realizados en onSubmit
+                toast('No se pudo realizar el pago, intente nuevamente', {
+                  duration: 3000,
+                      position: 'bottom-right',
+                  icon: '⚠️',
+                });
+                DeshandleClose();
+                reject();
+              });
+          } else {
+            // El pago no fue aprobado
+            reject();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          // Manejar la respuesta de error al intentar crear el pago
+          reject();
+        });
+    });
+  };
+  
+  
+  const onError = async (error) => {
+    // Callback llamado para todos los casos de error de Brick
+    console.log(error);
+  };
+  
+  const onReady = async () => {
+    /*
+      Callback llamado cuando Brick está listo.
+      Aquí puedes ocultar cargamentos de su sitio, por ejemplo.
+    */
+  };
 
   const handleConfirmDelete = () =>{
     eliminarElemento(indexBorrar);
@@ -149,13 +216,23 @@ const Carrito = (props) => {
     }
     let ids = cadenaAPI.slice(0, -1);
     const email = cookies.get('email');
-    if(descripcion === "") {
-        alert("Debes incluir una descripción para el pedido.")
+
+    const descripcionInput = document.querySelector('#descripcion');
+    const descripcionValor = descripcionInput.value;
+
+    if(descripcionValor === "") {
+      toast('No se pudo realizar el pago, descripción vacia', {
+        duration: 3000,
+            position: 'bottom-right',
+        icon: '⚠️',
+      });
+      DeshandleClose();
+        
     } else {
       setComprando(true);
       const data = {
         email: email,
-        descripcion: descripcion,
+        descripcion: descripcionValor,
         ids: ids
       };
       const requestOptions = {
@@ -167,7 +244,7 @@ const Carrito = (props) => {
 		const token = cookies.get('token');  
         const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
-          toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcion, {
+          toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcionValor, {
             duration: 5000,
             position: 'bottom-right',
             type: 'success'
@@ -187,20 +264,7 @@ const Carrito = (props) => {
   
 
 
-  const obtenerPrecio = () => {
-    let precioTotal = 0;
-    productosCarrito.forEach((producto, index) => {
-      const { precio, stock } = producto;
-      if(stock > 0) {
-        const cantidad = cantidadesSeleccionadas[index];
-        const precioFloat = parseFloat(precio);
-        const subtotal = precioFloat * cantidad;
-        precioTotal += subtotal;
-      }
-    });
-
-    return precioTotal;
-  };
+  
 
   const handleCantidadSeleccionada = (index, e) => {
     const cantidad = parseInt(e.target.value);
@@ -282,8 +346,6 @@ const Carrito = (props) => {
   useEffect(() => {
     obtenerProductos();
     initMercadoPago('TEST-9d1c09e5-7670-4cbb-97cf-ede37dc650e7', {locale: 'es-AR'});
-    setearDatos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [carrito]);
 
   const renderProductos = () => {
@@ -358,22 +420,20 @@ const Carrito = (props) => {
         
         <Modal.Body>
         { comprando === false && <div>
-          <Payment
-              initialization={initialization}
-              customization={customization}
-              onSubmit={onSubmit}
-              onReady={onReady}
-              onError={onError}
-            />
-            
+          
           <label htmlFor="descripcion">Ingrese la descripción:</label>
           <input
             type="text"
             id="descripcion"
             className="form-control"
-            value={descripcion}
-            onChange={DeshandleChange}
           />
+          <br/>
+          <MercadoPagoCardPayment
+          initialization={initialization}
+          onSubmit={onSubmit}
+          onReady={onReady}
+          onError={onError}
+        />
           </div>
         }
         { comprando === true && <div>Comprando...</div> }
@@ -382,9 +442,6 @@ const Carrito = (props) => {
         { comprando === false && <div>
           <Button variant="secondary" onClick={DeshandleClose}>
             Cerrar
-          </Button>
-          <Button className="mx-2" variant="primary" onClick={DeshandleSubmit}>
-            Comprar
           </Button>
           </div>
         }
