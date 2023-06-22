@@ -129,18 +129,34 @@ class perfil extends Component {
             </div>
               {/* Cards */}
               <div className="d-flex justify-content-center">
+              <Grid
+              container
+              direction="row"
+              justifyContent="center"
+              alignItems="center"
+              spacing={2}
+            >
               {pedidosPaginados.map((pedido) => (
-                <div className="card mt-2 w-50 mx-2">
-                  <div className="card-body">
-                    <h5 className="card-title">Pedido {this.formatDate(pedido.created_at)}</h5>
-                    <h6 className="card-subtitle mb-2 text-muted">Cantidad de productos: {pedido.cantidadproductos}</h6>
-                    <p className="card-text">{pedido.descripcion}</p>
-                  </div>
-                  <div className="d-flex justify-content-center">
-                  <button onClick={() => this.obtenerDetalle(pedido.id)} type="button" className="mb-2 mx-2 w-50 btn btn-success">Ver detalle</button>
-                  </div>
-                </div>
+                <Grid item key={pedido.id}>
+                <Card sx={{ maxWidth: 250 }}>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                    Pedido {this.formatDate(pedido.created_at)}
+                    </Typography>
+                    <Typography variant="body2">
+                    Cantidad de productos: {pedido.cantidadproductos}
+                    </Typography>
+                    <Typography>
+                    <b>{pedido.descripcion}</b>
+                    </Typography>
+                    <div className="d-flex justify-content-center mt-4">
+                      <button onClick={() => this.obtenerDetalle(pedido.id)} type="button" className="mb-2 mx-2 w-50 btn btn-success">Ver detalle</button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Grid>
               ))}
+              </Grid>
             </div>
           </div>
         { /* Barra de paginación */ }
@@ -163,7 +179,7 @@ class perfil extends Component {
         return (
           <div className="container">
              <div className="d-flex justify-content-center mb-2">
-             <h1>Información sobre el pedido: {this.state.visualizando}</h1>
+             <h1>(Pedido: {this.state.visualizando}) - Productos</h1>
             </div>
             <div className="d-flex justify-content-center">
             <Grid
