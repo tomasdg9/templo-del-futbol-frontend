@@ -59,9 +59,23 @@ const Carrito = (props) => {
       console.log(error);
     }
   }
+  const obtenerPrecio = () => {
+    let precioTotal = 0;
+    productosCarrito.forEach((producto, index) => {
+      const { precio, stock } = producto;
+      if(stock > 0) {
+        const cantidad = cantidadesSeleccionadas[index];
+        const precioFloat = parseFloat(precio);
+        const subtotal = precioFloat * cantidad;
+        precioTotal += subtotal;
+      }
+    });
+
+    return precioTotal;
+  };
 
   const initialization = {
-    amount: 100,
+    amount: obtenerPrecio(),
   };
   
   const onSubmit = async (formData) => {
@@ -87,6 +101,12 @@ const Carrito = (props) => {
               .catch(() => {
                 // Error en la operación DeshandleSubmit
                 // Revertir los cambios realizados en onSubmit
+                toast('No se pudo realizar el pago, intente nuevamente', {
+                  duration: 3000,
+                      position: 'bottom-right',
+                  icon: '⚠️',
+                });
+                DeshandleClose();
                 reject();
               });
           } else {
@@ -179,7 +199,12 @@ const Carrito = (props) => {
     const descripcionValor = descripcionInput.value;
 
     if(descripcionValor === "") {
-        alert("Debes incluir una descripción para el pedido.")
+      toast('No se pudo realizar el pago, descripción vacia', {
+        duration: 3000,
+            position: 'bottom-right',
+        icon: '⚠️',
+      });
+      DeshandleClose();
         
     } else {
       setComprando(true);
@@ -217,20 +242,7 @@ const Carrito = (props) => {
   
 
 
-  const obtenerPrecio = () => {
-    let precioTotal = 0;
-    productosCarrito.forEach((producto, index) => {
-      const { precio, stock } = producto;
-      if(stock > 0) {
-        const cantidad = cantidadesSeleccionadas[index];
-        const precioFloat = parseFloat(precio);
-        const subtotal = precioFloat * cantidad;
-        precioTotal += subtotal;
-      }
-    });
-
-    return precioTotal;
-  };
+  
 
   const handleCantidadSeleccionada = (index, e) => {
     const cantidad = parseInt(e.target.value);
