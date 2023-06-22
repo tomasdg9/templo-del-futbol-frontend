@@ -9,8 +9,9 @@ import { Button, Modal } from 'react-bootstrap';
 import toast, { Toaster } from 'react-hot-toast';
 import numeral from 'numeral';
 import { Link } from 'react-router-dom';
-
+import { CardPayment, initMercadoPago } from '@mercadopago/sdk-react';
 import Cookies from 'universal-cookie';
+
 const cookies = new Cookies();
 
 const Carrito = (props) => {
@@ -24,7 +25,10 @@ const Carrito = (props) => {
   const [descripcion, setDescripcion] = useState('');
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
-  const DeshandleClose = () => setshowDescripcion(false);
+  const DeshandleClose = () => {
+    setshowDescripcion(false);
+    window.cardPaymentBrickController.unmount();
+  }
   const DeshandleShow = () => setshowDescripcion(true);
   const DeshandleChange = (event) => setDescripcion(event.target.value);
 
@@ -56,6 +60,48 @@ const Carrito = (props) => {
       console.log(error);
     }
   }
+
+  const initialization = {
+    amount: 100,
+  };
+  
+  const onSubmit = async (formData) => {
+    // Callback llamado al hacer clic en el botón enviar datos
+    return new Promise((resolve, reject) => {
+      fetch('http://127.0.0.1:3001/process_payment/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // Recibir el resultado del pago
+          if(response.status === "approved"){
+            resolve();
+            DeshandleSubmit();
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          // Manejar la respuesta de error al intentar crear el pago
+          reject();
+        });
+    });
+  };
+  
+  const onError = async (error) => {
+    // Callback llamado para todos los casos de error de Brick
+    console.log(error);
+  };
+  
+  const onReady = async () => {
+    /*
+      Callback llamado cuando Brick está listo.
+      Aquí puedes ocultar cargamentos de su sitio, por ejemplo.
+    */
+  };
 
   const handleConfirmDelete = () =>{
     eliminarElemento(indexBorrar);
@@ -118,6 +164,7 @@ const Carrito = (props) => {
     const email = cookies.get('email');
     if(descripcion === "") {
         alert("Debes incluir una descripción para el pedido.")
+        
     } else {
       setComprando(true);
       const data = {
@@ -178,7 +225,7 @@ const Carrito = (props) => {
 
   useEffect(() => {
     obtenerProductos();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    initMercadoPago('TEST-9d1c09e5-7670-4cbb-97cf-ede37dc650e7', {locale: 'es-AR'});
   }, [carrito]);
 
   const renderProductos = () => {
@@ -253,6 +300,7 @@ const Carrito = (props) => {
         
         <Modal.Body>
         { comprando === false && <div>
+          
           <label htmlFor="descripcion">Ingrese la descripción:</label>
           <input
             type="text"
@@ -260,6 +308,13 @@ const Carrito = (props) => {
             className="form-control"
             value={descripcion}
             onChange={DeshandleChange}
+          />
+          <br/>
+          <CardPayment
+            initialization={initialization}
+            onSubmit={onSubmit}
+            onReady={onReady}
+            onError={onError}
           />
           </div>
         }
@@ -269,9 +324,6 @@ const Carrito = (props) => {
         { comprando === false && <div>
           <Button variant="secondary" onClick={DeshandleClose}>
             Cerrar
-          </Button>
-          <Button className="mx-2" variant="primary" onClick={DeshandleSubmit}>
-            Comprar
           </Button>
           </div>
         }
