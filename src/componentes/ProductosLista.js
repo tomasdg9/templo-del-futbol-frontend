@@ -170,7 +170,7 @@ class ProductosLista extends Component {
       </div>
       { /* Barra de paginación */ }
       { this.state.productosamostrar.length > 0 &&
-      <div className="container ">
+      <div className="container mt-2">
         <div className="pagination">
           <Pagination
               activePage={currentPage}

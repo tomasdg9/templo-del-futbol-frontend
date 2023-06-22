@@ -124,7 +124,7 @@ class CategoriasLista extends Component {
           )}
         </div>
         { this.state.categoriasamostrar.length > 0 &&
-        <div className="container ">
+        <div className="container mt-2">
             <div className="pagination">
                 <Pagination
                     activePage={currentPage}
