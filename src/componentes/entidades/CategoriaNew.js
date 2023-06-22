@@ -19,9 +19,11 @@ const CategoriaNew = (props) => {
         </CardContent>
         <div className="col-md-6 offset-md-3 text-center">
         <div style={{ marginTop: 'auto' }}>
+        <div className="d-flex justify-content-center mb-2">
           <CardActions>
             <Link to={`/categorias/${props.id}`} className="btn btn-primary btn-sm mx-2">Ver productos</Link>
           </CardActions>
+          </div>
         </div>
         </div>
       </Card>

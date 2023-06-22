@@ -35,9 +35,11 @@ class Producto extends Component {
         </CardContent>
         <div className="col-md-6 offset-md-3 text-center">
         <div style={{ marginTop: 'auto' }}>
+        <div className="d-flex justify-content-center mb-2">
           <CardActions>
             <Link to={`/productos/${this.props.id}`} className="btn btn-primary btn-sm mx-2 ">Ver producto</Link>
           </CardActions>
+        </div>
         </div>
         </div>
       </Card>
