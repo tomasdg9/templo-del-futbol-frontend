@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import NB from 'react-bootstrap/Navbar';
 import Cookies from 'universal-cookie';
 import toast, { Toaster } from 'react-hot-toast';
+import { BiFootball } from 'react-icons/bi';
+
 
 const cookies = new Cookies();
 
@@ -24,7 +26,10 @@ function Navbar(props) {
     <NB collapseOnSelect expand="lg" bg="success" variant="dark">
       <Container>
       <Toaster />
-        <NB.Brand>El Templo del Fútbol ⚽</NB.Brand>
+        <NB.Brand>
+          El Templo del Fútbol&nbsp;
+          <BiFootball className="mr-2" />
+        </NB.Brand>
         <NB.Toggle aria-controls="responsive-NB-nav" />
         <NB.Collapse id="responsive-NB-nav">
           <Nav className="me-auto">

@@ -81,7 +81,7 @@ const Carrito = (props) => {
   const onSubmit = async (formData) => {
     // Callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
-      fetch('http://127.0.0.1:3001/process_payment/', {
+      fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/process_payment/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

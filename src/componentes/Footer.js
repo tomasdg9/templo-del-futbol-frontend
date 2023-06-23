@@ -5,33 +5,37 @@ import 'bootstrap/dist/js/bootstrap.js';
 
 function Footer() {
     return (
-        <div className="mt-3">
-      <div className="footerColor align-items-center">
-        <div className="row justify-content-center text-center">
-          <div className="col mx-3">
-            <img src="/img/mercadopago.svg" className="img-fluid mt-4" />
+
+      <div class="mt-2">
+        <hr></hr>
+      <div class="align-items-center">
+        <div class="row justify-content-center text-center">
+          <div class="col-md-1 col-6">
+            <img src="/img/mercadopago.svg" class="img-fluid mt-4" />
           </div>
-          <div className="col">
-            <img src="/img/americanexpress.svg"className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/americanexpress.svg" class="img-fluid mt-4" />
           </div>
-          <div className="col">
-            <img src="/img/mastercard.svg" className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/mastercard.svg" class="img-fluid mt-4" />
           </div>
-          <div className="col">
-            <img src="/img/naranja.webp" className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/naranja.webp" class="img-fluid mt-4" />
           </div>
-          <div className="col">
-            <img src="/img/pagofacil.svg" className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/pagofacil.svg" class="img-fluid mt-4" />
           </div>
-          <div className="col">
-            <img src="/img/rapipago.svg" className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/rapipago.svg" class="img-fluid mt-4" />
           </div>
-          <div className="col mx-3">
-            <img src="/img/visa.svg" className="img-fluid mt-4" />
+          <div class="col-md-1 col-6">
+            <img src="/img/visa.svg" class="img-fluid mt-4" />
           </div>
         </div>
       </div>
-      </div>
+      <hr></hr>
+    </div>
+    
     );
   }
   
