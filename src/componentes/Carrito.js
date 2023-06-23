@@ -117,6 +117,12 @@ const Carrito = (props) => {
         })
         .catch((error) => {
           console.log(error);
+          toast('No se pudo realizar el pago', {
+            duration: 3000,
+                position: 'bottom-right',
+            icon: '⚠️',
+          });
+          DeshandleClose();
           // Manejar la respuesta de error al intentar crear el pago
           reject();
         });
@@ -229,6 +235,12 @@ const Carrito = (props) => {
           vaciarCarrito();
           setComprando(false);
         } else {
+          toast('No se pudo realizar el pago', {
+          duration: 3000,
+              position: 'bottom-right',
+          icon: '⚠️',
+        });
+        DeshandleClose();
           throw new Error('Esta intentando comprar un producto sin stock o se produjo un error en la solicitud.');
         }
       } catch (error) {
