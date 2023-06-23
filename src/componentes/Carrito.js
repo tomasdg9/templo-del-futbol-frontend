@@ -20,6 +20,7 @@ const Carrito = (props) => {
   const [productosCarrito, setProductosCarrito] = useState([]);
   const [cantidadesSeleccionadas, setCantidadesSeleccionadas] = useState([]);
   const [ cargando, setCargando ] = useState(true);
+  const [ cargandoMP, setCargandoMP] = useState(true);
   const [open, setOpen] = useState(false);
   const [showDescripcion, setshowDescripcion] = useState(false);
   const [openBorrar, setOpenBorrar] = useState(false);
@@ -129,10 +130,7 @@ const Carrito = (props) => {
   };
   
   const onReady = async () => {
-    /*
-      Callback llamado cuando Brick está listo.
-      Aquí puedes ocultar cargamentos de su sitio, por ejemplo.
-    */
+    setCargandoMP(false);
   };
 
   const handleConfirmDelete = () =>{
@@ -337,6 +335,11 @@ const Carrito = (props) => {
             className="form-control"
           />
           <br/>
+          {cargandoMP === true && 
+            <div className="container text-center">
+              <CircularProgress />
+              </div>
+          }
           <MercadoPagoCardPayment
           initialization={initialization}
           onSubmit={onSubmit}
