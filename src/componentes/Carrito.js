@@ -167,19 +167,6 @@ const Carrito = (props) => {
     setOpen(false);
   };
 
-  const setearDatos = () => {
-    
-    const emaila = cookies.get('email');
-    const tokena = cookies.get('token');
-    const cantidada = productosCarrito.length;
-    setDatos({...datos, 
-      ids: productosCarrito,
-      token: tokena,
-      email: emaila,
-      cantidad: cantidada
-    });
-    
-  }
 
   const comprarCarritoAux = async() => {
     const valor = cookies.get('email');
@@ -187,14 +174,6 @@ const Carrito = (props) => {
 
     if (regex.test(valor)) {
       DeshandleShow();
-      await setearDatos();
-      console.log(datos);
-      const obtenerPreference = async () => {
-        const preference = await obtenerPreferenceId();
-        setPreferenceId(preference);
-      };
-    
-      obtenerPreference();
   } else {
       toast('El email es inválido', {
         duration: 2000,
@@ -271,28 +250,6 @@ const Carrito = (props) => {
     const nuevasCantidades = [...cantidadesSeleccionadas];
     nuevasCantidades[index] = cantidad;
     setCantidadesSeleccionadas(nuevasCantidades);
-  };
-
-  const obtenerPreferenceId = async () => {
-    try {
-      const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/mercadopago/crear-preferencia', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ datos })
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-        const preferenceId = data.preferenceId;
-        return preferenceId;
-      } else {
-        throw new Error('No se pudo obtener el preference ID');
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   useEffect(() => {
@@ -443,6 +400,7 @@ const Carrito = (props) => {
                 <th scope='col'>Producto</th>
                 <th scope='col'>Precio unitario</th>
                 <th scope='col'>Cantidad</th>
+                <th scope='col'></th>
               </tr>
             </thead>
             <tbody>

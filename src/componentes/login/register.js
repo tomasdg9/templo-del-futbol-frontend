@@ -72,7 +72,7 @@ class register extends Component {
                 
                 <div className="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="text" className="form-control" id="password" placeholder="Ingrese su contraseña"/>
+                    <input type="password" className="form-control" id="password" placeholder="Ingrese su contraseña"/>
                 </div>
                 <div className="form-group">
                     <label for="nombre">Nombre:</label>
