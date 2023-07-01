@@ -5,7 +5,7 @@ import Producto from './entidades/Producto';
 import Grid from '@mui/material/Grid';
 
 function Home() {
-  let URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/productos/masnuevos";
+  let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/masnuevos";
   const [productos, setProductos] = useState([]);
     
   useEffect(() => {
@@ -25,8 +25,11 @@ function Home() {
         </div>
         <hr></hr>
         <div>
-          {productos.length > 0 && (<h1>LO MÁS NUEVO</h1>)}
-          <Grid container spacing={1}>
+        <div className="d-flex justify-content-center">
+          {productos.length > 0 && (<div><h1>LO MÁS NUEVO</h1><br></br></div>)}
+        </div>
+        <div className="d-flex justify-content-center">
+          <Grid container spacing={2} direction="row" justifyContent="center" alignItems="center" >
             {productos.length > 0 && productos.map((producto) => (
               <Producto
                 key={producto.id}
@@ -39,6 +42,7 @@ function Home() {
                 />
             ))}
           </Grid>
+          </div>
         </div>
         <Footer />
       </div>

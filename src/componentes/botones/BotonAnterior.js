@@ -4,7 +4,7 @@ import { Button, Icon } from 'semantic-ui-react'
 
 const BotonAnterior = () => (
   <div>
-    <Button animated>
+    <Button className="blue" animated>
       <Button.Content visible>Anterior</Button.Content>
       <Button.Content hidden>
         <Icon name='arrow left' />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'universal-cookie';
 
 // Componentes
 import Navbar from './componentes/Navbar';
@@ -12,11 +13,19 @@ import CategoriaDetalle from './componentes/entidades/CategoriaDetalle';
 import Carrito from './componentes/Carrito';
 import ProductoDetalle from './componentes/entidades/ProductoDetalle'
 import FooterContacto from './componentes/FooterContacto'
+import Login from './componentes/login/login'
+import Register from './componentes/login/register'
+import Perfil from './componentes/perfil'
+import Recuperar from './componentes/login/recuperarcontra'
+import Cambiar from './componentes/login/changepassword'
+
 //Contextos
 import CarritoContexto from './contextos/CarritoContexto';
 
 // Estilos
 import './css/styles.css';
+
+const cookies = new Cookies();
 
 class App extends Component {
   constructor(props) {
@@ -25,7 +34,16 @@ class App extends Component {
     const carrito = localStorage.getItem('carrito');
     this.state = {
       carrito: carrito ? JSON.parse(carrito) : [], 
+      ingreso: !!cookies.get('email')
     };
+  }
+
+  
+  iniciarSesion = () => {
+    this.setState({ingreso: true});
+  }
+  cerrarSesion = () => {
+    this.setState({ingreso: false});
   }
 
   guardarCarritoEnLocalStorage = () => {
@@ -76,21 +94,14 @@ class App extends Component {
     );
   };
 
-  comprarCarrito = (lista) =>{
-    const URL = "https://de-giusti-berti-laravel-tomasdg9.vercel.app/rest/pedidos/crear/";
-    lista.map((idProd) => {
-      const productoURL = URL + idProd;
-      return fetch(productoURL)
-        .then(respuesta => respuesta.json());
-    });
-  }
-
   render() {
     return (
       <Router>
         <div>
           <Navbar 
               cantCarrito={this.state.carrito.length}
+              ingreso={this.state.ingreso}
+              logout={this.cerrarSesion}
           />
           <CarritoContexto.Provider value={{ carrito: this.state.carrito, vaciarCarrito: this.vaciarCarrito, agregarProducto: this.agregarProducto, eliminarElemento: this.eliminarElemento}}>
             <Routes>
@@ -100,9 +111,14 @@ class App extends Component {
                 element={<ProductosLista datosBusqueda={this.vaciarCarrito} categoria={-1}/>}
               />
               <Route path="/productos/:id" element={<ProductoDetalle />} />
+              <Route path="/cambiar/:email/:token" element={<Cambiar />} />
               <Route path="/categorias" element={<CategoriasLista />} />
+              <Route path="/perfil" element={<Perfil ingreso={this.state.ingreso} />} />
+              <Route path="/recuperar" element={<Recuperar ingreso={this.state.ingreso} />} />
+              <Route path="/login" element={<Login onLogin={this.iniciarSesion} />} />
+              <Route path="/register" element={<Register onLogin={this.iniciarSesion} />} />
               <Route path="/categorias/:id" element={<CategoriaDetalle />} />
-              <Route path="/carrito" element={<Carrito nombre="Prueba" />} />
+              <Route path="/carrito" element={<Carrito ingreso={this.state.ingreso} nombre="Prueba" />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </CarritoContexto.Provider>
