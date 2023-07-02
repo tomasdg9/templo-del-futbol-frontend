@@ -25,6 +25,7 @@ const Carrito = (props) => {
   const [showDescripcion, setshowDescripcion] = useState(false);
   const [openBorrar, setOpenBorrar] = useState(false);
   const [indexBorrar, setIndexBorrar] = useState(null);
+  const [mpID, setIDMP] = useState('');
 
   const DeshandleClose = () => {
     setshowDescripcion(false);
@@ -94,6 +95,7 @@ const Carrito = (props) => {
           // Recibir el resultado del pago
           if (response.status === "approved") {
             // Realizar la operación de la API DeshandleSubmit
+            setIDMP(response.id);
             DeshandleSubmit()
               .then(() => {
                 // Ambas operaciones se completaron con éxito
@@ -216,7 +218,8 @@ const Carrito = (props) => {
       const data = {
         email: email,
         descripcion: descripcionValor,
-        ids: ids
+        ids: ids,
+        idMP: mpID
       };
       const requestOptions = {
         method: 'POST',
@@ -225,7 +228,7 @@ const Carrito = (props) => {
       };
       try {
 		const token = cookies.get('token');  
-        const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/crear/'+token, requestOptions);
+        const response = await fetch('http://127.0.0.1:3001/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcionValor, {
             duration: 5000,
