@@ -47,6 +47,10 @@ class login extends Component {
             cookies.set('token', response.data.token, {path: "/"});
             this.props.onLogin();
             this.setState({ shouldRedirect: true, cargando: false });
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 3); // Caduca en 3 días
+            cookies.set('token', response.data.token, { expires: expirationDate });
+            cookies.set('email', response.data.email, { expires: expirationDate });
             toast('Se inició sesión ('+email+')', {
                 duration: 5000,
                 position: 'bottom-right',

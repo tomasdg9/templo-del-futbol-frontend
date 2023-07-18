@@ -214,6 +214,7 @@ const Carrito = (props) => {
       DeshandleClose();
         
     } else {
+      console.log("id Parametro: "+mpIDparametro);
       setComprando(true);
       const data = {
         email: email,

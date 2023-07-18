@@ -34,7 +34,7 @@ class App extends Component {
     const carrito = localStorage.getItem('carrito');
     this.state = {
       carrito: carrito ? JSON.parse(carrito) : [], 
-      ingreso: !!cookies.get('email')
+      ingreso: !!cookies.get('token')
     };
   }
 
