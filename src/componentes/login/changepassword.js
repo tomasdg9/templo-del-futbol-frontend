@@ -31,29 +31,26 @@ const RecuperarContra = () => {
       });
   }
 
-  useEffect(() => {
-    if (reDirect) {
-      return <Navigate to="/" />;
-    }
-  }, [reDirect]);
-
-  return (
-    <div>
-      <Toaster />
-      <div className="row justify-content-center d-flex mt-2 mb-2 ">
-        <div className="col-md-6 bg-white">
-          <h2 className="text-center mb-4">Cambiar contraseña</h2>
-          <div className="form-group">
-            <label htmlFor="password">Nueva contraseña:</label>
-            <input type="text" className="form-control" id="password" placeholder="Ingrese su nueva contraseña" />
-          </div>
-          <div className="d-flex justify-content-center">
-            <button onClick={handleChange} className="btn btn-primary mb-2 mt-2">Cambiar</button>
+  if(!reDirect)
+    return (
+      <div>
+        <Toaster />
+        <div className="row justify-content-center d-flex mt-2 mb-2 ">
+          <div className="col-md-6 bg-white">
+            <h2 className="text-center mb-4">Cambiar contraseña</h2>
+            <div className="form-group">
+              <label htmlFor="password">Nueva contraseña:</label>
+              <input type="text" className="form-control" id="password" placeholder="Ingrese su nueva contraseña" />
+            </div>
+            <div className="d-flex justify-content-center">
+              <button onClick={handleChange} className="btn btn-primary mb-2 mt-2">Cambiar</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else
+    return <Navigate to="/" />;
 }
 
 export default RecuperarContra;
