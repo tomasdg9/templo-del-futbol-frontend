@@ -43,8 +43,6 @@ class login extends Component {
     this.setState({cargando: true});
     axios.post(baseUrl, { email, password }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-            cookies.set('email', response.data.email, {path: "/"});
-            cookies.set('token', response.data.token, {path: "/"});
             this.props.onLogin();
             this.setState({ shouldRedirect: true, cargando: false });
             const expirationDate = new Date();

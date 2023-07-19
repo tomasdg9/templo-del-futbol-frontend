@@ -31,8 +31,10 @@ class register extends Component {
   
     axios.post(baseUrl, { email, password, nombre, apellido }, { headers: { 'Content-Type': 'application/json' } })
         .then(response => {
-            cookies.set('email', response.data.email, {path: "/"});
-            cookies.set('token', response.data.token, {path: "/"});
+            const expirationDate = new Date();
+            expirationDate.setDate(expirationDate.getDate() + 3); // Caduca en 3 días
+            cookies.set('token', response.data.token, { expires: expirationDate });
+            cookies.set('email', response.data.email, { expires: expirationDate });
             this.props.onLogin();
             this.setState({ shouldRedirect: true });
             toast('Se registró el usuario con éxito ('+email+')', {
