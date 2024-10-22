@@ -53,7 +53,7 @@ class perfil extends Component {
 
   obtenerPedidos = () => {
     /* Obtener los pedidos del usuario */
-    let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
+    let URL = "https://templo-del-futbol-node/pedidos/email/"+cookies.get('email')+"/"+cookies.get('token');
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => {
@@ -70,7 +70,7 @@ class perfil extends Component {
 
   obtenerDetalle = (id) => { // ¿Tendria que validar con un token?
     this.setState({cargando: true, visualizando: id}, () => {
-      let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/verdetalle/"+id;
+      let URL = "https://templo-del-futbol-node/pedidos/verdetalle/"+id;
       fetch(URL)
         .then(respuesta => respuesta.json())
         .then(resultado => {

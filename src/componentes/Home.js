@@ -5,7 +5,7 @@ import Producto from './entidades/Producto';
 import Grid from '@mui/material/Grid';
 
 function Home() {
-  let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/masnuevos";
+  let URL = "https://templo-del-futbol-node.vercel.app/productos/masnuevos";
   const [productos, setProductos] = useState([]);
     
   useEffect(() => {

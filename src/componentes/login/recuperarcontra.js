@@ -6,7 +6,7 @@ class recuperarcontra extends Component {
 
   handleChange = () => {
     let email = document.getElementById('email').value;
-    axios.post("https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/clientes/changepassword", { email }, { headers: { 'Content-Type': 'application/json' } })
+    axios.post("https://templo-del-futbol-node/clientes/changepassword", { email }, { headers: { 'Content-Type': 'application/json' } })
       .then(response => {
         toast('Se envió un mail para cambiar la contraseña.', {
           duration: 5000,

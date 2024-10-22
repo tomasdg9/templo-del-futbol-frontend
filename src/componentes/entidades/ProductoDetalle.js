@@ -41,7 +41,7 @@ function ProductoDetalle() {
   };
 
   function obtenerProducto() {
-    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/" + id;
+    const URL = "https://templo-del-futbol-node.vercel.app/productos/" + id;
     fetch(URL)
       .then(respuesta => {
         if (respuesta.status === 200) return respuesta.json();
@@ -55,7 +55,7 @@ function ProductoDetalle() {
   }
 
   function obtenerRecientes(){
-    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/masnuevos";
+    const URL = "https://templo-del-futbol-node.vercel.app/productos/masnuevos";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => setProductos(resultado))

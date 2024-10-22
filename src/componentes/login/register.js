@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 import { Navigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 
-const baseUrl = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/clientes/register"; // api node.js cambiar luego por el otro vercel.
+const baseUrl = "https://templo-del-futbol-node.vercel.app/clientes/register"; // api node.js cambiar luego por el otro vercel.
 const cookies = new Cookies();
 
 class register extends Component {

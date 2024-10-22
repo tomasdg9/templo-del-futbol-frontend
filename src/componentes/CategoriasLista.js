@@ -57,7 +57,7 @@ class CategoriasLista extends Component {
 
   // Unica llamada a la API
   obtenerCategorias = () => {
-    let URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/categorias";
+    let URL = "https://templo-del-futbol-node.vercel.app/categorias";
     fetch(URL)
       .then(respuesta => respuesta.json())
       .then(resultado => this.setState({ categorias: resultado, cargando:false, categoriasamostrar: resultado }))

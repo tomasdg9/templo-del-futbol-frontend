@@ -44,7 +44,7 @@ const Carrito = (props) => {
   }
 
   const obtenerProductos = async () => {
-    const URL = "https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/productos/";
+    const URL = "https://templo-del-futbol-node.vercel.app/productos/";
   
     const promesas = carrito.map((idProd) => {
       const productoURL = URL + idProd;
@@ -83,7 +83,7 @@ const Carrito = (props) => {
   const onSubmit = async (formData) => {
     // Callback llamado al hacer clic en el botón enviar datos
     return new Promise((resolve, reject) => {
-      fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/process_payment/', {
+      fetch('https://templo-del-futbol-node.vercel.app/process_payment/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -96,6 +96,7 @@ const Carrito = (props) => {
           if (response.status === "approved") {
             // Realizar la operación de la API DeshandleSubmit
             //setIDMP(response.id);
+            print(response.status);
             DeshandleSubmit(response.id)
               .then(() => {
                 // Ambas operaciones se completaron con éxito
@@ -228,7 +229,7 @@ const Carrito = (props) => {
       };
       try {
 		const token = cookies.get('token');  
-        const response = await fetch('https://de-giusti-berti-api-nodejs-nicolasberti.vercel.app/pedidos/crear/'+token, requestOptions);
+        const response = await fetch('https://templo-del-futbol-node.vercel.app/pedidos/crear/'+token, requestOptions);
         if (response.ok) {
           toast('Pedido completado con éxito\nEmail: '+email+"\nDescripción: "+descripcionValor, {
             duration: 5000,
